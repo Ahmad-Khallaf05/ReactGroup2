@@ -4,6 +4,12 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
+
+Route::prefix('contacts')->group(function () {
+    Route::middleware('web')->get('/', [ContactController::class, 'index']);
+    Route::middleware('web')->post('/', [ContactController::class, 'store']);
+});
 
 
 
