@@ -12,7 +12,7 @@ const Sidebar = () => {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/Users">
+          <a className="nav-link" href="/users">
             <span className="menu-title">Users</span>
             <i className="mdi mdi-home menu-icon"></i>
           </a>
