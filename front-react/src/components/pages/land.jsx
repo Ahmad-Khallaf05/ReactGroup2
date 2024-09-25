@@ -1,7 +1,7 @@
 import React from 'react'
 
-// import '../landing/css/style.css';
-// import '../../components/landing/css/bootstrap.min.css';
+import '../landing/css/style.css';
+import '../landing/css/bootstrap.min.css';
 
 
 import NavLand from '../landing/components/nav';
