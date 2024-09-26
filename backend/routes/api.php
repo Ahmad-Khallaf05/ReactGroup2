@@ -5,6 +5,13 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
+
+Route::prefix('contacts')->group(function () {
+    Route::get('/', [ContactController::class, 'index']); // No middleware needed; uses api middleware by default
+    Route::post('/', [ContactController::class, 'store']);
+    Route::delete('/{id}', [ContactController::class, 'destroy']);
+});
 
 
 
