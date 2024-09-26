@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,14 @@ Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
 Route::put('/tasks/{task}/edit', [TaskController::class, 'update']);
 Route::delete('/tasks/{task}/delete', [TaskController::class, 'destroy']);
 
+//Subject
+Route::get('/subjects', [SubjectController::class, 'index']);
+Route::post('/subjects', [SubjectController::class, 'store']);
+Route::get('/subjects/{subject}', [SubjectController::class, 'show']);
+Route::get('/subjects/{subject}/edit', [SubjectController::class, 'edit']);
+Route::put('/subjects/{subject}/edit', [SubjectController::class, 'update']);
+Route::delete('/subjects/{subject}/delete', [SubjectController::class, 'destroy']);
+
 
 //Users
 Route::get('/user', [UserController::class, 'index']);
@@ -27,6 +36,8 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::get('/user/{id}/edit', [UserController::class, 'edit']);
 Route::put('/user/{id}/edit', [UserController::class, 'update']);
 Route::delete('/user/{id}/delete', [UserController::class, 'destroy']);
+
+
 
 
 Route::post('login', [AuthController::class, 'login']);

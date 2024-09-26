@@ -17,13 +17,19 @@ const Sidebar = () => {
             <i className="mdi mdi-home menu-icon"></i>
           </a>
         </li>
+       
         <li className="nav-item">
           <a className="nav-link" href="/Tasks">
             <span className="menu-title">Tasks</span>
             <i className="mdi mdi-home menu-icon"></i>
           </a>
         </li>
-       
+        <li className="nav-item">
+          <a className="nav-link" href="/Subjects">
+            <span className="menu-title">Subject</span>
+            <i className="mdi mdi-home menu-icon"></i>
+          </a>
+        </li>
       </ul>
     </nav>
   );
