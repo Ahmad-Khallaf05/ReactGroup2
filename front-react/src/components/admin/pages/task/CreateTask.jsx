@@ -15,7 +15,7 @@ const CreateTask = () => {
         axios.post('http://127.0.0.1:8000/api/tasks', values)
             .then(response => {
                 // add sweet alert
-                navigate('/users');
+                navigate('/tasks');
             })
             .catch(error => {
                 // add sweet alert and add the different error in status

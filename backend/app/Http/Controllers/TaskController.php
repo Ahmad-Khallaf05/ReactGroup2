@@ -137,8 +137,9 @@ class TaskController extends Controller
             $request->all(),
             [
                 'title' => 'required|string',
-                'progress' => 'required|string',
+                'progress' => 'required',
                 'description' => 'required|string',
+                'deadline' => 'required|string',
             ]
         );
         if ($validator->fails()) {
@@ -152,6 +153,7 @@ class TaskController extends Controller
                     'title' => $request->title,
                     'progress' => $request->progress,
                     'description' => $request->description,
+                    'deadline' => $request->deadline,
                 ]);
                 return response()->json([
                     'status' => 200,
