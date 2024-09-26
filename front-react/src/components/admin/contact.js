@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { MdDeleteForever } from "react-icons/md";
 
 import Navbar from "../../components/admin/Navbar"; 
 import Sidebar from "../../components/admin/Sidebar"; 
@@ -63,7 +64,8 @@ function Contacts() {
                                                                 <td>{contact.email}</td>
                                                                 <td>{contact.message}</td>
                                                                 <td>
-                                                                    <button onClick={() => handleDelete(contact.id)}>Delete</button>
+                                                                <MdDeleteForever style={{width: 35 , height:35}} onClick={ () => handleDelete(contact.id)}/>
+                                                                    {/* <button onClick={() => handleDelete(contact.id)}>Delete</button> */}
                                                                 </td>
                                                             </tr>
                                                         ))
