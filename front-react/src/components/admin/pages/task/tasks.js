@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-
-import Navbar from "./Navbar"; 
-import Sidebar from "./Sidebar"; 
-import Footer from "./Footer"; 
+import { Link } from 'react-router-dom';
+import Navbar from "../../Navbar"; 
+import Sidebar from "../../Sidebar"; 
+import Footer from "../../Footer"; 
 import axios from "axios"
 import { MdDeleteForever } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
@@ -14,6 +14,12 @@ function Tasks() {
             ).catch(error => console.error(error))
         },[]
     );
+
+    function handleDelete(id){
+        axios.delete(`http://127.0.0.1:8000/api/tasks/${id}/delete`).then(res=>{
+            alert('The User Has Been Delete');
+        })
+    }
 
     return (
 
@@ -28,6 +34,7 @@ function Tasks() {
             <div className="page-header">
                 <h3 className="page-title">Tasks</h3>
                 <nav aria-label="breadcrumb">
+                <a href="/create-task" className='btn btn-gradient-success btn-rounded btn-fw'>Add Task</a>
                 </nav>
             </div>
             <div className="row">
@@ -98,8 +105,10 @@ function Tasks() {
                                         </p>
                                         </td>
                                         <td >
-                                        <MdDeleteForever style={{width: 35 , height:35}}/>
+                                            <Link to={`/task-edit/${task.id}`}>
                                         <MdEdit style={{width: 35 , height:35}}/>
+                                            </Link>
+                                        <MdDeleteForever style={{width: 35 , height:35}} onClick={ () => handleDelete(task.id)}/>
                                         </td>
                                             </tr>
                                         })
