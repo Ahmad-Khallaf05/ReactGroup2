@@ -19,7 +19,7 @@ import FooterLand from './components/footer';
 import GategoryLand from './components/category';
 import ScrollToTopLand from './components/top';
 
-export default function land() {
+export default function Land() {
   return (
     <div>
           <>

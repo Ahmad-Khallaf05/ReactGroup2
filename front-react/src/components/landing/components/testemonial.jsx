@@ -1,6 +1,5 @@
 import React from 'react';
-import '../css/style.css'; // Make sure your styles are applied here
-import '../css/bootstrap.min.css';
+
 
 export default function Testimonial() {
   return (

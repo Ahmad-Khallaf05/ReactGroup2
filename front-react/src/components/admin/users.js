@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Navbar from "../../components/admin/Navbar"; 
-import Sidebar from "../../components/admin/Sidebar"; 
-import Footer from "../../components/admin/Footer"; 
+import Navbar from "./Navbar"; 
+import Sidebar from "./Sidebar"; 
+import Footer from "./Footer"; 
 
 function Users() {
     return (
