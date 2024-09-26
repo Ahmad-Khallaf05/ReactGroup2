@@ -7,8 +7,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 
 Route::prefix('contacts')->group(function () {
-    Route::middleware('web')->get('/', [ContactController::class, 'index']);
-    Route::middleware('web')->post('/', [ContactController::class, 'store']);
+    Route::get('/', [ContactController::class, 'index']); // No middleware needed; uses api middleware by default
+    Route::post('/', [ContactController::class, 'store']);
+    Route::delete('/{id}', [ContactController::class, 'destroy']);
 });
 
 
