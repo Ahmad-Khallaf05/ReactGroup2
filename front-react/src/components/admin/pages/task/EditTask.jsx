@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import { taskSchema } from "../../../../schemas/index";
 import axios from 'axios';
-
+import { useState,useEffect } from 'react';
 import Navbar from "../../Navbar";
 import Sidebar from "../../Sidebar";
 import Footer from "../../Footer";
@@ -11,12 +11,21 @@ import Footer from "../../Footer";
 const EditTask = () => {
     const {id} = useParams();
     const navigate = useNavigate();
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        axios.get(`http://127.0.0.1:8000/api/tasks/${id}`).then(res => {
+            setData(res.data.task);
+        }).catch(error => {
+            console.error('Error fetching user:', error);
+        });
+    }, [id]);
 
     const onSubmit = async (values) => {
         axios.put(`http://127.0.0.1:8000/api/tasks/${id}/edit`, values)
             .then(response => {
                 // add sweet alert
-                navigate('/users');
+                navigate('/tasks');
             })
             .catch(error => {
                 // add sweet alert and add the different error in status
@@ -27,12 +36,12 @@ const EditTask = () => {
 
     const formik = useFormik({
         initialValues: {
-            title: "",
-            description: "",
-            deadline: "",
-            progress: 0
+            title: data.title,
+            description: data.description,
+            deadline: data.deadline,
+            progress: data.progress
         },
-        validationSchema: taskSchema,
+        validationSchema: taskSchema,enableReinitialize:true,
         onSubmit,
     });
     return (
