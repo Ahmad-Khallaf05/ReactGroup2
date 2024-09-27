@@ -13,3 +13,10 @@ export const basicSchema = yup.object().shape({
         .required("Required"),
 
 });
+
+export const taskSchema = yup.object().shape({
+    title: yup.string().required("Required").min(3),
+    description: yup.string().required("Required").min(3),
+    progress: yup.number().required("Required"),
+    deadline: yup.string().required("Required")
+ });
