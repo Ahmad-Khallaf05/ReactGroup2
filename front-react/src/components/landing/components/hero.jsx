@@ -5,8 +5,6 @@ export default function hero() {
   return (
     <div>
 
-
-        
   {/* Hero Start */}
   <div
     className="container-fluid py-5 hero-header wow fadeIn"
@@ -15,7 +13,7 @@ export default function hero() {
     <div className="container py-5">
       <div className="row g-5">
         <div className="col-lg-7 col-md-12">
-          <h1 className="mb-3 text-primary">We Care Your Baby</h1>
+          <h1 className="mb-3 text-primary">WELCOM TO ZAID ALSAAFEEN WEB SAIT</h1>
           <h1 className="mb-5 display-1 text-white">
             The Best Play Area For Your Kids
           </h1>
@@ -29,7 +27,7 @@ export default function hero() {
             href=""
             className="btn btn-primary px-4 py-3 px-md-5 btn-border-radius"
           >
-            Learn More
+            learn more aobut
           </a>
           
         </div>

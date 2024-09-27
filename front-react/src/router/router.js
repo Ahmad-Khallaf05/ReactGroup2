@@ -12,7 +12,6 @@ import EditUser from '../components/admin/pages/user/editUser';
 export default function Myrouter() {
     return (
         <div>
-
             <Router>
                 <Routes>
                     <Route path="/" element={<Landing />} />
