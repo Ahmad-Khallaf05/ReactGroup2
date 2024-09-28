@@ -13,10 +13,10 @@ export default function hero() {
     <div className="container py-5">
       <div className="row g-5">
         <div className="col-lg-7 col-md-12">
-          <h1 className="mb-3 text-primary">WELCOM TO ZAID ALSAAFEEN WEB SAIT</h1>
-          <h1 className="mb-5 display-1 text-white">
-            The Best Play Area For Your Kids
-          </h1>
+          <h1 className="mb-3 text-primary">Illuminating the Path to the Future</h1>
+          <h4 className="mb-5 display-1 text-white">
+          With Quality Education and an Inspiring Environment
+          </h4>
           <a
             href=""
             className="btn btn-primary px-4 py-3 px-md-5  me-4 btn-border-radius"

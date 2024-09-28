@@ -26,14 +26,13 @@ export default function about() {
             About Us
           </h4>
           <h1 className="text-dark mb-4 display-5">
-            We Learn Smart Way To Build Bright Futute For Your Children
+            
+           we are committed to providing exceptional education
           </h1>
           <p className="text-dark mb-4">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. the printing and typesetting industry. Lorem Ipsum has
-            been the industry's standard dummy text ever since the 1500s, when
-            an unknown printer Lorem Ipsum has been the industry's standard
-            dummy text ever since the 1500s.
+          academic and personal skills We offer a safe and motivating learning environment that encourages creativity and innovation, with a strong emphasis on building values and ethics. Through modern curricula and a variety of activities, we strive to prepare a capable and confident generation ready to face the challenges of the future with excellence and confidence."
+
+
           </p>
           <div className="row mb-4">
             <div className="col-lg-6">

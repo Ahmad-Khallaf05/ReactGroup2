@@ -1,8 +1,12 @@
 import React from 'react';
+import Footer from './category';
+import Nav from './nav';
 
 export default function Register() {
   return (
     <div>
+      <Nav />
+
       {/* Register Start */}
       <div className="login">
         <div className="container py-5">
@@ -33,6 +37,8 @@ export default function Register() {
           </div>
         </div>
       </div>
+      <Footer />
+
       {/* Register End */}
     </div>
   );

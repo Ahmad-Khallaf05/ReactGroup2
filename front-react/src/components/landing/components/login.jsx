@@ -1,9 +1,11 @@
 import React from 'react';
-
+import Nav from './nav';
+import Footer from './category';
 export default function Login() {
   return (
     <div>
       {/* Login Start */}
+<Nav />
       <div className="login">
         <div className="container py-5">
           <div className="row g-5 justify-content-center">
@@ -25,9 +27,8 @@ export default function Login() {
             </div>
           </div>
         </div>
-      
       </div>
-      {/* Login End */}
-    </div>
+      <Footer />
+      </div>
   );
 }
