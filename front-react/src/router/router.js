@@ -10,6 +10,10 @@ import CreateUser from '../components/admin/pages/user/createUser';
 import EditUser from '../components/admin/pages/user/editUser';
 import CreateTask from '../components/admin/pages/task/CreateTask';
 import EditTask from '../components/admin/pages/task/EditTask';
+import Admins from '../components/admin/pages/admins/Admins';
+import CreateAdmin from '../components/admin/pages/admins/CreateAdmin';
+import UpdateAdmin from '../components/admin/pages/admins/UpdateAdmin';
+import ViewAdmin from '../components/admin/pages/admins/ViewAdmin';
 //  import "../../public/assets/css/style.css"; 
 
 export default function Myrouter() {
@@ -27,6 +31,10 @@ export default function Myrouter() {
                     <Route path="/create-user" element={<CreateUser />} />
                     <Route path={`/user-edit/:id`} element={<EditUser/>}/>
                     <Route path="/Contacts" element={<Contacts />} />
+                    <Route path="/Admins" element={<Admins />} />
+                    <Route path="/add_admin" element={<CreateAdmin />} />
+                    <Route path="/view_admin/:id" element={<ViewAdmin />} />
+                    <Route path="/edit_admin/:id" element={<UpdateAdmin />} />
                 </Routes>
             </Router>
 

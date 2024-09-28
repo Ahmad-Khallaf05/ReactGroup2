@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -43,3 +44,11 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('loginUser', [AuthController::class, 'loginUser']);
     Route::post('logout', [AuthController::class, 'logout']);
 });
+
+//Admin Routes
+Route::get('admins', [AdminController::class, 'index']);
+Route::get('admin/{id}', [AdminController::class, 'show']); 
+Route::post('add_admin', [AdminController::class, 'store']); 
+Route::put('admin_update/{id}', [AdminController::class, 'update']);
+Route::delete('admin_delete/{id}', [AdminController::class, 'destroy']);
+//RGD
