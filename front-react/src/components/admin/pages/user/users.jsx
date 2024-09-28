@@ -7,6 +7,7 @@ import Navbar from "../../Navbar";
 import Sidebar from "../../Sidebar"; 
 import Footer from "../../Footer"; 
 
+
 function Users() {
 
     
@@ -24,6 +25,7 @@ function handleDelete(id){
 
     useEffect(()=>{
         axios.get('http://127.0.0.1:8000/api/user').then(res=>{
+
             setUser(res.data.user);
             setLoading(false);
         })
@@ -42,13 +44,15 @@ function handleDelete(id){
         return (
             <>
             <tr key={index}>
-                    <td>{item.id}</td>
+                    <td>< img src={`http://127.0.0.1:8000/${item.san7a}`} alt="fix"  />
+                    </td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
-                    <td>fix</td>
+                    <td>{item.dob}</td>
+                    <td>{item.parentPhone}</td>
                     <td>
+                        <Link to={`/user-show/${item.id}`} className="btn btn-info">View</Link>
                         <Link to={`/user-edit/${item.id}`} className="btn btn-success">Edit</Link>
-                  
                         <button className="btn btn-danger" onClick={()=>handleDelete(item.id)}>Delete</button>
                     </td>
                 </tr>
@@ -86,6 +90,7 @@ function handleDelete(id){
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Age</th>
+                                        <th>Parent Phone</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
