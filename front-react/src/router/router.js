@@ -11,12 +11,15 @@ import EditUser from '../components/admin/pages/user/editUser';
 import ShowUser from '../components/admin/pages/user/showUser';
 import CreateTask from '../components/admin/pages/task/CreateTask';
 import EditTask from '../components/admin/pages/task/EditTask';
-
+import Event from '../components/admin/pages/event/event';
+import EditEvent from '../components/admin/pages/event/EditEvent';
+import EventView from '../components/admin/pages/event/EventView';
 //  import "../../public/assets/css/style.css";
 
 export default function Myrouter() {
     return (
         <div>
+
             <Router>
                 <Routes>
                     <Route path="/" element={<Landing />} />
@@ -29,6 +32,9 @@ export default function Myrouter() {
                     <Route path={`/user-edit/:id`} element={<EditUser/>}/>
                     <Route path={`/user-show/:id`} element={<ShowUser/>}/>
                     <Route path="/Contacts" element={<Contacts />} />
+                    <Route path="/event" element={<Event />} />
+                    <Route path="/edit-event/:id" element={<EditEvent />} />
+                    <Route path="/view-event/:id" element={<EventView />} />
                 </Routes>
             </Router>
 

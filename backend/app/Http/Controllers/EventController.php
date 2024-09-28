@@ -7,59 +7,66 @@ use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $events = Event::all();
+        return response()->json(['events' => $events]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'san7a' => 'required|string',
+            'date' => 'required|date',
+            'category' => 'required|string',
+            'admin_id' => 'required|exists:admins,id',
+        ]);
+
+        $event = Event::create($validatedData);
+        return response()->json(['message' => 'Event created successfully', 'event' => $event], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Event $event)
+    public function show($id)
     {
-        //
+        $event = Event::find($id);
+        if ($event) {
+            return response()->json(['event' => $event]);
+        } else {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Event $event)
+    public function update(Request $request, $id)
     {
-        //
+        $event = Event::find($id);
+
+        if (!$event) {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
+
+        $validatedData = $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'san7a' => 'required|string',
+            'date' => 'required|date',
+            'category' => 'required|string',
+        ]);
+
+        $event->update($validatedData);
+        return response()->json(['message' => 'Event updated successfully', 'event' => $event]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Event $event)
+    public function destroy($id)
     {
-        //
-    }
+        $event = Event::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Event $event)
-    {
-        //
+        if ($event) {
+            $event->delete();
+            return response()->json(['message' => 'Event deleted successfully']);
+        } else {
+            return response()->json(['message' => 'Event not found'], 404);
+        }
     }
 }
