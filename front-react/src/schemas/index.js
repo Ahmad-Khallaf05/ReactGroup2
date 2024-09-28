@@ -11,6 +11,9 @@ export const basicSchema = yup.object().shape({
         .min(5)
         .matches(passwordRules, { message: "Please create a stronger password" })
         .required("Required"),
+    dob: yup.date().required("Required"),
+    parentName: yup.string().required("Required").min(3),
+    parentPhone: yup.string().required("Required"),
 
 });
 
