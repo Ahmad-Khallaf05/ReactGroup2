@@ -6,6 +6,14 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EventController;
+
+Route::get('/event', [EventController::class, 'index']);
+Route::post('/event', [EventController::class, 'store']);
+Route::get('/event/{id}', [EventController::class, 'show']);
+Route::put('/event/{id}', [EventController::class, 'update']); // Changed to match RESTful conventions
+Route::delete('/event/{id}', [EventController::class, 'destroy']);
+
 
 Route::prefix('contacts')->group(function () {
     Route::get('/', [ContactController::class, 'index']); // No middleware needed; uses api middleware by default

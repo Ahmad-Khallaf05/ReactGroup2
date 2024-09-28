@@ -64,8 +64,7 @@ function Contacts() {
                                                                 <td>{contact.email}</td>
                                                                 <td>{contact.message}</td>
                                                                 <td>
-                                                                <MdDeleteForever style={{width: 35 , height:35}} onClick={ () => handleDelete(contact.id)}/>
-                                                                    {/* <button onClick={() => handleDelete(contact.id)}>Delete</button> */}
+                                                                <MdDeleteForever style={{width: 35 , height:35}} onClick={ () => handleDelete(contact.id)}/>                                        
                                                                 </td>
                                                             </tr>
                                                         ))

@@ -10,6 +10,9 @@ import CreateUser from '../components/admin/pages/user/createUser';
 import EditUser from '../components/admin/pages/user/editUser';
 import CreateTask from '../components/admin/pages/task/CreateTask';
 import EditTask from '../components/admin/pages/task/EditTask';
+import Event from '../components/admin/pages/event/event';
+import EditEvent from '../components/admin/pages/event/EditEvent';
+import EventView from '../components/admin/pages/event/EventView';
 //  import "../../public/assets/css/style.css"; 
 
 export default function Myrouter() {
@@ -27,6 +30,9 @@ export default function Myrouter() {
                     <Route path="/create-user" element={<CreateUser />} />
                     <Route path={`/user-edit/:id`} element={<EditUser/>}/>
                     <Route path="/Contacts" element={<Contacts />} />
+                    <Route path="/event" element={<Event />} />
+                    <Route path="/edit-event/:id" element={<EditEvent />} />
+                    <Route path="/view-event/:id" element={<EventView />} />
                 </Routes>
             </Router>
 
