@@ -11,18 +11,18 @@ import Footer from "../../Footer";
 const CreateTask = () => {
     const navigate = useNavigate();
 
-    // const onSubmit = async (values) => {
-    //     axios.post('http://127.0.0.1:8000/api/tasks', values)
-    //         .then(response => {
-    //             // add sweet alert
-    //             navigate('/users');
-    //         })
-    //         .catch(error => {
-    //             // add sweet alert and add the different error in status
-    //             console.error('Error submitting form:', error);
-    //         });
+    const onSubmit = async (values) => {
+        axios.post('http://127.0.0.1:8000/api/tasks', values)
+            .then(response => {
+                // add sweet alert
+                navigate('/tasks');
+            })
+            .catch(error => {
+                // add sweet alert and add the different error in status
+                console.error('Error submitting form:', error);
+            });
 
-    // };
+    };
   
         const formik = useFormik({
         initialValues: {
@@ -32,20 +32,7 @@ const CreateTask = () => {
             progress: 0
     },
         validationSchema: taskSchema,
-        onSubmit : async (values) => {
-            console.log('hi',values);
-            
-            axios.post('http://127.0.0.1:8000/api/tasks', values)
-                .then(response => {
-                    // add sweet alert
-                    navigate('/users');
-                })
-                .catch(error => {
-                    // add sweet alert and add the different error in status
-                    console.error('Error submitting form:', error);
-                });
-    
-        },
+        onSubmit ,
     });
     return (
         <>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use function PHPUnit\Framework\isEmpty;
 
 class UserController extends Controller
 {
@@ -41,11 +42,32 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(),
             [
-                'name' => 'required|string',
+                'name' => 'required|string|min:3',
+                'gender' => 'required',
                 'email' => 'required|email',
+                'dob' => 'required|date',
+                'parentName' => 'required|string',
+                'parentPhone' => 'required|string',
+//                'san7a' => 'nullable|image|mimes:jpeg,png,jpg,webp',
+//                'officialId' => 'nullable|image|mimes:jpeg,png,jpg,webp',
                 'password' => 'required|string',
             ]
         );
+
+        if ($request->san7a) {
+            $file=$request->san7a;
+            $extension=$request->san7a->getClientOriginalExtension();
+            $fileNameSan7a=time().'.'.$extension;
+            $path='uploads/students/san7a';
+            $file->move($path, $fileNameSan7a);
+        }
+        if ($request->officialId) {
+            $file=$request->officialId;
+            $extension=$file->getClientOriginalExtension();
+            $fileNameId=time().'.'.$extension;
+            $path='uploads/students/officialId';
+            $file->move($path, $fileNameId);
+        }
         if ($validator->fails()) {
             return response()->json([
                 'status' => 422,
@@ -54,9 +76,14 @@ class UserController extends Controller
         } else {
             $user = User::create([
                 'name' => $request->name,
+                'gender' => $request->gender,
                 'email' => $request->email,
+                'dob' => $request->dob,
+                'parentName' => $request->parentName,
+                'parentPhone' => $request->parentPhone,
+                'san7a' => 'uploads/students/san7a/'.$fileNameSan7a,
+                'officialId' => 'uploads/students/officialId/'.$fileNameId,
                 'password' => $request->password,
-
             ]);
             if ($user) {
                 return response()->json([
@@ -113,37 +140,87 @@ class UserController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(),
-            [
-                'name' => 'required|string',
-                'email' => 'required|email',
-            ]
-        );
+//   if (isEmpty($request)) {
+//       return response()->json([
+//           'status' => 403,
+//           "data"=>$request->name
+//       ],403);
+//   }
+        // Validation rules
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|min:3',
+            'gender' => 'required|string|max:7',
+            'email' => 'required|email',
+            'dob' => 'required|date',
+            'parentName' => 'required|string',
+            'parentPhone' => 'required|string',
+//            'san7a' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+//            'officialId' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ]);
+
+        // Return validation errors if any
         if ($validator->fails()) {
             return response()->json([
                 'status' => 422,
                 'errors' => $validator->messages()
             ], 422);
-        } else {
-            $user =User::find($id);
-            if ($user) {
-                $user->update([
-                    'name' => $request->name,
-                    'email' => $request->email,
-
-                ]);
-
-                return response()->json([
-                    'status' => 200,
-                    'massage' => 'User Updated Successfully'
-                ], 200);
-            } else {
-                return response()->json([
-                    'status' => 500,
-                    'massage' => 'No Records Found'
-                ], 500);
-            }
         }
+
+        // Find the user
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'No Records Found'
+            ], 404);
+        }
+
+        // Handle file uploads
+        $fileNameSan7a = $this->uploadFile($request->file('san7a'), 'san7a');
+        $fileNameOfficialId = $this->uploadFile($request->file('officialId'), 'officialId');
+//        if ($request->san7a) {
+//            $file=$request->san7a;
+//            $extension=$request->san7a->getClientOriginalExtension();
+//            $fileNameSan7a=time().'.'.$extension;
+//            $path='uploads/students/san7a';
+//            $file->move($path, $fileNameSan7a);
+//        }
+//        if ($request->officialId) {
+//            $file=$request->officialId;
+//            $extension=$file->getClientOriginalExtension();
+//            $fileNameOfficialId=time().'.'.$extension;
+//            $path='uploads/students/officialId';
+//            $file->move($path, $fileNameOfficialId);
+//        }
+
+        // Update user details
+        $user->update([
+            'name' => $request->name,
+            'gender' => $request->gender,
+            'email' => $request->email,
+            'dob' => $request->dob,
+            'parentName' => $request->parentName,
+            'parentPhone' => $request->parentPhone,
+            'san7a' => $fileNameSan7a ? 'uploads/students/san7a/' . $fileNameSan7a : $user->san7a,
+            'officialId' => $fileNameOfficialId ? 'uploads/students/officialId/' . $fileNameOfficialId : $user->officialId,
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'User Updated Successfully'
+        ], 200);
+    }
+
+// Helper function for file uploads
+    private function uploadFile($file, $type)
+    {
+        if ($file) {
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $path = 'uploads/students/' . $type;
+            $file->move($path, $fileName);
+            return $fileName;
+        }
+        return null;
     }
 
     public function destroy(string $id)

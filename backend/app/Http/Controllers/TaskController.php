@@ -52,7 +52,8 @@ class TaskController extends Controller
             [
                 'title' => 'required|string',
                 'description' => 'required|string',
-                'progress' => 'required|string',
+                'progress' => 'required',
+                'deadline' => 'required|string',
             ]
         );
         if ($validator->fails()) {
@@ -65,6 +66,7 @@ class TaskController extends Controller
                 'title' => $request->title,
                 'description' => $request->description,
                 'progress' => $request->progress,
+                'deadline' => $request->deadline,
 
             ]);
             if ($user) {
@@ -135,8 +137,9 @@ class TaskController extends Controller
             $request->all(),
             [
                 'title' => 'required|string',
-                'progress' => 'required|string',
+                'progress' => 'required',
                 'description' => 'required|string',
+                'deadline' => 'required|string',
             ]
         );
         if ($validator->fails()) {
@@ -150,6 +153,7 @@ class TaskController extends Controller
                     'title' => $request->title,
                     'progress' => $request->progress,
                     'description' => $request->description,
+                    'deadline' => $request->deadline,
                 ]);
                 return response()->json([
                     'status' => 200,

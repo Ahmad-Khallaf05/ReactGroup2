@@ -5,8 +5,6 @@ export default function hero() {
   return (
     <div>
 
-
-        
   {/* Hero Start */}
   <div
     className="container-fluid py-5 hero-header wow fadeIn"
@@ -29,7 +27,7 @@ export default function hero() {
             href=""
             className="btn btn-primary px-4 py-3 px-md-5 btn-border-radius"
           >
-            Learn More
+            learn more aobut
           </a>
           
         </div>
