@@ -18,8 +18,8 @@ return new class extends Migration {
             $table->date('dob');
             $table->string('parentName');
             $table->string('parentPhone');
-            $table->string('san7a');
-            $table->string('officialId');
+            $table->string('san7a')->nullable();
+            $table->string('officialId')->nullable();
             $table->boolean('accepter')->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

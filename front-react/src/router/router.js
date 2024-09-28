@@ -8,13 +8,17 @@ import Contacts from '../components/admin/contact';
 import Home from "../components/pages/admin";   
 import CreateUser from '../components/admin/pages/user/createUser';
 import EditUser from '../components/admin/pages/user/editUser';
+import ShowUser from '../components/admin/pages/user/showUser';
 import CreateTask from '../components/admin/pages/task/CreateTask';
 import EditTask from '../components/admin/pages/task/EditTask';
+import Event from '../components/admin/pages/event/event';
+import EditEvent from '../components/admin/pages/event/EditEvent';
+import EventView from '../components/admin/pages/event/EventView';
 import Admins from '../components/admin/pages/admins/Admins';
 import CreateAdmin from '../components/admin/pages/admins/CreateAdmin';
 import UpdateAdmin from '../components/admin/pages/admins/UpdateAdmin';
 import ViewAdmin from '../components/admin/pages/admins/ViewAdmin';
-//  import "../../public/assets/css/style.css"; 
+//  import "../../public/assets/css/style.css";
 
 export default function Myrouter() {
     return (
@@ -30,11 +34,15 @@ export default function Myrouter() {
                     <Route path="/task-edit/:id" element={<EditTask />} />
                     <Route path="/create-user" element={<CreateUser />} />
                     <Route path={`/user-edit/:id`} element={<EditUser/>}/>
+                    <Route path={`/user-show/:id`} element={<ShowUser/>}/>
                     <Route path="/Contacts" element={<Contacts />} />
                     <Route path="/Admins" element={<Admins />} />
                     <Route path="/add_admin" element={<CreateAdmin />} />
                     <Route path="/view_admin/:id" element={<ViewAdmin />} />
                     <Route path="/edit_admin/:id" element={<UpdateAdmin />} />
+                    <Route path="/event" element={<Event />} />
+                    <Route path="/edit-event/:id" element={<EditEvent />} />
+                    <Route path="/view-event/:id" element={<EventView />} />
                 </Routes>
             </Router>
 

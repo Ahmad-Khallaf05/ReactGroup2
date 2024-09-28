@@ -89,8 +89,9 @@ export default function Contact() {
             ></textarea>
           </div>
           <button type="submit" className="btn btn-primary">Send Message</button>
-        </form>
+          <br></br>
         {responseMessage && <p className="mt-3">{responseMessage}</p>}
+        </form>
       </div>
       {/* Contact Form End */}
     </div>
