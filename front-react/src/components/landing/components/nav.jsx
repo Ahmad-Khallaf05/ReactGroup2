@@ -137,13 +137,27 @@ export default function nav() {
               </a>
             </div>
           </div>
-          <button
-            className="btn-search btn btn-primary btn-md-square rounded-circle"
-            data-bs-toggle="modal"
-            data-bs-target="#searchModal"
+          <a href="/profile" >
+          <button  className="btn btn-primary "
           >
-            <i className="fas fa-search text-white" />
+            
+<i class="fa-solid fa-user"></i> your profile
           </button>
+          </a>
+          <a href="/login" >
+          <button  className="btn btn-primary "
+          >
+            
+<i class="fa-solid fa-user"></i> login
+          </button>
+          </a>
+          <a href="/register" >
+          <button  className="btn btn-primary "
+          >
+            
+<i class="fa-solid fa-user"></i> register
+          </button>
+          </a>
         </div>
       </nav>
     </div>

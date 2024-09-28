@@ -249,7 +249,7 @@ h6,
 .login{
     background: linear-gradient(rgba(13, 22, 26, 0.61), rgba(0, 0, 0, 0.861)), url(../img/school.jpg);
     background-position: center center;
-    height: 700px;
+    height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -257,8 +257,8 @@ h6,
     align-items: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
-    margin-bottom: 40px;
+    /* margin-top: 40px; */
+    /* margin-bottom: 40px; */
 }
 
 /*** About Start ***/
@@ -676,7 +676,6 @@ padding-top: 20px;
     margin: 0 5px;
     width: 15px;
     height: 15px;
-    /* background: var(--bs-primary); */
     border-radius: 10px;
     transition: 0.5s;
 }
@@ -685,8 +684,6 @@ padding-top: 20px;
     width: 30px;
     background: var(--bs-secondary);
 }
-/*** testimonial End ***/
-/* img-fluid w-100 rounded-circle */
 
 /*** Footer Start ***/
 .footer {
@@ -756,3 +753,40 @@ form {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+/* src/App.css */
+.profile-page {
+    display: flex;
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    height:130vh; 
+    
+}
+
+
+.profile-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+ul li a:hover {
+    color: #007bff;
+}
+

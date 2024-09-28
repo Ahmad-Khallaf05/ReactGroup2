@@ -12,6 +12,14 @@ import CreateTask from '../components/admin/pages/task/CreateTask';
 import EditTask from '../components/admin/pages/task/EditTask';
 import CreateSubject from '../components/admin/pages/subject/CreateSubject.jsx';
 import EditSubject from '../components/admin/pages/subject/EditSubject';
+import Profile from '../components/landing/components/profile';
+import TaskSt from '../components/landing/components/tasks';
+import EditProfile from '../components/landing/components/edit-profile';
+import DeleteProfile from '../components/landing/components/delete-profile';
+import Login from '../components/landing/components/login';
+import Register from '../components/landing/components/register';
+
+
 //  import "../../public/assets/css/style.css"; 
 
 export default function Myrouter() {
@@ -24,6 +32,12 @@ export default function Myrouter() {
                     <Route path="/dashboard" element={<Home />} />
                     <Route path="/users" element={<User />} />
                     <Route path="/Tasks" element={<Tasks />} />
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/TaskSt" element={<TaskSt />} />
+                    <Route path="/edit-profile" element={<EditProfile />} />
+                    <Route path="/delete-profile" element={<DeleteProfile />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     
                     <Route path="/Subjects" element={<Subjects />} />
 
