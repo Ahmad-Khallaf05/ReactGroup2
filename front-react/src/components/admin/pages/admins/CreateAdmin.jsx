@@ -9,9 +9,9 @@ export default function CreateAdmin() {
   const [adminData, setAdminData] = useState({
     name: "",
     email: "",
-    //Check need to add PW field
-    role: ""
-    // san7a: "",
+    password: "",
+    role: "",
+    // san7a: null,
   });
 
   const changeAdminField = (e) => {
@@ -22,6 +22,13 @@ export default function CreateAdmin() {
     //console.log(userField);
 }
 const [loading,setLoading]=useState()
+
+// const handleFileChange = (e) => {
+//   setAdminData({
+//     ...adminData,
+//     san7a: e.target.files[0],
+//   });
+// };
 
 const onSubmitChange = async (e) => {
     e.preventDefault();
@@ -67,14 +74,15 @@ if(loading){
                       <div className="form-group mb-3">
                         <label htmlFor="title">Full Name</label>
                         <input onChange={e => changeAdminField(e)} name="name" type="text" placeholder="Enter Admin Full Name" className={"form-control"} />
-                        {/* {formik.errors.title && formik.touched.title && <p className="error">{formik.errors.title}</p>} */}
                       </div>
                       <div className="form-group mb-3">
                         <label htmlFor="description">Email</label>
                         <input onChange={e => changeAdminField(e)} name="email" type="email" placeholder="Enter Admin Email" className={"form-control"} />
-                        {/* {formik.errors.description && formik.touched.description && <p className="error">{formik.errors.description}</p>} */}
                       </div>
-
+                      <div className="form-group mb-3">
+                        <label htmlFor="description">Password</label>
+                        <input onChange={e => changeAdminField(e)} name="password" type="password" placeholder="Enter Admin Password" className={"form-control"} />
+                      </div>
                       <div>
                         <label htmlFor="progress">Role</label>
                         <div className="input-group mb-3">
@@ -89,13 +97,13 @@ if(loading){
                       </div>
 
                       <label htmlFor="title">Image</label>
-                      <div className="input-group mb-3">
+                      {/* <div className="input-group mb-3"> */}
                         {/* <label htmlFor='title'>Image</label> */}
-                        <input type="file" className="form-control" id="inputGroupFile02" name="admin_img" onChange={e => changeAdminField(e)} />
+                        {/* <input type="file" className="form-control" id="inputGroupFile02" name="admin_img" onChange={e => handleFileChange(e)} />
                         <label className="input-group-text" htmlFor="inputGroupFile02">
                           Upload
                         </label>
-                      </div>
+                      </div> */}
                       <div className="form-group mb-3">
                         <button type="submit" className="btn btn-primary">
                           Add task
