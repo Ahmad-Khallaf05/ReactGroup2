@@ -6,19 +6,39 @@ import axios from 'axios';
 import Navbar from "../../Navbar"; 
 import Sidebar from "../../Sidebar"; 
 import Footer from "../../Footer"; 
-
-
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { MdDeleteForever } from 'react-icons/md';
+import { MdEdit } from 'react-icons/md';
+import { MdVisibility } from 'react-icons/md';
 function Users() {
-
+    
+    const MySwal = withReactContent(Swal)
     
 const [user, setUser] = useState([]);
 const [loading, setLoading] = useState(true);
 
 function handleDelete(id){
-    axios.delete(`http://127.0.0.1:8000/api/user/${id}/delete`).then(res=>{
-        alert('The User Has Been Delete');
-        setLoading(true);
-    })
+    Swal.fire({
+        title: "Are you sure you want to delete this user?",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            axios.delete(`http://127.0.0.1:8000/api/user/${id}/delete`).then(res=>{
+                // alert('The User Has Been Delete');
+                Swal.fire("Deleted!", "", "success");
+                setLoading(true);
+            })
+        } else if (result.isDenied) {
+          Swal.fire("Changes are not saved", "", "info");
+        }
+      });
+    // axios.delete(`http://127.0.0.1:8000/api/user/${id}/delete`).then(res=>{
+    //     alert('The User Has Been Delete');
+    //     setLoading(true);
+    // })
 }
 
 
@@ -51,9 +71,14 @@ function handleDelete(id){
                     <td>{item.dob}</td>
                     <td>{item.parentPhone}</td>
                     <td>
-                        <Link to={`/user-show/${item.id}`} className="btn btn-info">View</Link>
-                        <Link to={`/user-edit/${item.id}`} className="btn btn-success">Edit</Link>
-                        <button className="btn btn-danger" onClick={()=>handleDelete(item.id)}>Delete</button>
+                        <Link to={`/user-show/${item.id}`}>
+                        <MdVisibility
+                                                                        style={{ width: 25, height: 25, cursor: 'pointer' }}
+                                                                    />
+                        </Link>
+                        <Link to={`/user-edit/${item.id}`}>
+                        <MdEdit style={{width: 25 , height:25 , cursor: 'pointer'}} /></Link>
+                        <MdDeleteForever onClick={()=>handleDelete(item.id)} style={{width: 25 , height:25 , cursor: 'pointer'}}/>
                     </td>
                 </tr>
             </>

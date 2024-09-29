@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Navbar from "../../Navbar"; 
 import Sidebar from "../../Sidebar"; 
 import Footer from "../../Footer"; 
+import Swal from 'sweetalert2';
 
 function Events() {
     const [events, setEvents] = useState([]);
@@ -28,15 +29,27 @@ function Events() {
 
     // Function to handle event deletion
     const handleDelete = (id) => {
-        axios.delete(`http://127.0.0.1:8000/api/event/${id}`)
+        Swal.fire({
+            title: "Are you sure you want to delete this Event?",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.delete(`http://127.0.0.1:8000/api/event/${id}`)
             .then(() => {
-                console.log(`Event with ID ${id} deleted successfully`);
+                Swal.fire(`Event with ID ${id} deleted successfully`, "", 'success');
                 setEvents(events.filter(event => event.id !== id));
             })
             .catch(error => {
+                Swal.fire('Error deleting event',"","error");
                 console.error('Error deleting event:', error);
             });
-    };
+          };
+        
+    })
+};
+
 
     return (
         <div className="container-scroller">
@@ -95,7 +108,7 @@ function Events() {
                                                             </td>
                                                             <td>
                                                                 <MdDeleteForever
-                                                                    style={{ width: 35, height: 35, cursor: 'pointer' }}
+                                                                    style={{ width: 25, height: 25, cursor: 'pointer' }}
                                                                     onClick={() => handleDelete(event.id)}
                                                                 />
                                                             </td>
