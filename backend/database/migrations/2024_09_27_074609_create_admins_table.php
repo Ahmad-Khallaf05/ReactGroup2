@@ -17,7 +17,6 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            //Check need to add PW field
             $table->string('role');
             $table->string('san7a')->nullable();
             $table->timestamps();
