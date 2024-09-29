@@ -58,14 +58,30 @@ function handleDelete(id){
             </div>
         )
     }
+function Image (image){
+        if(image){
+            return (
+                <>
+                    < img src={`http://127.0.0.1:8000/${image}`} alt="student"  />
+                </>
+            )
+        }
+        else
+        {
+            return (
+                <>
+                    < img src="https://afn.ca/wp-content/uploads/2022/12/unknown_staff-500x500.webp" alt="student"  />
+                </>
+            )
+        }
 
+}
     let userDetails = '';
     userDetails = user.map((item, index) => {
         return (
             <>
             <tr key={index}>
-                    <td>< img src={`http://127.0.0.1:8000/${item.san7a}`} alt="fix"  />
-                    </td>
+                    <td>{Image(item.san7a)}</td>
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.dob}</td>

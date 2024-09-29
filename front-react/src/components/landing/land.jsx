@@ -23,7 +23,6 @@ export default function Land() {
   return (
     <div>
           <>
-
           <NavLand />
           <HeroLand />
           <AboutLand />
@@ -39,7 +38,6 @@ export default function Land() {
           <FooterLand />
           <GategoryLand />
           <ScrollToTopLand />
-
 
           </>
     </div>

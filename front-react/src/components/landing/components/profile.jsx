@@ -1,8 +1,40 @@
-import React from 'react';
+import React, {useEffect, useState ,useContext} from 'react';
 import Sidebar from './sidebar';
 import { FaTasks } from 'react-icons/fa';
+import { AuthContext } from './context/AuthContext';
+
+import axios from "axios";
 
 function Profile() {
+    const [student, setStudent] = useState({})
+    const [error, setError] = useState({})
+    const { auth } = useContext(AuthContext);
+    // console.log(auth.user.name)
+    // useEffect(() => {
+    //     const fetchStudentData = async () => {
+    //         try {
+    //
+    //             const response = await axios.get('http://127.0.0.1:8000/api/loginUser', {
+    //                 withCredentials: true,
+    //
+    //             });
+    //
+    //             if (!response.ok) {
+    //                 throw new Error('Cannot fetch student data');
+    //             }
+    //
+    //             const data = await response.json();
+    //             setStudent(data);
+    //         } catch (err) {
+    //             setError(err.message);
+    //             console.log(err.message);
+    //         }
+    //     };
+    //
+    //     fetchStudentData();
+    // }, []);
+
+
     const taskCount = 5; 
     const userName = "John Doe";
     const userAge = 30;
@@ -67,7 +99,7 @@ function Profile() {
                             gap: '15px',
                         }}>
                             {[
-                                { label: "User Name", value: userName },
+                                { label: "User Name", value: auth.user.name },
                                 { label: "Age", value: userAge },
                                 { label: "Date of Birth", value: dateOfBirth },
                                 { label: "Location", value: userLocation },
