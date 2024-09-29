@@ -84,8 +84,7 @@ class UserController extends Controller
                 'parentPhone' => $request->parentPhone,
                 'san7a' => 'uploads/students/san7a/'.$fileNameSan7a,
                 'officialId' => 'uploads/students/officialId/'.$fileNameId,
-                'password'=>Hash::make($request->input('password')),
-            ]);
+                'password'=>Hash::make($request->input('password')),]);
             if ($user) {
                 return response()->json([
                     'status' => 200,
