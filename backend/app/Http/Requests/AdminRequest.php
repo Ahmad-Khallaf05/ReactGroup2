@@ -26,15 +26,17 @@ class AdminRequest extends FormRequest
         return [
             'name' => 'required|string',
             'email' => 'required|string',
+            'password' => 'required|string',
             'role' => 'required|string',
-            'san7a' => 'string'
+            'san7a' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ];
     } else {
             return [
                 'name' => 'required|string',
                 'email' => 'required|string',
+                'password' => 'required|string',
                 'role' => 'required|string',
-                'san7a' => 'string'
+                'san7a' => 'nullable|image|max:2048'
             ];
         }
     }

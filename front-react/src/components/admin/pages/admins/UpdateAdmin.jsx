@@ -13,9 +13,9 @@ export default function UpdateAdmin() {
   const [adminData, setAdminData] = useState({
     name: "",
     email: "",
+    // password: "",
     role: "",
-    san7a: "",
-    // created_at: "",
+    // san7a: "",
   });
 
   useEffect(() => {
@@ -157,6 +157,7 @@ export default function UpdateAdmin() {
                         <button
                           type="submit"
                           className="btn btn-success btn-fw"
+                          onClick={e=>onSubmit(e)}
                         >
                           Update
                         </button>
