@@ -35,4 +35,10 @@ export const taskSchema = yup.object().shape({
      admin_id: Yup.string().required('Admin must be selected'),
  });
  
+ export const StudentclassSchema = Yup.object().shape({
+     
+     admin_id: Yup.string().required('Admin must be selected'),
+     class_id: Yup.string().required('class must be selected'),
+ });
+ 
  

@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\StudentclasseController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,14 @@ Route::get('/classrooms/{classroom}', [ClassroomController::class, 'show']);
 Route::get('/classrooms/{classroom}/edit', [ClassroomController::class, 'edit']);
 Route::put('/classrooms/{classroom}/edit', [ClassroomController::class, 'update']);
 Route::delete('/classrooms/{id}/delete', [ClassroomController::class, 'destroy']);
+//studentclassrooms
+Route::get('/studentclasses', [StudentclasseController::class, 'index']);
+Route::post('/studentclasses', [StudentclasseController::class, 'store']);
+Route::apiResource('studentclasses', StudentclasseController::class);
+Route::get('/studentclasses/{studentclass}', [StudentclasseController::class, 'show']);
+Route::get('/studentclasses/{studentclass}/edit', [StudentclasseController::class, 'edit']);
+Route::put('/studentclasses/{studentclass}/edit', [StudentclasseController::class, 'update']);
+Route::delete('/studentclasses/{studentclasse}', [StudentclasseController::class, 'destroy']);
 //Subject
 Route::get('/subjects', [SubjectController::class, 'index']);
 Route::post('/subjects', [SubjectController::class, 'store']);

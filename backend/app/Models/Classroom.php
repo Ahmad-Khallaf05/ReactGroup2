@@ -19,5 +19,9 @@ class Classroom extends Model
     {
         return $this->hasMany(Task::class);
     }
+    function Studentclasse()
+    {
+        return $this->hasMany(Studentclasse::class ,'Studentclasse_id');
+    }
     // protected $fillable = ['name', 'level'];
 }

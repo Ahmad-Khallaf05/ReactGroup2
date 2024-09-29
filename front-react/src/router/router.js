@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import User from '../components/admin/pages/user/users';
 import Tasks from '../components/admin/pages/task/tasks.js';
 import Classes from '../components/admin/pages/classroom/classrooms.jsx';
+import Studentclasses from '../components/admin/pages/studentclass/studentclasses.jsx';
 import Subjects from '../components/admin/pages/subject/subjects.js';
 import Contacts from '../components/admin/contact';
 import Home from "../components/pages/admin";   
@@ -19,6 +20,8 @@ import EditTask from '../components/admin/pages/task/EditTask';
 
 import EditClassroom from '../components/admin/pages/classroom/EditClassroom';
 import CreateClassroom from '../components/admin/pages/classroom/CreateClassroom';
+
+import Createstudemtclass from '../components/admin/pages/studentclass/Createstudentclass.jsx';
 // ---------------------------------------------------------------------------
 import Event from '../components/admin/pages/event/event';
 import AddEvent from '../components/admin/pages/event/addEvent.jsx';
@@ -59,11 +62,14 @@ export default function Myrouter() {
                     <Route path="/delete-profile" element={<DeleteProfile />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/studentclasses" element={<Studentclasses />} />
 
                     <Route path="/classrooms" element={<Classes />} />
                     
                     <Route path="/create-classroom" element={<CreateClassroom />} />
                     <Route path="/edit-classroom/:id" element={<EditClassroom />} />
+
+                    <Route path="/createstudentclass" element={<Createstudemtclass />} />
                     
                     <Route path="/Subjects" element={<Subjects />} />
 
