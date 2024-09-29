@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use function PHPUnit\Framework\isEmpty;
 
@@ -83,7 +84,7 @@ class UserController extends Controller
                 'parentPhone' => $request->parentPhone,
                 'san7a' => 'uploads/students/san7a/'.$fileNameSan7a,
                 'officialId' => 'uploads/students/officialId/'.$fileNameId,
-                'password' => $request->password,
+                'password'=>Hash::make($request->input('password')),
             ]);
             if ($user) {
                 return response()->json([
@@ -98,7 +99,6 @@ class UserController extends Controller
             }
         }
     }
-
 
     public function show(string $id)
     {

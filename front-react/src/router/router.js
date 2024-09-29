@@ -1,4 +1,6 @@
 import React from 'react'
+import { AuthProvider } from '../components/landing/components/context/AuthContext';
+import ProtectedRoute from '../components/landing/components/utils/ProtectedRoute'; // Create this component for regular users.
 
 import Landing from "../components/pages/land";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -19,6 +21,7 @@ import EditClassroom from '../components/admin/pages/classroom/EditClassroom';
 import CreateClassroom from '../components/admin/pages/classroom/CreateClassroom';
 // ---------------------------------------------------------------------------
 import Event from '../components/admin/pages/event/event';
+import AddEvent from '../components/admin/pages/event/addEvent.jsx';
 import EditEvent from '../components/admin/pages/event/EditEvent';
 import EventView from '../components/admin/pages/event/EventView';
 // ---------------------------------------------------------------------------
@@ -43,7 +46,7 @@ import Register from '../components/landing/components/register';
 export default function Myrouter() {
     return (
         <div>
-
+            <AuthProvider>
             <Router>
                 <Routes>
                     <Route path="/" element={<Landing />} />
@@ -79,11 +82,12 @@ export default function Myrouter() {
                     <Route path="/view_admin/:id" element={<ViewAdmin />} />
                     <Route path="/edit_admin/:id" element={<UpdateAdmin />} />
                     <Route path="/event" element={<Event />} />
+                    <Route path="/addEvent" element={<AddEvent />} />
                     <Route path="/edit-event/:id" element={<EditEvent />} />
                     <Route path="/view-event/:id" element={<EventView />} />
                 </Routes>
             </Router>
-
+            </AuthProvider>
 
 
         </div>

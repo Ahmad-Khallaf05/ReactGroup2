@@ -34,8 +34,6 @@ export default function Land() {
         <TeamLand />
         <TestemonialLand />
         <Contact />
-        <Login />
-        <Register />
         <FooterLand />
         <GategoryLand />
         <ScrollToTopLand />
