@@ -13,6 +13,7 @@ import ShowUser from '../components/admin/pages/user/showUser';
 import CreateTask from '../components/admin/pages/task/CreateTask';
 import EditTask from '../components/admin/pages/task/EditTask';
 import Event from '../components/admin/pages/event/event';
+import AddEvent from '../components/admin/pages/event/addEvent.jsx';
 import EditEvent from '../components/admin/pages/event/EditEvent';
 import EventView from '../components/admin/pages/event/EventView';
 import Admins from '../components/admin/pages/admins/Admins';
@@ -65,6 +66,7 @@ export default function Myrouter() {
                     <Route path="/view_admin/:id" element={<ViewAdmin />} />
                     <Route path="/edit_admin/:id" element={<UpdateAdmin />} />
                     <Route path="/event" element={<Event />} />
+                    <Route path="/addEvent" element={<AddEvent />} />
                     <Route path="/edit-event/:id" element={<EditEvent />} />
                     <Route path="/view-event/:id" element={<EventView />} />
                 </Routes>

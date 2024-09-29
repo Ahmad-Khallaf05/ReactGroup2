@@ -18,7 +18,6 @@ class EventController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'san7a' => 'required|string',
             'date' => 'required|date',
             'category' => 'required|string',
             'admin_id' => 'required|exists:admins,id',

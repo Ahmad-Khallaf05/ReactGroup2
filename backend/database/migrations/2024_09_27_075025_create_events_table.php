@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->string('san7a');
+            $table->string('san7a')->nullable();
             $table->date('date');
             $table->string('category');
             $table->foreignIdFor(Admin::class)->constrained();
