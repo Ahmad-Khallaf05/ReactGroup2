@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import * as Yup from 'yup';
 
 const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
 // min 5 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
@@ -23,3 +24,12 @@ export const taskSchema = yup.object().shape({
     progress: yup.number().required("Required"),
     deadline: yup.string().required("Required")
  });
+
+
+ export const ClassroomSchema = Yup.object().shape({
+     name: Yup.string().required('Name is required'),
+     level: Yup.string().required('Level is required'),
+     admin_id: Yup.string().required('Admin must be selected'),
+ });
+ 
+ 

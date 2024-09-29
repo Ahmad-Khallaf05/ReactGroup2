@@ -15,7 +15,7 @@ return new class extends Migration {
     {
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Admin::class)->constrained();
+            $table->foreignIdFor(Admin::class)->nullable()->constrained();
             $table->string('name');
             $table->string('level');
             $table->timestamps();

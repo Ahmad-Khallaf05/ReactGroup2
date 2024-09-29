@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SubjectController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,7 @@ Route::prefix('contacts')->group(function () {
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 //Tasks
 Route::get('/tasks', [TaskController::class, 'index']);
 Route::post('/tasks', [TaskController::class, 'store']);
@@ -35,7 +37,14 @@ Route::get('/tasks/{task}', [TaskController::class, 'show']);
 Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
 Route::put('/tasks/{task}/edit', [TaskController::class, 'update']);
 Route::delete('/tasks/{task}/delete', [TaskController::class, 'destroy']);
-
+//classrooms
+Route::get('/classrooms', [ClassroomController::class, 'index']);
+Route::post('/classrooms', [ClassroomController::class, 'store']);
+Route::apiResource('classrooms', ClassroomController::class);
+Route::get('/classrooms/{classroom}', [ClassroomController::class, 'show']);
+Route::get('/classrooms/{classroom}/edit', [ClassroomController::class, 'edit']);
+Route::put('/classrooms/{classroom}/edit', [ClassroomController::class, 'update']);
+Route::delete('/classrooms/{id}/delete', [ClassroomController::class, 'destroy']);
 //Subject
 Route::get('/subjects', [SubjectController::class, 'index']);
 Route::post('/subjects', [SubjectController::class, 'store']);
