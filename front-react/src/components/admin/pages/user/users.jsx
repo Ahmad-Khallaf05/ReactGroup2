@@ -16,7 +16,7 @@ function Users() {
     const MySwal = withReactContent(Swal)
     
 const [user, setUser] = useState([]);
-const [loading, setLoading] = useState(true);
+const [loading, setLoading] = useState(false);
 
 function handleDelete(id){
     Swal.fire({
@@ -44,12 +44,17 @@ function handleDelete(id){
 
 
     useEffect(()=>{
-        axios.get('http://127.0.0.1:8000/api/user').then(res=>{
+        
 
-            setUser(res.data.user);
-            setLoading(false);
-        })
-    },[loading])
+            axios.get('http://127.0.0.1:8000/api/user').then(res=>{
+                
+                setUser(res.data.user);
+                // setLoading(false);
+            }).catch(error => console.error(error)
+            )
+        },[loading]
+    
+    )
 
     if(loading){
         return (
