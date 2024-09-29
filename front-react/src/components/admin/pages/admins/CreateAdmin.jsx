@@ -4,7 +4,7 @@ import Footer from "../../Footer";
 import { useState } from "react";
 import axios from "axios";
 import Admins from "./Admins";
-
+import Swal from "sweetalert2";
 export default function CreateAdmin() {
   const [adminData, setAdminData] = useState({
     name: "",
@@ -35,11 +35,11 @@ const onSubmitChange = async (e) => {
     try {
         const response= await axios.post("http://127.0.0.1:8000/api/add_admin", adminData);
         console.log(response)
-        alert("Admin Added successfully!")
+        Swal.fire("Admin Added successfully!","","success")
         setLoading(true);
     } catch (error) {
         console.log("Something Wrong");
-        alert("Try again, & Check all fields!")
+        Swal.fire("Server/Validation Error: Try again, & Check all fields!","","error")
     }
 }
 if(loading){

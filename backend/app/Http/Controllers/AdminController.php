@@ -15,8 +15,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::all(); 
-          
+        $admins = Admin::all();
+
         return response()->json([
              'result' => $admins
         ],200);
@@ -129,9 +129,9 @@ class AdminController extends Controller
             $admins->password = $request->password;
             $admins->role = $request->role;
             $admins->san7a = $request->admin_img;
-       
+
             $admins->save();
-       
+
             return response()->json([
                 'message' => "Information successfully updated."
             ],200);
@@ -154,14 +154,14 @@ class AdminController extends Controller
              'message'=>'This Admin Not Found.'
           ],404);
         }
-         
+
         // Delete User
         $admins->delete();
-       
+
         // Return Json Response
         return response()->json([
             'message' => "Admin successfully deleted."
         ],200);
-    
+
     }
 }

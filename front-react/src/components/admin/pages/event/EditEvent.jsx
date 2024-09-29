@@ -93,7 +93,7 @@ const EditEvent = () => {
                                     name="san7a"
                                     value={event.san7a || ''}
                                     onChange={handleChange}
-                                    required
+
                                 />
                             </div>
                             <div className="form-group">

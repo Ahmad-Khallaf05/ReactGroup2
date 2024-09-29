@@ -10,49 +10,118 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
+
 
 class AuthController extends Controller
 {
 
     public function register(Request $request)
     {
-        return User::create([
-            'name'=>$request->input('name'),
-            'email'=>$request->input('email'),
-            'password'=>Hash::make($request->input('password')),
+        $validator = Validator::make($request->all(),
+            [
+                'name' => 'required|string|min:3',
+                'gender' => 'required',
+                'email' => 'required|email',
+                'dob' => 'required|date',
+                'parentName' => 'required|string',
+                'parentPhone' => 'required|string',
+                'password' => 'required|string',
+            ]
+        );
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $validator->messages()
+            ], 422);
+        } else {
+            $user = User::create([
+                'name' => $request->name,
+                'gender' => $request->gender,
+                'email' => $request->email,
+                'dob' => $request->dob,
+                'parentName' => $request->parentName,
+                'parentPhone' => $request->parentPhone,
+                'password'=>Hash::make($request->input('password')),
+            ]);
+            if ($user) {
+                return response()->json([
+                    'status' => 200,
+                    'massage' => 'User Created Successfully'
+                ], 200);
+            } else {
+                return response()->json([
+                    'status' => 500,
+                    'massage' => 'something error '
+                ], 500);
+            }
+        }
+
+    }
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
+        if (Auth::attempt($request->only('email', 'password')) ) {
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+            $cookie = cookie('jwt', $token, 60 * 24);
 
-    }
-    public function login( Request $request)
-    {
-        if ( !Auth::attempt($request->only('email','password') ))
+            return response()->json([
+                'message' => 'Login successful',
+                'user' => $user,
+                'token' => $token, // Include token for debugging
+            ])->withCookie($cookie);
+        }
+        elseif (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+            $admin = Auth::guard('admin')->user();
+            $token = $admin->createToken('admin_auth_token')->plainTextToken;
+            $cookie = cookie('admin_jwt', $token, 60 * 24); // Token stored in a cookie for 24 hours
+
+            return response()->json([
+                'message' => 'Admin login successful',
+                'admin' => $admin,
+                'token' => $token, // Token for debugging purposes
+            ])->withCookie($cookie);
+        }
+
+        else
         {
             return response()->json([
-                'message' => 'invalid credentials'
-            ],Response::HTTP_UNAUTHORIZED);
+                'message' => 'Invalid credentials',
+            ], Response::HTTP_UNAUTHORIZED);
         }
-        $user = Auth::user();
-        $token = $user->createToken('token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60 * 24);
-        return response()->json([
-            'message' => $token,
-        ])->withCookie($cookie);
+
+//        $user = Auth::user();
+//        $token = $user->createToken('auth_token')->plainTextToken;
+//        $cookie = cookie('jwt', $token, 60 * 24);
+//
+//        return response()->json([
+//            'message' => 'Login successful',
+//            'user' => $user,
+//            'token' => $token, // Include token for debugging
+//        ])->withCookie($cookie);
     }
 
-   function loginUser(Request $request)
-   {
-       return Auth::user();
-   }
-
-public function logout()
-{
-    $cookie =Cookie::forget('jwt');
-    return response()->json([
-        'message' => 'success',
-    ])->withCookie($cookie);
-}
 
 
+    public function loginUser(Request $request)
+    {
+        if (Auth::check()) {
+            return response()->json(Auth::user());
+        }
+
+        return response()->json(['error' => 'Unauthorized', 'message' => 'You are not logged in.'], 401);
+    }
+
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'Logged out successfully']);
+    }
 
 }

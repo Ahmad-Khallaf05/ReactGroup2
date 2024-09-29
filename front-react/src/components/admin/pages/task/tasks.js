@@ -6,6 +6,7 @@ import Footer from "../../Footer";
 import axios from "axios"
 import { MdDeleteForever } from "react-icons/md";
 import { MdEdit } from "react-icons/md";
+import Swal from 'sweetalert2';
 function Tasks() {
     const [data, setData] = useState([]);
     useEffect(
@@ -16,9 +17,17 @@ function Tasks() {
     );
 
     function handleDelete(id){
+        Swal.fire({
+            title: "Are you sure you want to delete this Task?",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
         axios.delete(`http://127.0.0.1:8000/api/tasks/${id}/delete`).then(res=>{
-            alert('The User Has Been Delete');
+            alert('The Task Has Been Delete');
         })
+    }})
     }
 
     return (
@@ -106,9 +115,9 @@ function Tasks() {
                                         </td>
                                         <td >
                                             <Link to={`/task-edit/${task.id}`}>
-                                        <MdEdit style={{width: 35 , height:35}}/>
+                                        <MdEdit style={{width: 25 , height:25}}/>
                                             </Link>
-                                        <MdDeleteForever style={{width: 35 , height:35}} onClick={ () => handleDelete(task.id)}/>
+                                        <MdDeleteForever style={{width: 25 , height:25}} onClick={ () => handleDelete(task.id)}/>
                                         </td>
                                             </tr>
                                         })
