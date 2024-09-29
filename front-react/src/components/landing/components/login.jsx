@@ -34,10 +34,10 @@ export default function Login() {
           user: response.data.user,
           token: response.data.token,
         })
-      if (!response.ok) {
-        // const errorData = await response.json();
-        // throw new Error(errorData.message || 'Login failed');
-      }
+      // if (!response.ok) {
+      //   const errorData = await response.json();
+      //   throw new Error(errorData.message || 'Login failed');
+      // }
 
       navigate('/profile');
     } catch (err) {

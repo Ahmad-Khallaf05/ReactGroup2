@@ -8,7 +8,7 @@ import User from '../components/admin/pages/user/users';
 import Tasks from '../components/admin/pages/task/tasks.js';
 import Classes from '../components/admin/pages/classroom/classrooms.jsx';
 import Studentclasses from '../components/admin/pages/studentclass/studentclasses.jsx';
-import Subjects from '../components/admin/pages/subject/subjects.js';
+// import Subjects from '../components/admin/pages/subject/subjects.js';
 import Contacts from '../components/admin/contact';
 import Home from "../components/pages/admin";   
 import CreateUser from '../components/admin/pages/user/createUser';
@@ -32,17 +32,15 @@ import Admins from '../components/admin/pages/admins/Admins';
 import CreateAdmin from '../components/admin/pages/admins/CreateAdmin';
 import UpdateAdmin from '../components/admin/pages/admins/UpdateAdmin';
 import ViewAdmin from '../components/admin/pages/admins/ViewAdmin';
-// ---------------------------------------------------------------------------
-import CreateSubject from '../components/admin/pages/subject/CreateSubject.jsx';
-import EditSubject from '../components/admin/pages/subject/EditSubject';
-// ------------------------------------------------------------------------
+// import CreateSubject from '../components/admin/pages/subject/CreateSubject.jsx';
+// import EditSubject from '../components/admin/pages/subject/EditSubject';
 import Profile from '../components/landing/components/profile';
 import TaskSt from '../components/landing/components/tasks';
 import EditProfile from '../components/landing/components/edit-profile';
 import DeleteProfile from '../components/landing/components/delete-profile';
 import Login from '../components/landing/components/login';
 import Register from '../components/landing/components/register';
-
+// import components from '../components'
 
 //  import "../../public/assets/css/style.css";
 
@@ -64,17 +62,16 @@ export default function Myrouter() {
                     <Route path="/register" element={<Register />} />
                     <Route path="/studentclasses" element={<Studentclasses />} />
 
-                    <Route path="/classrooms" element={<Classes />} />
-                    
-                    <Route path="/create-classroom" element={<CreateClassroom />} />
-                    <Route path="/edit-classroom/:id" element={<EditClassroom />} />
+<Route path="/classrooms" element={<Classes />} />
 
-                    <Route path="/createstudentclass" element={<Createstudemtclass />} />
-                    
-                    <Route path="/Subjects" element={<Subjects />} />
+<Route path="/create-classroom" element={<CreateClassroom />} />
+<Route path="/edit-classroom/:id" element={<EditClassroom />} />
 
-                    <Route path="/create-subject" element={<CreateSubject />} />
-                    <Route path="/Subject-edit/:id" element={<EditSubject />} />
+<Route path="/createstudentclass" element={<Createstudemtclass />} />
+                    {/* <Route path="/Subjects" element={<Subjects />} /> */}
+
+                    {/* <Route path="/create-subject" element={<CreateSubject />} /> */}
+                    {/* <Route path="/Subject-edit/:id" element={<EditSubject />} /> */}
 
                     <Route path="/create-task" element={<CreateTask />} />
                     <Route path="/task-edit/:id" element={<EditTask />} />

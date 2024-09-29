@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { FaRegUser } from "react-icons/fa";
 const Sidebar = () => {
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
@@ -27,7 +27,7 @@ const Sidebar = () => {
         <li className="nav-item">
           <a className="nav-link" href="/Contacts">
             <span className="menu-title">Contacts</span>
-            <i className="mdi mdi-home menu-icon"></i>
+            <FaRegUser/>
           </a>
         </li>
         <li className="nav-item">
@@ -39,12 +39,6 @@ const Sidebar = () => {
         <li className="nav-item">
           <a className="nav-link" href="/Admins">
             <span className="menu-title">Admins</span>
-            <i className="mdi mdi-home menu-icon"></i>
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/Subjects">
-            <span className="menu-title">Subject</span>
             <i className="mdi mdi-home menu-icon"></i>
           </a>
         </li>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use function PHPUnit\Framework\isEmpty;
-
+use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
@@ -84,8 +84,7 @@ class UserController extends Controller
                 'parentPhone' => $request->parentPhone,
                 'san7a' => 'uploads/students/san7a/'.$fileNameSan7a,
                 'officialId' => 'uploads/students/officialId/'.$fileNameId,
-                'password'=>Hash::make($request->input('password')),
-            ]);
+                'password'=>Hash::make($request->input('password')),]);
             if ($user) {
                 return response()->json([
                     'status' => 200,
@@ -168,6 +167,7 @@ class UserController extends Controller
 
         // Find the user
         $user = User::find($id);
+        
         if (!$user) {
             return response()->json([
                 'status' => 404,
@@ -201,12 +201,15 @@ class UserController extends Controller
             'dob' => $request->dob,
             'parentName' => $request->parentName,
             'parentPhone' => $request->parentPhone,
-            'san7a' => $fileNameSan7a ? 'uploads/students/san7a/' . $fileNameSan7a : $user->san7a,
-            'officialId' => $fileNameOfficialId ? 'uploads/students/officialId/' . $fileNameOfficialId : $user->officialId,
+            // 'san7a' => $fileNameSan7a ? 'uploads/students/san7a/' . $fileNameSan7a : $user->san7a,
+            // 'officialId' => $fileNameOfficialId ? 'uploads/students/officialId/' . $fileNameOfficialId : $user->officialId,
         ]);
-
+        $user = Auth::user();
+        // $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
             'status' => 200,
+            'user' => $user,
+            // 'token' => $token,
             'message' => 'User Updated Successfully'
         ], 200);
     }

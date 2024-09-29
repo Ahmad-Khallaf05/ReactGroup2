@@ -65,22 +65,40 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        // Attempt regular user login
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+            $cookie = cookie('jwt', $token, 60 * 24); // 24 hours
+
             return response()->json([
-                'message' => 'Invalid credentials',
-            ], Response::HTTP_UNAUTHORIZED);
+                'message' => 'Login successful',
+                'user' => $user,
+                'token' => $token, // Token for debugging
+            ])->withCookie($cookie);
         }
 
-        $user = Auth::user();
-        $token = $user->createToken('auth_token')->plainTextToken;
-        $cookie = cookie('jwt', $token, 60 * 24);
+        // Attempt admin login if regular user fails
+        elseif (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+            $admin = Auth::guard('admin')->user();
+            $token = $admin->createToken('admin_auth_token')->plainTextToken;
+            $cookie = cookie('admin_jwt', $token, 60 * 24); // Token stored in a cookie for 24 hours
 
+            return response()->json([
+                'message' => 'Admin login successful',
+                'user' => $admin,
+                'token' => $token, // Token for debugging purposes
+            ])->withCookie($cookie);
+        }
+
+        // If neither user nor admin credentials match
         return response()->json([
-            'message' => 'Login successful',
-            'user' => $user,
-            'token' => $token, // Include token for debugging
-        ])->withCookie($cookie);
+            'message' => 'Invalid credentials',
+        ], Response::HTTP_UNAUTHORIZED);
     }
+
+
+
 
     public function loginUser(Request $request)
     {
@@ -92,14 +110,10 @@ class AuthController extends Controller
     }
 
 
-    public function logout()
-{
-    $cookie =Cookie::forget('jwt');
-    return response()->json([
-        'message' => 'success',
-    ])->withCookie($cookie);
-}
-
-
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(['message' => 'Logged out successfully']);
+    }
 
 }
