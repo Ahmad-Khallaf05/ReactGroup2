@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import { basicSchema } from "../../../../schemas/index";
 import axios from 'axios';
 
 import Navbar from "../../Navbar";
@@ -11,43 +9,87 @@ import Footer from "../../Footer";
 const CreateUser = () => {
     const navigate = useNavigate();
 
-    const onSubmit = async (values) => {
-        const formData = new FormData();
+    // State for form fields
+    const [formValues, setFormValues] = useState({
+        name: "",
+        email: "",
+        dob: "",
+        gender: "Male",
+        parentName: "",
+        parentPhone: "",
+        san7a: null,
+        officialId: null,
+        password: ""
+    });
 
-        // Append form values to FormData
-        Object.keys(values).forEach(key => {
-            formData.append(key, values[key]);
+    // State for form errors
+    const [formErrors, setFormErrors] = useState({});
+
+    // State for handling form submission status
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    // Handle form value changes
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormValues({
+            ...formValues,
+            [name]: value
         });
-
-        try {
-            console.log(formData);
-            await axios.post('http://127.0.0.1:8000/api/user', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            });
-            navigate('/users');
-        } catch (error) {
-            console.error('Error submitting form:', error);
-            alert('Error submitting form:', error);
-        }
     };
 
-    const formik = useFormik({
-        initialValues: {
-            name: "",
-            email: "",
-            dob: "",
-            gender: "",
-            parentName: "",
-            parentPhone: "",
-            san7a: null,
-            officialId: null,
-            password: ""
-        },
-        validationSchema: basicSchema,
-        onSubmit,
-    });
+    // Handle file input changes
+    const handleFileChange = (e) => {
+        const { name, files } = e.target;
+        setFormValues({
+            ...formValues,
+            [name]: files[0]
+        });
+    };
+
+    // Handle form validation (basic validation)
+    const validate = () => {
+        let errors = {};
+
+        if (!formValues.name) errors.name = "Name is required";
+        if (!formValues.email) errors.email = "Email is required";
+        if (!formValues.dob) errors.dob = "Date of Birth is required";
+        if (!formValues.parentName) errors.parentName = "Parent Name is required";
+        if (!formValues.parentPhone) errors.parentPhone = "Parent Phone is required";
+        if (!formValues.password) errors.password = "Password is required";
+
+        return errors;
+    };
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const errors = validate();
+        setFormErrors(errors);
+
+        if (Object.keys(errors).length === 0) {
+            setIsSubmitting(true);
+
+            const formData = new FormData();
+            Object.keys(formValues).forEach(key => {
+                formData.append(key, formValues[key]);
+            });
+
+            try {
+                await axios.post('http://127.0.0.1:8000/api/user', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+                navigate('/users');
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                alert('Error submitting form:', error);
+            } finally {
+                setIsSubmitting(false);
+            }
+        }
+    };
 
     return (
         <div className="container-scroller">
@@ -58,7 +100,7 @@ const CreateUser = () => {
                     <div className="content-wrapper">
                         <div className="page-header">
                             <nav aria-label="breadcrumb">
-                                <a href="/users" className='btn btn-danger'>back</a>
+                                <a href="/users" className='btn btn-danger'>Back</a>
                             </nav>
                         </div>
                         <div className="row">
@@ -68,33 +110,33 @@ const CreateUser = () => {
                                         <h4>Add Student</h4>
                                     </div>
                                     <div className="card-body">
-                                        <form onSubmit={formik.handleSubmit} autoComplete="off" >
+                                        <form onSubmit={handleSubmit} autoComplete="off" >
                                             <div className="row">
                                                 <div className="form-group mb-3 col-6">
                                                     <label htmlFor='name'>Name</label>
                                                     <input
-                                                        value={formik.values.name}
-                                                        onChange={formik.handleChange}
+                                                        name="name"
+                                                        value={formValues.name}
+                                                        onChange={handleChange}
                                                         id="name"
                                                         type="text"
                                                         placeholder="Enter your name"
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.name && formik.touched.name ? "input-error form-control" : "form-control"}
+                                                        className={formErrors.name ? "input-error form-control" : "form-control"}
                                                     />
-                                                    {formik.errors.name && formik.touched.name && <p className="error">{formik.errors.name}</p>}
+                                                    {formErrors.name && <p className="error">{formErrors.name}</p>}
                                                 </div>
                                                 <div className="form-group mb-3 col-6">
                                                     <label htmlFor='email'>Email</label>
                                                     <input
-                                                        value={formik.values.email}
-                                                        onChange={formik.handleChange}
+                                                        name="email"
+                                                        value={formValues.email}
+                                                        onChange={handleChange}
                                                         id="email"
                                                         type="email"
                                                         placeholder="Enter your email"
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.email && formik.touched.email ? "input-error form-control" : "form-control"}
+                                                        className={formErrors.email ? "input-error form-control" : "form-control"}
                                                     />
-                                                    {formik.errors.email && formik.touched.email && <p className="error">{formik.errors.email}</p>}
+                                                    {formErrors.email && <p className="error">{formErrors.email}</p>}
                                                 </div>
                                             </div>
 
@@ -102,23 +144,23 @@ const CreateUser = () => {
                                                 <div className="form-group col-6">
                                                     <label htmlFor='dob'>Date of Birth</label>
                                                     <input
+                                                        name="dob"
                                                         id="dob"
                                                         type="date"
-                                                        value={formik.values.dob}
-                                                        onChange={formik.handleChange}
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.dob && formik.touched.dob ? "input-error form-control" : "form-control"}
+                                                        value={formValues.dob}
+                                                        onChange={handleChange}
+                                                        className={formErrors.dob ? "input-error form-control" : "form-control"}
                                                     />
-                                                    {formik.errors.dob && formik.touched.dob && <p className="error">{formik.errors.dob}</p>}
+                                                    {formErrors.dob && <p className="error">{formErrors.dob}</p>}
                                                 </div>
                                                 <div className="form-group col-6">
                                                     <label htmlFor='gender'>Gender</label>
                                                     <select
+                                                        name="gender"
                                                         id="gender"
                                                         className="form-control"
-                                                        value={formik.values.gender}
-                                                        onChange={formik.handleChange}
-                                                        onBlur={formik.handleBlur}
+                                                        value={formValues.gender}
+                                                        onChange={handleChange}
                                                     >
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
@@ -130,28 +172,28 @@ const CreateUser = () => {
                                                 <div className="form-group mb-3 col-6">
                                                     <label htmlFor='parentName'>Parent Name</label>
                                                     <input
-                                                        value={formik.values.parentName}
-                                                        onChange={formik.handleChange}
+                                                        name="parentName"
+                                                        value={formValues.parentName}
+                                                        onChange={handleChange}
                                                         id="parentName"
                                                         type="text"
-                                                        placeholder="Enter your Parent Name"
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.parentName && formik.touched.parentName ? "input-error form-control" : "form-control"}
+                                                        placeholder="Enter Parent's Name"
+                                                        className={formErrors.parentName ? "input-error form-control" : "form-control"}
                                                     />
-                                                    {formik.errors.parentName && formik.touched.parentName && <p className="error">{formik.errors.parentName}</p>}
+                                                    {formErrors.parentName && <p className="error">{formErrors.parentName}</p>}
                                                 </div>
                                                 <div className="form-group mb-3 col-6">
                                                     <label htmlFor='parentPhone'>Parent Phone</label>
                                                     <input
-                                                        value={formik.values.parentPhone}
-                                                        onChange={formik.handleChange}
+                                                        name="parentPhone"
+                                                        value={formValues.parentPhone}
+                                                        onChange={handleChange}
                                                         id="parentPhone"
                                                         type="text"
-                                                        placeholder="Enter your Parent Phone"
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.parentPhone && formik.touched.parentPhone ? "input-error form-control" : "form-control"}
+                                                        placeholder="Enter Parent's Phone"
+                                                        className={formErrors.parentPhone ? "input-error form-control" : "form-control"}
                                                     />
-                                                    {formik.errors.parentPhone && formik.touched.parentPhone && <p className="error">{formik.errors.parentPhone}</p>}
+                                                    {formErrors.parentPhone && <p className="error">{formErrors.parentPhone}</p>}
                                                 </div>
                                             </div>
 
@@ -159,47 +201,43 @@ const CreateUser = () => {
                                                 <div className="form-group mb-3 col-6">
                                                     <label htmlFor='san7a'>Student Image</label>
                                                     <input
+                                                        name="san7a"
                                                         id="san7a"
                                                         type="file"
-                                                        onChange={(event) => {
-                                                            formik.setFieldValue("san7a", event.currentTarget.files[0]);
-                                                        }}
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.san7a && formik.touched.san7a ? "input-error form-control" : "form-control"}
+                                                        onChange={handleFileChange}
+                                                        className={formErrors.san7a ? "input-error form-control" : "form-control"}
                                                     />
-                                                    {formik.errors.san7a && formik.touched.san7a && <p className="error">{formik.errors.san7a}</p>}
+                                                    {formErrors.san7a && <p className="error">{formErrors.san7a}</p>}
                                                 </div>
                                                 <div className="form-group mb-3 col-6">
                                                     <label htmlFor='officialId'>Official ID/Documents</label>
                                                     <input
+                                                        name="officialId"
                                                         id="officialId"
                                                         type="file"
-                                                        onChange={(event) => {
-                                                            formik.setFieldValue("officialId", event.currentTarget.files[0]);
-                                                        }}
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.officialId && formik.touched.officialId ? "input-error form-control" : "form-control"}
+                                                        onChange={handleFileChange}
+                                                        className={formErrors.officialId ? "input-error form-control" : "form-control"}
                                                     />
-                                                    {formik.errors.officialId && formik.touched.officialId && <p className="error">{formik.errors.officialId}</p>}
+                                                    {formErrors.officialId && <p className="error">{formErrors.officialId}</p>}
                                                 </div>
                                             </div>
 
                                             <div className="form-group mb-3">
                                                 <label htmlFor='password'>Password</label>
                                                 <input
+                                                    name="password"
                                                     id="password"
                                                     type="password"
                                                     placeholder="Enter your password"
-                                                    value={formik.values.password}
-                                                    onChange={formik.handleChange}
-                                                    onBlur={formik.handleBlur}
-                                                    className={formik.errors.password && formik.touched.password ? "input-error form-control" : "form-control"}
+                                                    value={formValues.password}
+                                                    onChange={handleChange}
+                                                    className={formErrors.password ? "input-error form-control" : "form-control"}
                                                 />
-                                                {formik.errors.password && formik.touched.password && <p className="error">{formik.errors.password}</p>}
+                                                {formErrors.password && <p className="error">{formErrors.password}</p>}
                                             </div>
 
                                             <div className="form-group mb-3">
-                                                <button type='submit' disabled={formik.isSubmitting} className='btn btn-primary'>Add User</button>
+                                                <button type='submit' disabled={isSubmitting} className='btn btn-primary'>Add User</button>
                                             </div>
                                         </form>
                                     </div>

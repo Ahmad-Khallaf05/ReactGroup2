@@ -6,6 +6,7 @@ use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 
+
 class AdminController extends Controller
 {
     /**
@@ -13,8 +14,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::all(); 
-          
+        $admins = Admin::all();
+
         return response()->json([
              'result' => $admins
         ],200);
@@ -40,7 +41,7 @@ class AdminController extends Controller
             //     $filename = time() . '.' . $admin_img->getClientOriginalExtension();
             //     $path = ' '; // Directory where you want to store the image
             //     $admin_img->move($path, $filename);
-    
+
             // // $path = $request->file('sport_image')->store('landing/img');
             // }
 
@@ -48,7 +49,9 @@ class AdminController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'role' => $request->role,
-                'san7a' => $request->san7a // Have to change when add image
+                'san7a' => $request->san7a ,// Have to change when add image
+
+
             ]);
              return response()->json([
                 'message' => "User successfully created."
@@ -97,14 +100,14 @@ class AdminController extends Controller
                 'message'=>'User Not Found.'
               ],404);
             }
-       
+
             $admins->name = $request->name;
             $admins->email = $request->email;
             $admins->role = $request->role;
             $admins->san7a = $request->admin_img;
-       
+
             $admins->save();
-       
+
             return response()->json([
                 'message' => "Information successfully updated."
             ],200);
@@ -127,14 +130,14 @@ class AdminController extends Controller
              'message'=>'This Admin Not Found.'
           ],404);
         }
-         
+
         // Delete User
         $admins->delete();
-       
+
         // Return Json Response
         return response()->json([
             'message' => "Admin successfully deleted."
         ],200);
-    
+
     }
 }

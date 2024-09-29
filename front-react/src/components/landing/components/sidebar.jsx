@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUser, FaCog, FaTasks, FaHome, FaSignOutAlt, FaChevronDown, FaEdit, FaTrash } from 'react-icons/fa';
-
+import Logout from './logout';
 function Sidebar() {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -84,15 +84,7 @@ function Sidebar() {
                     )}
                 </li>
                 <li style={{ margin: '10px 0' }}>
-                    <Link 
-                        to="/" 
-                        style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333', padding: '10px', borderRadius: '5px', transition: 'background 0.3s', border: '1px solid #e0e0e0' }} 
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f0f0'} 
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                    >
-                        <FaSignOutAlt style={{ marginRight: '8px' }} />
-                        Log Out
-                    </Link>
+                    <Logout/>
                 </li>
             </ul>
         </div>
