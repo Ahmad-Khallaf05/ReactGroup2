@@ -1,4 +1,6 @@
 import React from 'react'
+import { AuthProvider } from '../components/landing/components/context/AuthContext';
+import ProtectedRoute from '../components/landing/components/utils/ProtectedRoute'; // Create this component for regular users.
 
 import Landing from "../components/pages/land";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -34,7 +36,7 @@ import Register from '../components/landing/components/register';
 export default function Myrouter() {
     return (
         <div>
-
+            <AuthProvider>
             <Router>
                 <Routes>
                     <Route path="/" element={<Landing />} />
@@ -69,7 +71,7 @@ export default function Myrouter() {
                     <Route path="/view-event/:id" element={<EventView />} />
                 </Routes>
             </Router>
-
+            </AuthProvider>
 
 
         </div>
