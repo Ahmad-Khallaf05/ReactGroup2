@@ -4,12 +4,16 @@ import Footer from "../../Footer";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { NavLink } from "react-router-dom";
-
+import { MdDeleteForever } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { LuView } from "react-icons/lu";
 import { FaUserEdit } from "react-icons/fa";
 import { TiUserDelete } from "react-icons/ti";
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content'
 
 export default function Admins() {
+  const MySwal = withReactContent(Swal)
   const [adminData, setAdminData] = useState([]);
 
   useEffect(() => {
@@ -29,21 +33,48 @@ export default function Admins() {
   };
   const handleDelete = async (id) => {
     // console.log(id)
-    if (window.confirm("Are you sure you want to delete this admin? This action cannot be undone.")) {
-      try {
-        const response = await axios.delete(`http://127.0.0.1:8000/api/admin_delete/${id}`);
-        if (response.status === 200) {
-          // Filter out the admin from the adminData state if soft delete was successful
-          const newAdminData = adminData.filter((item) => item.id !== id);
-          setAdminData(newAdminData);
-          alert("Admin has been deleted successfully.");
-        }
-      } catch (error) {
-        console.error("Something went wrong", error);
-        alert("Failed to delete the admin. Please try again.");
+    Swal.fire({
+      title: "Are you sure you want to delete this Admin?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+    }).then( async (result) => {
+      if (result.isConfirmed) {
+        try {
+              const response = await axios.delete(`http://127.0.0.1:8000/api/admin_delete/${id}`);
+              if (response.status === 200) {
+                // Filter out the admin from the adminData state if soft delete was successful
+                const newAdminData = adminData.filter((item) => item.id !== id);
+                setAdminData(newAdminData);
+                Swal.fire("Admin has been deleted successfully!", "", "success");
+                // alert("Admin has been deleted successfully.");
+              }
+            } 
+            catch (error) {
+              console.error("Something went wrong", error);
+              Swal.fire("Failed to delete the admin. Please try again.");
+            }
+          // axios.delete(`http://127.0.0.1:8000/api/user/${id}/delete`).then(res=>{
+          //     // alert('The User Has Been Delete');
+          //     setLoading(true);
+          // })
       }
-    }
-  };
+    });
+  }
+    // if (window.confirm("Are you sure you want to delete this admin? This action cannot be undone.")) {
+    //   try {
+    //     const response = await axios.delete(`http://127.0.0.1:8000/api/admin_delete/${id}`);
+    //     if (response.status === 200) {
+    //       // Filter out the admin from the adminData state if soft delete was successful
+    //       const newAdminData = adminData.filter((item) => item.id !== id);
+    //       setAdminData(newAdminData);
+    //       alert("Admin has been deleted successfully.");
+    //     }
+    //   } catch (error) {
+    //     console.error("Something went wrong", error);
+    //     alert("Failed to delete the admin. Please try again.");
+    //   }
+    // }
+  
 
   return (
     <div className="container-scroller">
@@ -101,13 +132,15 @@ export default function Admins() {
                                     to={`/edit_admin/${admin.id}`}
                                     className="btn btn-inverse-warning"
                                   >
-                                    <FaUserEdit />
+                                    {/* <FaUserEdit /> */}
+                                    <MdEdit style={{width: 35 , height:35}}/>
                                   </NavLink>
                                   <button
                                     className="btn btn-inverse-danger"
                                     onClick={() => handleDelete(admin.id)}
                                   >
-                                    <TiUserDelete />
+                                    {/* <TiUserDelete /> */}
+                                    <MdDeleteForever style={{width: 35 , height:35}}/>
                                   </button>
                                 </td>
                               </tr>
