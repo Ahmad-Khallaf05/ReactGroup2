@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('gender');
             $table->string('email')->unique();
+            $table->string('role')->default('0');
             $table->date('dob');
             $table->string('parentName');
             $table->string('parentPhone');
