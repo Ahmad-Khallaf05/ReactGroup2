@@ -188,4 +188,13 @@ class TaskController extends Controller
         }
     }
 
+    public function getUserTasks($userId)
+    {
+        $tasks = Task::join('studenttasks', 'tasks.id', '=', 'studenttasks.task_id')
+                     ->where('studenttasks.user_id', $userId)
+                     ->select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.san7a', 'studenttasks.timeoOfDelivery')
+                     ->get();
+        return response()->json($tasks);
+    }
+
 }
