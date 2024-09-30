@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
@@ -66,6 +67,10 @@ Route::get('/subjects/{subject}', [SubjectController::class, 'show']);
 Route::get('/subjects/{subject}/edit', [SubjectController::class, 'edit']);
 Route::put('/subjects/{subject}/edit', [SubjectController::class, 'update']);
 Route::delete('/subjects/{subject}/delete', [SubjectController::class, 'destroy']);
+
+
+//chart
+Route::get('/chart', [ChartController::class, 'index']);
 
 
 //Users

@@ -14,7 +14,8 @@ class Event extends Model
         'description',
         'date',
         'category',
-        'admin_id', 
+        'san7a',
+        'admin_id',
     ];
 
     public function admin()
