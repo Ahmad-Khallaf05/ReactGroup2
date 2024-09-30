@@ -65,17 +65,20 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password')) ) {
+        // Attempt regular user login
+        if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken;
-            $cookie = cookie('jwt', $token, 60 * 24);
+            $cookie = cookie('jwt', $token, 60 * 24); // 24 hours
 
             return response()->json([
                 'message' => 'Login successful',
                 'user' => $user,
-                'token' => $token, // Include token for debugging
+                'token' => $token, // Token for debugging
             ])->withCookie($cookie);
         }
+
+        // Attempt admin login if regular user fails
         elseif (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
             $admin = Auth::guard('admin')->user();
             $token = $admin->createToken('admin_auth_token')->plainTextToken;
@@ -83,28 +86,17 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'Admin login successful',
-                'admin' => $admin,
+                'user' => $admin,
                 'token' => $token, // Token for debugging purposes
             ])->withCookie($cookie);
         }
 
-        else
-        {
-            return response()->json([
-                'message' => 'Invalid credentials',
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-//        $user = Auth::user();
-//        $token = $user->createToken('auth_token')->plainTextToken;
-//        $cookie = cookie('jwt', $token, 60 * 24);
-//
-//        return response()->json([
-//            'message' => 'Login successful',
-//            'user' => $user,
-//            'token' => $token, // Include token for debugging
-//        ])->withCookie($cookie);
+        // If neither user nor admin credentials match
+        return response()->json([
+            'message' => 'Invalid credentials',
+        ], Response::HTTP_UNAUTHORIZED);
     }
+
 
 
 

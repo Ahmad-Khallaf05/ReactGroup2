@@ -4,37 +4,26 @@ import Nav from "./nav";
 import Footer from "./category";
 import { FaTasks } from 'react-icons/fa';
 import { AuthContext } from './context/AuthContext';
+import { useNavigate} from "react-router-dom";
+
 import axios from "axios";
 
 function Profile() {
+    const navigate = useNavigate();
     const [student, setStudent] = useState({});
     const [taskCount, setTaskCount] = useState(0); 
     const [error, setError] = useState({});
     const { auth } = useContext(AuthContext);
-    // console.log(auth.user.name)
 
-    // Fetch student data (uncomment when needed)
-    // useEffect(() => {
-    //     const fetchStudentData = async () => {
-    //         try {
-    //             const response = await axios.get('http://127.0.0.1:8000/api/loginUser', {
-    //                 withCredentials: true,
-    //             });
+    useEffect(() => {
+        if(auth.user.role != "0")
+        {
+            console.log('hi')
+            navigate("/dashboard");
+        }
+    }, []);
 
-    //             if (!response.ok) {
-    //                 throw new Error('Cannot fetch student data');
-    //             }
 
-    //             const data = await response.json();
-    //             setStudent(data);
-    //         } catch (err) {
-    //             setError(err.message);
-    //             console.log(err.message);
-    //         }
-    //     };
-
-    //     fetchStudentData();
-    // }, []);
 
     useEffect(() => {
         const fetchStudentTaskCount = async () => {

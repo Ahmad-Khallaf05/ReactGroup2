@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function store(AdminRequest $request)
     {
         try {
-            
+
         // Handle image upload
         $imagePath = null;
         if ($request->hasFile('admin_img')) {
@@ -48,7 +48,7 @@ class AdminController extends Controller
             //     $filename = time() . '.' . $admin_img->getClientOriginalExtension();
             //     $path = ' '; // Directory where you want to store the image
             //     $admin_img->move($path, $filename);
-    
+
             // $path = $request->file('sport_image')->store('landing/img');
             // }
 
@@ -56,10 +56,9 @@ class AdminController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password'=>Hash::make($request->input('password')),
-                // 'password' => $request->password,
                 'role' => $request->role,
                 // 'san7a' => $request->admin_img // Have to Ckeck when add image
-                'san7a' => $imagePath // Have to Ckeck when add image
+//                'san7a' => $imagePath // Have to Ckeck when add image
             ]);
              return response()->json([
                 'message' => "User successfully created."
@@ -108,7 +107,7 @@ class AdminController extends Controller
                 'message'=>'User Not Found.'
               ],404);
             }
-       
+
         // Handle image upload and replace old image
         if ($request->hasFile('san7a')) {
             // Delete old image if exists
