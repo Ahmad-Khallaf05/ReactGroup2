@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
@@ -68,6 +69,10 @@ Route::put('/subjects/{subject}/edit', [SubjectController::class, 'update']);
 Route::delete('/subjects/{subject}/delete', [SubjectController::class, 'destroy']);
 
 
+//chart
+Route::get('/chart', [ChartController::class, 'index']);
+
+
 //Users
 Route::get('/user', [UserController::class, 'index']);
 Route::post('/user', [UserController::class, 'store']);
@@ -75,6 +80,7 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::get('/user/{id}/edit', [UserController::class, 'edit']);
 Route::put('/user/{id}/edit', [UserController::class, 'update']);
 Route::delete('/user/{id}/delete', [UserController::class, 'destroy']);
+Route::patch('/user/{id}/edit', [UserController::class, 'accept']);
 
 
 

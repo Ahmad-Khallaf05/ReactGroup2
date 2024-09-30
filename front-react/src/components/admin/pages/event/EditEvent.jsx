@@ -39,6 +39,8 @@ const EditEvent = () => {
         }));
     };
 
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.put(`http://127.0.0.1:8000/api/event/${id}`, event)
