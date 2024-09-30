@@ -14,6 +14,10 @@ export const basicSchema = yup.object().shape({
     dob: yup.date().required("Required"),
     parentName: yup.string().required("Required").min(3),
     parentPhone: yup.string().required("Required"),
+    confirmPassword: yup
+        .string()
+        .oneOf([yup.ref("password"), null], "Passwords must match")
+        .required("Required"),
 
 });
 

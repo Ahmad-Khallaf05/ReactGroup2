@@ -1,26 +1,40 @@
-import React, { useState } from 'react';
-import Sidebar from './sidebar'; 
-import { FaTasks } from 'react-icons/fa';
-
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Sidebar from './sidebar';
+import Nav from "./nav";
+import Footer from "./category"
+import { AuthContext } from './context/AuthContext';
+import { useContext } from 'react';
 function TaskSt() {
-    const [tasks] = useState([
-        { id: 1, title: "Design Homepage", description: "Create a visually appealing homepage layout.", status: "Pending", img: "path/to/image1.jpg" },
-        { id: 2, title: "Develop API", description: "Implement the backend API for data handling.", status: "Completed", img: "path/to/image2.jpg" },
-        { id: 3, title: "User Testing", description: "Conduct user testing sessions and gather feedback.", status: "In Progress", img: "path/to/image3.jpg" },
-        { id: 4, title: "Fix Bugs", description: "Resolve identified bugs from the last testing phase.", status: "Pending", img: "path/to/image4.jpg" },
-        { id: 5, title: "Deploy Application", description: "Deploy the application to the production environment.", status: "Completed", img: "path/to/image5.jpg" },
-    ]);
+    const [tasks, setTasks] = useState([]);
+    const { auth } = useContext(AuthContext);
+    useEffect(() => {
+        const userId = auth.user.id;
+        const fetchTasks = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:8000/api/user-tasks/${userId}`);
+                setTasks(response.data);
+            } catch (error) {
+                console.error("Error fetching tasks:", error);
+            }
+        };
+
+        fetchTasks();
+    }, []);
 
     return (
+        <div>
+            <Nav />
+       
         <div className="tasks-page" style={{ display: 'flex', backgroundColor: '#fff', minHeight: '100vh' }}>
             <Sidebar />
             <div className="tasks-content" style={{ padding: '20px', flex: 1 }}>
-            <div style={{ padding: '10px' }}>
-    <h1>tasks</h1>
-    <p>this is your tasks</p>
-</div>
+                <div style={{ padding: '10px' }}>
+                    <h1>Tasks</h1>
+                    <p>This is your tasks</p>
+                </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px',  backgroundColor: '#fff', padding: '20px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: '20px', backgroundColor: '#fff', padding: '20px' }}>
                     {tasks.map(task => (
                         <div key={task.id} style={{
                             padding: '15px',
@@ -56,6 +70,8 @@ function TaskSt() {
                     ))}
                 </div>
             </div>
+        </div>
+        <Footer />
         </div>
     );
 }

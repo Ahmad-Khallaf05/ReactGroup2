@@ -11,7 +11,7 @@ import { FaUserEdit } from "react-icons/fa";
 import { TiUserDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content'
-
+import { MdVisibility } from "react-icons/md";
 export default function Admins() {
   const MySwal = withReactContent(Swal)
   const [adminData, setAdminData] = useState([]);
@@ -102,7 +102,7 @@ export default function Admins() {
                       <h4>Admins Table</h4>
                     </div>
                     <div className="card-body">
-                      <table className="table table-bordered">
+                      <table className="table table-striped">
                         <thead>
                           <tr>
                             <th>S No.</th>
@@ -126,21 +126,23 @@ export default function Admins() {
                                     type="button"
                                     className="btn btn-inverse-info"
                                   >
-                                    <LuView />
+                                    <MdVisibility
+                                      style={{ width: 20, height: 20, cursor: 'pointer' }}
+                                    />
                                   </NavLink>
                                   <NavLink
                                     to={`/edit_admin/${admin.id}`}
                                     className="btn btn-inverse-warning"
                                   >
                                     {/* <FaUserEdit /> */}
-                                    <MdEdit style={{width: 35 , height:35}}/>
+                                    <MdEdit style={{width: 20 , height:20}}/>
                                   </NavLink>
                                   <button
                                     className="btn btn-inverse-danger"
                                     onClick={() => handleDelete(admin.id)}
                                   >
                                     {/* <TiUserDelete /> */}
-                                    <MdDeleteForever style={{width: 35 , height:35}}/>
+                                    <MdDeleteForever style={{width: 20 , height:20}}/>
                                   </button>
                                 </td>
                               </tr>

@@ -1,5 +1,5 @@
 import React from "react";
-
+import Logout from "../landing/components/logout";
 const Navbar = () => {
   return (
     <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -38,7 +38,8 @@ const Navbar = () => {
               </a>
               <div className="dropdown-divider"></div>
               <a className="dropdown-item" href="#">
-                <i className="mdi mdi-logout me-2 text-primary"></i> Signout 
+                <i className="mdi mdi-logout me-2 text-primary"></i>
+                <Logout/>
               </a>
             </div>
           </li>
