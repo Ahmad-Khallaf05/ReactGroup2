@@ -15,7 +15,7 @@ return new class extends Migration {
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Classroom::class)->constrained();
+            // $table->foreignIdFor(Classroom::class)->constrained();
             $table->string('title');
             $table->string('san7a');
             $table->string('deadline');
