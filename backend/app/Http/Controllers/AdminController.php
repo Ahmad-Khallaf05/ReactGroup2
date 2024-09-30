@@ -48,7 +48,6 @@ class AdminController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password'=>Hash::make($request->input('password')),
-                // 'password' => $request->password,
                 'role' => $request->role,
                 // 'san7a' => $request->admin_img // Have to Ckeck when add image
                 'san7a' => 'uploads/admins/san7a/'.$fileNameSan7a,
@@ -99,7 +98,7 @@ class AdminController extends Controller
                 'message'=>'User Not Found.'
               ],404);
             }
-       
+
         // Handle image upload and replace old image
         $fileNameSan7a = $this->uploadFile($request->file('san7a'), 'san7a');
 

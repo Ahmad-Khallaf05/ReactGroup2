@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 
+
+
 Route::get('/event', [EventController::class, 'index']);
 Route::post('/event', [EventController::class, 'store']);
 Route::get('/event/{id}', [EventController::class, 'show']);
@@ -35,6 +37,9 @@ Route::get('/tasks/{task}', [TaskController::class, 'show']);
 Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
 Route::put('/tasks/{task}/edit', [TaskController::class, 'update']);
 Route::delete('/tasks/{task}/delete', [TaskController::class, 'destroy']);
+
+Route::get('/user-tasks/{userId}', [TaskController::class, 'getUserTasks']);
+
 
 //Subject
 Route::get('/subjects', [SubjectController::class, 'index']);
