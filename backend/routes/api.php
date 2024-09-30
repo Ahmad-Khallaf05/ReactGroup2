@@ -82,6 +82,7 @@ Route::get('/user/{id}', [UserController::class, 'show']);
 Route::get('/user/{id}/edit', [UserController::class, 'edit']);
 Route::put('/user/{id}/edit', [UserController::class, 'update']);
 Route::delete('/user/{id}/delete', [UserController::class, 'destroy']);
+Route::patch('/user/{id}/edit', [UserController::class, 'accept']);
 
 
 

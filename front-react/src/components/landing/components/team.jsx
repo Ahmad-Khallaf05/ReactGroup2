@@ -27,25 +27,25 @@ export default function team() {
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" className="img-fluid w-100" alt="" />
             <div className="team-icon d-flex align-items-center justify-content-center">
               <a
-                className="share btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fas fa-share-alt" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-facebook-f" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-twitter" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle"
+                className="share-link btn  btn-md-square text-white rounded-circle"
                 href=""
               >
                 <i className="fab fa-instagram" />
@@ -65,25 +65,25 @@ export default function team() {
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" className="img-fluid w-100" alt="" />
             <div className="team-icon d-flex align-items-center justify-content-center">
               <a
-                className="share btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fas fa-share-alt" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-facebook-f" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-twitter" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle"
+                className="share-link btn  btn-md-square text-white rounded-circle"
                 href=""
               >
                 <i className="fab fa-instagram" />
@@ -103,25 +103,25 @@ export default function team() {
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" className="img-fluid w-100" alt="" />
             <div className="team-icon d-flex align-items-center justify-content-center">
               <a
-                className="share btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fas fa-share-alt" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-facebook-f" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-twitter" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle"
+                className="share-link btn  btn-md-square text-white rounded-circle"
                 href=""
               >
                 <i className="fab fa-instagram" />
@@ -141,25 +141,25 @@ export default function team() {
             <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" className="img-fluid w-100" alt="" />
             <div className="team-icon d-flex align-items-center justify-content-center">
               <a
-                className="share btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fas fa-share-alt" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-facebook-f" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle me-3"
+                className="share-link btn  btn-md-square text-white rounded-circle me-3"
                 href=""
               >
                 <i className="fab fa-twitter" />
               </a>
               <a
-                className="share-link btn btn-primary btn-md-square text-white rounded-circle"
+                className="share-link btn  btn-md-square text-white rounded-circle"
                 href=""
               >
                 <i className="fab fa-instagram" />

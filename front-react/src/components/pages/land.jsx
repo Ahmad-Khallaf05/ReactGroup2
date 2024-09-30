@@ -10,7 +10,7 @@ import HeroLand from '../landing/components/hero';
 import AboutLand from '../landing/components/about';
 import EventLand from '../landing/components/event';
 import ProgramLand from '../landing/components/program';
-import BlogLand from '../landing/components/blog';
+// import BlogLand from '../landing/components/blog';
 import TeamLand from '../landing/components/team';
 import TestemonialLand from '../landing/components/testemonial';
 import Contact from '../landing/components/Contact';
@@ -30,7 +30,7 @@ export default function Land() {
         <AboutLand />
         <EventLand />
         <ProgramLand />
-        <BlogLand />
+        {/* <BlogLand /> */}
         <TeamLand />
         <TestemonialLand />
         <Contact />

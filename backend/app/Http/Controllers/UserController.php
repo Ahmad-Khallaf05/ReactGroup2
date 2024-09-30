@@ -203,8 +203,8 @@ class UserController extends Controller
             'dob' => $request->dob,
             'parentName' => $request->parentName,
             'parentPhone' => $request->parentPhone,
-            // 'san7a' => $fileNameSan7a ? 'uploads/students/san7a/' . $fileNameSan7a : $user->san7a,
-            // 'officialId' => $fileNameOfficialId ? 'uploads/students/officialId/' . $fileNameOfficialId : $user->officialId,
+             'san7a' => $fileNameSan7a ? 'uploads/students/san7a/' . $fileNameSan7a : $user->san7a,
+             'officialId' => $fileNameOfficialId ? 'uploads/students/officialId/' . $fileNameOfficialId : $user->officialId,
         ]);
         $user = Auth::user();
         // $token = $user->createToken('auth_token')->plainTextToken;
@@ -257,5 +257,14 @@ class UserController extends Controller
             'manager' => Admin::where('role', 'Manager')->count()->get(),
             'event' => Event::all()->count(),
         ],200);
+    }
+
+    function accept(Request $request)
+    {
+        $user=User::find($request->id);
+        $user->update([
+           'accepter' => 1,
+        ]);
+
     }
 }

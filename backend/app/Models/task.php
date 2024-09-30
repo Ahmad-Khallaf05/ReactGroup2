@@ -9,18 +9,9 @@ class task extends Model
 {
     use HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $guarded = [];
-
-    /**
-     * Get the classroom that owns the task.
-     */
-    public function classroom()
-    {
+//    protected $guarded = [];
+    function class(
+    ) {
         return $this->belongsTo(Classroom::class, 'classroom_id');
     }
 
@@ -32,11 +23,11 @@ class task extends Model
         return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
     }
 
-    // Uncomment and use the following if you want to specify fillable attributes
-    // protected $fillable = [
-    //     'title',
-    //     'description',
-    //     'deadline',
-    //     'san7a',
-    // ];
+     protected $fillable = [
+         'title',
+         'description',
+         'deadline',
+         'san7a',
+     ];
+
 }

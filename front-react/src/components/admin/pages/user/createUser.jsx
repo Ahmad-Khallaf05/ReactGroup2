@@ -162,9 +162,9 @@ const CreateUser = () => {
                                                         value={formValues.gender}
                                                         onChange={handleChange}
                                                     >
-                                                        <option value="Male">Choose Gender</option>
-                                                        <option value="Male">Male</option>
+                                                        <option value="other">Choose Gender</option>
                                                         <option value="Female">Female</option>
+                                                        <option value="Male">Male</option>
                                                     </select>
                                                 </div>
                                             </div>

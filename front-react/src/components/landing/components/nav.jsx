@@ -53,9 +53,9 @@ export default function nav() {
     <div className="container px-0">
       <nav className="navbar navbar-light navbar-expand-xl py-3">
         <a href="index.html" className="navbar-brand">
-          <h1 className="text-primary display-6">
+          {/* <h1 className="text-primary display-6">
             Baby<span className="text-secondary">Care</span>
-          </h1>
+          </h1> */}
         </a>
         <button
           className="navbar-toggler py-2 px-3"
@@ -73,16 +73,16 @@ export default function nav() {
             <a href="about.html" className="nav-item nav-link">
               About
             </a>
-            <a href="service.html" className="nav-item nav-link">
-              Services
-            </a>
+            {/* <a href="service.html" className="nav-item nav-link">
+              Event
+            </a> */}
             <a href="program.html" className="nav-item nav-link">
-              Programs
+              teatcher
             </a>
             <a href="event.html" className="nav-item nav-link">
               Events
             </a>
-            <div className="nav-item dropdown">
+            {/* <div className="nav-item dropdown">
               <a
                 href="#"
                 className="nav-link dropdown-toggle"
@@ -104,7 +104,7 @@ export default function nav() {
                   404 Page
                 </a>
               </div>
-            </div>
+            </div> */}
             <a href="contact.html" className="nav-item nav-link">
               Contact
             </a>
@@ -130,29 +130,29 @@ export default function nav() {
                 </div>
               </a>
             </div>
-            <div className="d-flex flex-column pe-3 border-end border-primary">
+            {/* <div className="d-flex flex-column pe-3 border-end border-primary">
               <span className="text-primary">Have any questions?</span>
               <a href="#">
                 <span className="text-secondary">Free: + 0123 456 7890</span>
               </a>
-            </div>
+            </div> */}
           </div>
-          <a href="/profile" >
-          <button  className="btn btn-primary "
+          <a href="/profile"   >
+          <button 
           >
-            
+            <i class="fa-solid fa-user"></i>  
 <i class="fa-solid fa-user"></i> your profile
           </button>
           </a>
           <a href="/login" >
-          <button  className="btn btn-primary "
+          <button 
           >
             
 <i class="fa-solid fa-user"></i> login
           </button>
           </a>
           <a href="/register" >
-          <button  className="btn btn-primary "
+          <button 
           >
             
 <i class="fa-solid fa-user"></i> register

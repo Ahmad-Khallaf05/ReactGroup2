@@ -53,8 +53,8 @@ class TaskController extends Controller
             [
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
-                // 'deadline' => 'required|date',
-                // 'san7a' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+                'deadline' => 'required|date',
+                'san7a' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]
         );
 
@@ -65,17 +65,20 @@ class TaskController extends Controller
             ], 422);
         }
 
-        // if ($request->hasFile('san7a')) {
-        //     $san7a = $request->file('san7a');
-        //     $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
-        //     $san7a->move(public_path('uploads/tasks'), $san7aName);
-        // }
+        // Handle file upload if it exists
+        if ($request->san7a) {
+            $file=$request->san7a;
+            $extension=$request->san7a->getClientOriginalExtension();
+            $fileNameSan7a=time().'.'.$extension;
+            $path='uploads/tasks/san7a';
+            $file->move($path, $fileNameSan7a);
+        }
 
         $task = task::create([
             'title' => $request->title,
             'description' => $request->description,
-            // 'deadline' => $request->deadline,
-            // 'san7a' => $san7aName ?? null, 
+            'deadline' => $request->deadline,
+            'san7a' => 'uploads/tasks/san7a/'. $fileNameSan7a ?? null,
         ]);
 
         return response()->json([
@@ -113,8 +116,8 @@ class TaskController extends Controller
             [
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
-                // 'deadline' => 'required|date',
-                'san7a' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // التحقق من صحة san7a إذا تم رفعها
+                'deadline' => 'required|date',
+                'san7a' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]
         );
 

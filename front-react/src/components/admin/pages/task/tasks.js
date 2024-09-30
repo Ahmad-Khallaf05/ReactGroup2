@@ -7,6 +7,7 @@ import axios from "axios";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import { FaEye } from "react-icons/fa"; 
 import Swal from 'sweetalert2';
+import {log10} from "chart.js/helpers";
 
 function Tasks() {
     const [data, setData] = useState([]);
@@ -55,7 +56,7 @@ function Tasks() {
     if (error) {
         return <div>{error}</div>;
     }
-
+    console.log(data)
     return (
         <div>
             <div className="container-scroller">
@@ -89,6 +90,13 @@ function Tasks() {
                                                         data.map(task => (
                                                             <tr key={task.id}>
                                                                 <td>{task.title}</td>
+                                                                <td>
+                                                                    {task.san7a ? (
+                                                                        <img src={`http://127.0.0.1:8000/${task.san7a}`} alt={`${task.title} image`}  />
+                                                                    ) : (
+                                                                        <p>No Image</p>
+                                                                    )}
+                                                                </td>
                                                                 <td>{task.deadline}</td>
                                                                 <td>{task.description}</td>
                                                                 <td>
