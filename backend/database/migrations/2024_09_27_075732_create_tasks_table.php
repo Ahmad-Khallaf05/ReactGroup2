@@ -1,5 +1,4 @@
 <?php
-
 use App\Models\Classroom;
 use App\Models\Task;
 use App\Models\User;
@@ -15,10 +14,8 @@ return new class extends Migration {
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Classroom::class)->constrained();
             $table->string('title');
-            $table->string('san7a');
-            $table->string('deadline');
+            // $table->string('san7a', 255);
             $table->string('description');
             $table->timestamps();
         });
@@ -26,7 +23,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Task::class)->constrained();
-            $table->date('timeoOfDelivery');
+            // $table->date('timeoOfDelivery');
             $table->timestamps();
         });
     }

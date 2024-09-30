@@ -11,7 +11,7 @@ export default function CreateAdmin() {
     email: "",
     password: "",
     role: "",
-    // san7a: null,
+    san7a: null,
   });
 
   const changeAdminField = (e) => {
@@ -23,17 +23,31 @@ export default function CreateAdmin() {
 }
 const [loading,setLoading]=useState()
 
-// const handleFileChange = (e) => {
-//   setAdminData({
-//     ...adminData,
-//     san7a: e.target.files[0],
-//   });
-// };
+const handleImageFile = (e) => {
+  const { name, files } = e.target;
+    setAdminData({
+      ...adminData,
+      [name]: files[0]
+    });
+};
 
 const onSubmitChange = async (e) => {
     e.preventDefault();
+        // Create a new FormData object
+        const formData = new FormData();
+    
+        // Append all fields to FormData
+        Object.keys(adminData).forEach(key => {
+            formData.append(key, adminData[key]);
+        });
     try {
-        const response= await axios.post("http://127.0.0.1:8000/api/add_admin", adminData);
+        const response= await axios.post("http://127.0.0.1:8000/api/add_admin", formData,
+          {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
         console.log(response)
         Swal.fire("Admin Added successfully!","","success")
         setLoading(true);
@@ -97,13 +111,13 @@ if(loading){
                       </div>
 
                       <label htmlFor="title">Image</label>
-                      {/* <div className="input-group mb-3"> */}
+                      <div className="input-group mb-3">
                         {/* <label htmlFor='title'>Image</label> */}
-                        {/* <input type="file" className="form-control" id="inputGroupFile02" name="admin_img" onChange={e => handleFileChange(e)} />
+                        <input type="file" className="form-control" id="inputGroupFile02" name="san7a" onChange={e => handleImageFile(e)} />
                         <label className="input-group-text" htmlFor="inputGroupFile02">
                           Upload
                         </label>
-                      </div> */}
+                      </div>
                       <div className="form-group mb-3">
                         <button type="submit" className="btn btn-primary">
                           Add task

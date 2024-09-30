@@ -30,6 +30,26 @@ export default function ViewAdmin() {
     navigate('/Admins')
 }
 
+
+function Image (image){
+    if(image){
+        return (
+            <>
+                < img src={`http://127.0.0.1:8000/${image}`} alt="student"  />
+            </>
+        )
+    }
+    else
+    {
+        return (
+            <>
+                < img src="https://afn.ca/wp-content/uploads/2022/12/unknown_staff-500x500.webp" alt="student"  />
+            </>
+        )
+    }
+
+}
+
   return (
     <div className="container-scroller">
       <Navbar />
@@ -68,7 +88,7 @@ export default function ViewAdmin() {
                         <tbody>
                               <tr>
                                 <td>{adminData.id}</td>
-                                <td>{adminData.san7a}</td>
+                                <td>{Image(adminData.san7a)}</td>
                                 <td>{adminData.name}</td>
                                 <td>{adminData.email}</td>
                                 <td>{adminData.role}</td>

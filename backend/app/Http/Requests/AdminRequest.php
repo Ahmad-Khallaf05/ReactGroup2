@@ -28,7 +28,7 @@ class AdminRequest extends FormRequest
             'email' => 'required|string',
             'password' => 'required|string',
             'role' => 'required|string',
-            'san7a' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'san7a' => 'nullable|image|mimes:jpeg,png,jpg,gif'
         ];
     } else {
             return [
@@ -36,7 +36,7 @@ class AdminRequest extends FormRequest
                 'email' => 'required|string',
                 'password' => 'required|string',
                 'role' => 'required|string',
-                'san7a' => 'nullable|image|max:2048'
+                'san7a' => 'nullable|image|mimes:jpeg,png,jpg,gif'
             ];
         }
     }
@@ -46,7 +46,10 @@ class AdminRequest extends FormRequest
             return [
                 'name.required' => 'Name is required!',
                 'email.required' => 'Email is required!',
-                'role.required' => 'Role field is required!'
+                'password.required' => 'Email is required!',
+                'role.required' => 'Role field is required!',
+                'san7a' => 'nullable|image|mimes:jpeg,png,jpg,gif'
+
             ];
         } else {
             return [

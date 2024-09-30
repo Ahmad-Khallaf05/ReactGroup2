@@ -101,7 +101,7 @@ export default function Admins() {
                       <h4>Admins Table</h4>
                     </div>
                     <div className="card-body">
-                      <table className="table table-bordered">
+                      <table className="table table-striped">
                         <thead>
                           <tr>
                             <th>S No.</th>
@@ -126,7 +126,7 @@ export default function Admins() {
                                     className="btn btn-inverse-info"
                                   >
                                     <MdVisibility
-                                      style={{ width: 25, height: 25, cursor: 'pointer' }}
+                                      style={{ width: 20, height: 20, cursor: 'pointer' }}
                                     />
                                   </NavLink>
                                   <NavLink
@@ -134,14 +134,14 @@ export default function Admins() {
                                     className="btn btn-inverse-warning"
                                   >
                                     {/* <FaUserEdit /> */}
-                                    <MdEdit style={{width: 35 , height:35}}/>
+                                    <MdEdit style={{width: 20 , height:20}}/>
                                   </NavLink>
                                   <button
                                     className="btn btn-inverse-danger"
                                     onClick={() => handleDelete(admin.id)}
                                   >
                                     {/* <TiUserDelete /> */}
-                                    <MdDeleteForever style={{width: 35 , height:35}}/>
+                                    <MdDeleteForever style={{width: 20 , height:20}}/>
                                   </button>
                                 </td>
                               </tr>
