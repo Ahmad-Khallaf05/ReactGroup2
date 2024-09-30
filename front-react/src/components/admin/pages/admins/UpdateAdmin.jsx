@@ -1,7 +1,6 @@
 import Navbar from "../../Navbar";
 import Sidebar from "../../Sidebar";
 import Footer from "../../Footer";
-
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -13,9 +12,9 @@ export default function UpdateAdmin() {
   const [adminData, setAdminData] = useState({
     name: "",
     email: "",
-    // password: "",
+    password: "",
     role: "",
-    // san7a: "",
+    san7a: null, // Change this to null initially
   });
 
   useEffect(() => {
@@ -25,33 +24,46 @@ export default function UpdateAdmin() {
   const fetchAdmin = async () => {
     try {
       const result = await axios.get("http://127.0.0.1:8000/api/admin/" + id);
-      // console.log(result.data.users)
       setAdminData(result.data.admins);
     } catch (error) {
-      console.log("Somthing wrong");
+      console.log("Something went wrong");
     }
   };
 
   const changeAdminData = (e) => {
+    const { name, value, type, files } = e.target;
     setAdminData({
       ...adminData,
-      [e.target.name]: e.target.value,
+      [name]: type === "file" ? files[0] : value, // Handle file input separately
     });
-    console.log(adminData);
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    
+    // Create FormData object
+    const formData = new FormData();
+    
+    // Append all fields to FormData
+    Object.keys(adminData).forEach(key => {
+      formData.append(key, adminData[key]);
+    });
+
     try {
       await axios.put(
         "http://127.0.0.1:8000/api/admin_update/" + id,
-        adminData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
       );
-      alert("Admin info Updated successfully!");
+      alert("Admin info updated successfully!");
       navigate("/Admins");
     } catch (error) {
-      // console.log('Somthing wrong')
-      alert("All Fields are required!!");
+      alert("All fields are required!!");
+      console.error("Update error:", error.response ? error.response.data : error.message);
     }
   };
 
@@ -62,14 +74,6 @@ export default function UpdateAdmin() {
         <Sidebar />
         <div className="main-panel">
           <div className="content-wrapper">
-            {/* <div className="page-header">
-              <h3 className="page-title">Update Information</h3>
-              <nav aria-label="breadcrumb">
-                <a href="/Admins" className="btn btn-info float-end">
-                  Back
-                </a>
-              </nav>
-            </div> */}
             <div className="row">
               <div className="col-md-12">
                 <div className="card">
@@ -77,7 +81,11 @@ export default function UpdateAdmin() {
                     <h4>Edit Information</h4>
                   </div>
                   <div className="card-body">
-                    <form>
+                    <form onSubmit={onSubmit}>
+                      {/* Display current image */}
+                      {adminData.san7a && (
+                        <img src={`http://127.0.0.1:8000/${adminData.san7a}`} className="img-thumbnail" alt="Current Admin" />
+                      )}
                       <div className="form-group mb-3">
                         <label htmlFor="title">ID No.</label>
                         <input
@@ -86,12 +94,8 @@ export default function UpdateAdmin() {
                           name="id"
                           value={id}
                           disabled
-                        ></input>
+                        />
                       </div>
-                      {/* <div className="form-group mb-3">
-                        <label htmlFor="title">Image</label>
-                        <img src="..." className="img-thumbnail" alt="..." />
-                      </div> */}
                       <div className="form-group mb-3">
                         <label htmlFor="title">Full Name</label>
                         <input
@@ -99,8 +103,7 @@ export default function UpdateAdmin() {
                           type="text"
                           className="form-control"
                           value={adminData.name}
-                          onChange={(e) => changeAdminData(e)}
-                          //   placeholder={adminData.name}
+                          onChange={changeAdminData}
                         />
                       </div>
                       <div className="form-group mb-3">
@@ -110,7 +113,7 @@ export default function UpdateAdmin() {
                           type="email"
                           className="form-control"
                           value={adminData.email}
-                          onChange={(e) => changeAdminData(e)}
+                          onChange={changeAdminData}
                         />
                       </div>
                       <div>
@@ -119,49 +122,36 @@ export default function UpdateAdmin() {
                           <select
                             className="form-select"
                             id="inputGroupSelect02"
-                            onChange={(e) => changeAdminData(e)}
+                            onChange={changeAdminData}
                             name="role"
                             value={adminData.role}
                           >
+                            <option value="">Choose Admin Role...</option>
                             <option value="Teacher">Teacher</option>
                             <option value="Supervisor">Supervisor</option>
                           </select>
-                          <label
-                            className="input-group-text"
-                            htmlFor="inputGroupSelect02"
-                          >
-                            Options
-                          </label>
                         </div>
-                        <p className="error"></p>
                       </div>
 
+                      {/* File Upload */}
                       <label htmlFor="title">Image</label>
                       <div className="input-group mb-3">
-                        {/* <label htmlFor='title'>Image</label> */}
                         <input
                           type="file"
                           className="form-control"
                           id="inputGroupFile02"
-                          name="admin_img"
-                          onChange={(e) => changeAdminData(e)}
+                          name="san7a" // Match with Laravel controller expectation
+                          onChange={changeAdminData}
                         />
-                        <label
-                          className="input-group-text"
-                          htmlFor="inputGroupFile02"
-                        >
-                          Upload
-                        </label>
                       </div>
+
+                      {/* Buttons */}
                       <div className="container d-flex justify-content-center gap-2">
-                        <button
-                          type="submit"
-                          className="btn btn-success btn-fw"
-                          onClick={e=>onSubmit(e)}
-                        >
+                        <button type="submit" className="btn btn-success btn-fw">
                           Update
                         </button>
                         <button
+                          type="button"
                           className="btn btn-primary btn-fw"
                           onClick={() => navigate("/Admins")}
                         >
