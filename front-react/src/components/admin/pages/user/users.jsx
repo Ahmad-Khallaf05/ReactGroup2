@@ -11,7 +11,6 @@ import withReactContent from 'sweetalert2-react-content'
 import { MdDeleteForever } from 'react-icons/md';
 import { MdEdit } from 'react-icons/md';
 import { MdVisibility } from 'react-icons/md';
-import {toDegrees} from "chart.js/helpers";
 function Users() {
     
     const MySwal = withReactContent(Swal)
@@ -64,13 +63,6 @@ function handleDelete(id){
             </div>
         )
     }
-     async function acceptClick(id)
-    {
-        setLoading(true);
-        await axios.patch(`http://127.0.0.1:8000/api/user/${id}/edit`);
-        setLoading(false);
-
-    }
 function Image (image){
         if(image){
             return (
@@ -89,17 +81,6 @@ function Image (image){
         }
 
 }
-function accept(accepter,id){
-        if(accepter==0){
-            return(
-                <>
-                    <td>
-                        <button className={'btn btn-danger'} onClick={()=>acceptClick(id)}>accept</button>
-                    </td>
-                </>
-            )
-        }
-    }
     let userDetails = '';
     userDetails = user.map((item, index) => {
         return (
@@ -119,9 +100,7 @@ function accept(accepter,id){
                         <Link to={`/user-edit/${item.id}`}>
                         <MdEdit style={{width: 25 , height:25 , cursor: 'pointer'}} /></Link>
                         <MdDeleteForever onClick={()=>handleDelete(item.id)} style={{width: 25 , height:25 , cursor: 'pointer'}}/>
-
                     </td>
-                {accept(item.accepter,item.id)}
                 </tr>
             </>
         )

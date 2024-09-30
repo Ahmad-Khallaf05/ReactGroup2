@@ -5,14 +5,25 @@ import { MdEdit, MdDeleteForever } from 'react-icons/md';
 import Navbar from "../../Navbar"; 
 import Sidebar from "../../Sidebar"; 
 import Footer from "../../Footer"; 
-
+import { useContext } from 'react';
+import { AuthContext } from '../../../landing/components/context/AuthContext';
+import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 function Classrooms() {
     const [classrooms, setClassrooms] = useState([]);
-
+    const { auth } = useContext(AuthContext);
+    console.log(auth.user);
+    const navigate = useNavigate();
     useEffect(() => {
-        fetchClassrooms();
+        if(!auth.user) {
+            Swal.fire("Unauthorized","","error");
+            navigate("/login");
+          }
+          else{
+              fetchClassrooms();
+          }
     }, []);
-
+  // console.log(auth); 
     // Function to fetch classrooms data from the API
     const fetchClassrooms = () => {
         axios.get('http://127.0.0.1:8000/api/classrooms')
@@ -35,7 +46,8 @@ function Classrooms() {
             }
         }
     };
-
+    if(auth.user.role)
+    {
     return (
         <div className="container-scroller">
             <Navbar />
@@ -105,6 +117,9 @@ function Classrooms() {
             </div>
         </div>
     );
+} else {
+    return <>idk</>
+}
 }
 
 export default Classrooms;

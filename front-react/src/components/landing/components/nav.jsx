@@ -1,7 +1,48 @@
 import React from 'react'
+// import { AuthContext } from "../../../landing/components/context/AuthContext";
+import { AuthContext } from './context/AuthContext';
+import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import Logout from './logout';
+export default function Nav() {
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
 
 
-export default function nav() {
+  function options(){
+    if(auth.user)
+    {
+      return (<>
+      <a href="/profile"   >
+          <button 
+          >
+            <i class="fa-solid fa-user"></i>  
+<i class="fa-solid fa-user"></i> your profile
+          </button>
+          </a>
+          
+          {/* <Logout/> */}
+      </>)
+    }
+    else {
+      return(<><a href="/login" >
+        <button 
+        >
+          
+<i class="fa-solid fa-user"></i> login
+        </button>
+        </a>
+        <a href="/register" >
+        <button 
+        >
+          
+<i class="fa-solid fa-user"></i> register
+        </button>
+        </a></>)
+    }
+  }
+
   return (
     <div>
 
@@ -111,27 +152,7 @@ export default function nav() {
               </a>
             </div> */}
           </div>
-          <a href="/profile"   >
-          <button 
-          >
-            <i class="fa-solid fa-user"></i>  
-<i class="fa-solid fa-user"></i> your profile
-          </button>
-          </a>
-          <a href="/login" >
-          <button 
-          >
-            
-<i class="fa-solid fa-user"></i> login
-          </button>
-          </a>
-          <a href="/register" >
-          <button 
-          >
-            
-<i class="fa-solid fa-user"></i> register
-          </button>
-          </a>
+          {options()}
         </div>
       </nav>
     </div>

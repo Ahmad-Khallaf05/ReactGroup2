@@ -1,7 +1,31 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa";
+import { AuthContext } from '../landing/components/context/AuthContext';
+import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Sidebar = () => {
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  function options()
+  {
+    if(auth.user.role != "Teacher")
+    {
+      return <><li className="nav-item">
+      <a className="nav-link" href="/event">
+        <span className="menu-title">Events</span>
+        <i className="mdi mdi-calendar menu-icon"></i>
+      </a>
+    </li>
+    <li className="nav-item">
+      <a className="nav-link" href="/Admins">
+        <span className="menu-title">Admins</span>
+        <i className="mdi mdi-account-star menu-icon"></i>
+      </a>
+    </li></>
+    }
+  }
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
       <ul className="nav">
@@ -32,18 +56,6 @@ const Sidebar = () => {
           </a>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="/event">
-            <span className="menu-title">Events</span>
-            <i className="mdi mdi-calendar menu-icon"></i>
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/Admins">
-            <span className="menu-title">Admins</span>
-            <i className="mdi mdi-account-star menu-icon"></i>
-          </a>
-        </li>
-        <li className="nav-item">
           <a className="nav-link" href="/classrooms">
             <span className="menu-title">classrooms</span>
             <i className="mdi mdi-school menu-icon"></i>
@@ -55,6 +67,7 @@ const Sidebar = () => {
             <i className="mdi mdi-home menu-icon"></i>
           </a>
         </li>
+        {options()}
       </ul>
     </nav>
   );

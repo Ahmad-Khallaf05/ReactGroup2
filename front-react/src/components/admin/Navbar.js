@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logout from "../landing/components/logout";
+import { AuthContext } from '../landing/components/context/AuthContext';
+import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+// import { useEffect } from "react";
 const Navbar = () => {
-  return (
-    <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [imaage, setImaage] = useState('');
+  console.log(auth);
+  useEffect( () => {
+    if(auth.user)
+    {
+      if(auth.user.role == 0) {
+        Swal.fire("Unauthorized","","error");
+        navigate("/login");
+      }
+    }else {
+      Swal.fire("Unauthorized","","error");
+      navigate("/login");
+    }
+  })
+  if(auth.user)
+  {if(auth.user.role != 0)
+  {
+
+    return (
+      <nav className="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a className="navbar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo" /></a>
         <a className="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
@@ -25,11 +50,11 @@ const Navbar = () => {
           <li className="nav-item nav-profile dropdown">
             <a className="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
               <div className="nav-profile-img">
-                <img src="./assets/images/faces/face1.jpg" alt="image" />
+                <img src={`http://127.0.0.1:8000/${auth.user.san7a}`} alt="image" />
                 <span className="availability-status online"></span>
               </div>
               <div className="nav-profile-text">
-                <p className="mb-1 text-black">David Greymaax</p>
+                <p className="mb-1 text-black">{auth.user.name}</p>
               </div>
             </a>
             <div className="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -53,5 +78,6 @@ const Navbar = () => {
     </nav>
   );
 };
-
+}
+}
 export default Navbar;
