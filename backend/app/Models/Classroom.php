@@ -19,4 +19,13 @@ class Classroom extends Model
     {
         return $this->hasMany(Task::class);
     }
+    function Studentclasse()
+    {
+        return $this->hasMany(Studentclasse::class ,'Studentclasse_id');
+    }
+    public function admin()
+    {
+        return $this->belongsTo(Admin::class);
+    }
+    // protected $fillable = ['name', 'level'];
 }
