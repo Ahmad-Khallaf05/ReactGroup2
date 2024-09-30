@@ -1,4 +1,3 @@
-// src/components/Sidebar.js
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { FaUser, FaCog, FaTasks, FaHome, FaSignOutAlt, FaChevronDown, FaEdit, FaTrash } from 'react-icons/fa';
@@ -38,42 +37,46 @@ function Sidebar() {
                         Home
                     </Link>
                 </li>
-                <li style={{ margin: '10px 0' }}>
-                    <Link 
-                        to="/TaskSt" 
-                        style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333', padding: '10px', borderRadius: '5px', transition: 'background 0.3s', border: '1px solid #e0e0e0' }} 
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f0f0'} 
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                    >
-                        <FaTasks style={{ marginRight: '8px' }} />
-                        Tasks
-                    </Link>
-                </li>
-                <li style={{ margin: '10px 0' }}>
-                    <div 
-                        onClick={toggleMenu} 
-                        style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', padding: '10px', borderRadius: '5px', transition: 'background 0.3s', border: '1px solid #e0e0e0' }} 
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f0f0'} 
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                    >
-                        <FaCog style={{ marginRight: '8px' }} />
-                        Settings
-                        <FaChevronDown style={{ marginLeft: 'auto' }} />
-                    </div>
-                    {isOpen && (
-                        <ul style={{ listStyleType: 'none', padding: 0, margin: '10px 0 0 0' }}>
-                            <li style={{ margin: '5px 0' }}>
-                                <Link 
-                                    to="/edit-profile" 
-                                    style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333', padding: '8px 10px', borderRadius: '5px', background: '#f9f9f9' }}
-                                >
-                                    <FaEdit style={{ marginRight: '8px' }} />
-                                    Edit Profile
-                                </Link>
-                            </li>
-                        </ul>
-                    )}
-                </li>
+                {auth.user.accepter != 0 && (
+                    <>
+                        <li style={{ margin: '10px 0' }}>
+                            <Link 
+                                to="/TaskSt" 
+                                style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333', padding: '10px', borderRadius: '5px', transition: 'background 0.3s', border: '1px solid #e0e0e0' }} 
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f0f0'} 
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                            >
+                                <FaTasks style={{ marginRight: '8px' }} />
+                                Tasks
+                            </Link>
+                        </li>
+                        <li style={{ margin: '10px 0' }}>
+                            <div 
+                                onClick={toggleMenu} 
+                                style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', padding: '10px', borderRadius: '5px', transition: 'background 0.3s', border: '1px solid #e0e0e0' }} 
+                                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f0f0f0'} 
+                                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                            >
+                                <FaCog style={{ marginRight: '8px' }} />
+                                Settings
+                                <FaChevronDown style={{ marginLeft: 'auto' }} />
+                            </div>
+                            {isOpen && (
+                                <ul style={{ listStyleType: 'none', padding: 0, margin: '10px 0 0 0' }}>
+                                    <li style={{ margin: '5px 0' }}>
+                                        <Link 
+                                            to="/edit-profile" 
+                                            style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: '#333', padding: '8px 10px', borderRadius: '5px', background: '#f9f9f9' }}
+                                        >
+                                            <FaEdit style={{ marginRight: '8px' }} />
+                                            Edit Profile
+                                        </Link>
+                                    </li>
+                                </ul>
+                            )}
+                        </li>
+                    </>
+                )}
                 <li style={{ margin: '10px 0' }}>
                     <Logout />
                 </li>

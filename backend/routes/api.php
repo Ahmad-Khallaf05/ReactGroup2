@@ -42,6 +42,8 @@ Route::get('/tasks/{task}/edit', [TaskController::class, 'edit']);
 Route::put('/tasks/{task}/edit', [TaskController::class, 'update']);
 Route::delete('/tasks/{task}/delete', [TaskController::class, 'destroy']);
 
+Route::post('/tasks/{task}/students', [TaskController::class, 'addStudent']);
+
 Route::get('/user-tasks/{userId}', [TaskController::class, 'getUserTasks']);
 
 //classrooms
