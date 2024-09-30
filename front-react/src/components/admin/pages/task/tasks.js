@@ -6,6 +6,7 @@ import Footer from "../../Footer";
 import axios from "axios";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
 import Swal from 'sweetalert2';
+import {log10} from "chart.js/helpers";
 
 function Tasks() {
     const [data, setData] = useState([]);
@@ -54,7 +55,7 @@ function Tasks() {
     if (error) {
         return <div>{error}</div>; // Error state
     }
-
+    console.log(data)
     return (
         <div>
             <div className="container-scroller">
@@ -91,7 +92,7 @@ function Tasks() {
                                                                 <td>{task.title}</td>
                                                                 <td>
                                                                     {task.san7a ? (
-                                                                        <img src={`http://127.0.0.1:8000/uploads/tasks/${task.san7a}`} alt={`${task.title} image`} width="50" />
+                                                                        <img src={`http://127.0.0.1:8000/${task.san7a}`} alt={`${task.title} image`}  />
                                                                     ) : (
                                                                         <p>No Image</p>
                                                                     )}
