@@ -9,7 +9,7 @@ import HeroLand from './components/hero';
 import AboutLand from './components/about';
 import EventLand from './components/event';
 import ProgramLand from './components/program';
-import BlogLand from './components/blog';
+// import BlogLand from './components/blog';
 import TeamLand from './components/team';
 import TestemonialLand from './components/testemonial';
 import Contact from './components/Contact';
@@ -29,7 +29,7 @@ export default function Land() {
           {/* <Category /> */}
           <EventLand />
           <ProgramLand />
-          <BlogLand />
+          {/* <BlogLand /> */}
           <TeamLand />
           <TestemonialLand />
           <Contact />
