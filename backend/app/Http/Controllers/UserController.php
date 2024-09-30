@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -167,7 +169,7 @@ class UserController extends Controller
 
         // Find the user
         $user = User::find($id);
-        
+
         if (!$user) {
             return response()->json([
                 'status' => 404,
@@ -201,8 +203,8 @@ class UserController extends Controller
             'dob' => $request->dob,
             'parentName' => $request->parentName,
             'parentPhone' => $request->parentPhone,
-            // 'san7a' => $fileNameSan7a ? 'uploads/students/san7a/' . $fileNameSan7a : $user->san7a,
-            // 'officialId' => $fileNameOfficialId ? 'uploads/students/officialId/' . $fileNameOfficialId : $user->officialId,
+             'san7a' => $fileNameSan7a ? 'uploads/students/san7a/' . $fileNameSan7a : $user->san7a,
+             'officialId' => $fileNameOfficialId ? 'uploads/students/officialId/' . $fileNameOfficialId : $user->officialId,
         ]);
         $user = Auth::user();
         // $token = $user->createToken('auth_token')->plainTextToken;
@@ -244,4 +246,25 @@ class UserController extends Controller
     }
 
 
+    public function chart()
+    {
+        return response()->json([
+            'status' => 200,
+            'student' => User::all()->count(),
+            'admin' => Admin::all()->count(),
+            'teacher' => Admin::where('role', 'Teacher')->count()->get(),
+            'supervisor' => Admin::where('role', 'Supervisor')->count()->get(),
+            'manager' => Admin::where('role', 'Manager')->count()->get(),
+            'event' => Event::all()->count(),
+        ],200);
+    }
+
+    function accept(Request $request)
+    {
+        $user=User::find($request->id);
+        $user->update([
+           'accepter' => 1,
+        ]);
+
+    }
 }

@@ -35,7 +35,7 @@ h3,
 .h1,
 .h2,
 .h3 {
-    font-weight: 200;
+    font-weight: 500;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -45,7 +45,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-weight: 600;
+    font-weight: 800;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -74,13 +74,12 @@ h6,
 
 /*** Button Start ***/
 .btn {
-    font-weight: 600;
+    font-weight: 900;
     transition: .5s;
 }
 
 .btn-square {
     width: 32px;
-    height: 32px;
 }
 
 .btn-sm-square {
@@ -117,7 +116,7 @@ h6,
 .btn.btn-primary:hover {
     /* background: var(--bs-secondary); */
     color: #FFFFFF;
-    background-color: rgb(14, 116, 101);
+    background-color: rgb(143, 61, 129);
     /* color: var(--bs-primary); */
 }
 
@@ -159,7 +158,7 @@ h6,
     /* background: var(--bs-secondary) !important; */
     color: #FFFFFF;
     /* background-color: rgb(88, 31, 58); */
-    background-color: rgb(14, 116, 101);
+    background-color: rgb(143, 61, 129);
 
 }
 
@@ -648,7 +647,7 @@ padding-top: 20px;
 }
 
 .team .team-item:hover .team-content h4 {
-    color: var(--bs-white) !important;
+    /* color: var(--bs-white) !important; */
 }
 
 .team .team-item:hover .team-content p {
@@ -790,3 +789,39 @@ ul li a:hover {
     color: #007bff;
 }
 
+a {
+    text-decoration: none;
+}
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: white;
+    background-color: #bb89d8;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    width: 100%; 
+}
+
+button i {
+    margin-right: 8px; 
+}
+
+button:hover {
+    background-color: rgb(137, 70, 122);
+    transform: translateY(-3px); 
+}
+
+button:focus {
+    outline: none;
+}
+
+button:active {
+    transform: translateY(1px); 
+}

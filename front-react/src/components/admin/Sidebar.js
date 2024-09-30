@@ -8,6 +8,24 @@ import Swal from "sweetalert2";
 const Sidebar = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
+  function options()
+  {
+    if(auth.user.role != "Teacher")
+    {
+      return <><li className="nav-item">
+      <a className="nav-link" href="/event">
+        <span className="menu-title">Events</span>
+        <i className="mdi mdi-calendar menu-icon"></i>
+      </a>
+    </li>
+    <li className="nav-item">
+      <a className="nav-link" href="/Admins">
+        <span className="menu-title">Admins</span>
+        <i className="mdi mdi-account-star menu-icon"></i>
+      </a>
+    </li></>
+    }
+  }
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
       <ul className="nav">
@@ -19,39 +37,28 @@ const Sidebar = () => {
         </li>
         <li className="nav-item">
           <a className="nav-link" href="/users">
-            <span className="menu-title">Users</span>
-            <i className="mdi mdi-home menu-icon"></i>
+            <span className="menu-title">Student</span>
+            <i className="mdi mdi-account-tie menu-icon"></i>
           </a>
         </li>
        
         <li className="nav-item">
           <a className="nav-link" href="/Tasks">
             <span className="menu-title">Tasks</span>
-            <i className="mdi mdi-home menu-icon"></i>
+            <i className="mdi mdi-file-tree menu-icon"></i>
           </a>
         </li>
         <li className="nav-item">
           <a className="nav-link" href="/Contacts">
             <span className="menu-title">Contacts</span>
-            <FaRegUser style={{float: 'right'}}/>
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/event">
-            <span className="menu-title">Events</span>
-            <i className="mdi mdi-home menu-icon"></i>
-          </a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="/Admins">
-            <span className="menu-title">Admins</span>
-            <i className="mdi mdi-home menu-icon"></i>
+            <i className=" mdi mdi-account-box menu-icon"></i>
+
           </a>
         </li>
         <li className="nav-item">
           <a className="nav-link" href="/classrooms">
             <span className="menu-title">classrooms</span>
-            <i className="mdi mdi-home menu-icon"></i>
+            <i className="mdi mdi-school menu-icon"></i>
           </a>
         </li>
         <li className="nav-item">
@@ -60,6 +67,7 @@ const Sidebar = () => {
             <i className="mdi mdi-home menu-icon"></i>
           </a>
         </li>
+        {options()}
       </ul>
     </nav>
   );

@@ -4,8 +4,14 @@ import Footer from "../../Footer";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { AuthContext } from "../../../landing/components/context/AuthContext";
+import { useContext } from 'react';
+import Swal from "sweetalert2";
+
+
 
 export default function UpdateAdmin() {
+  const { auth } = useContext(AuthContext);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -18,7 +24,13 @@ export default function UpdateAdmin() {
   });
 
   useEffect(() => {
-    fetchAdmin();
+    if(auth.user.role != "Teacher")
+    {
+      fetchAdmin();
+    }else{
+      Swal.fire("Unathorized","","error");
+      navigate("/dashboard")
+    }
   }, [id]);
 
   const fetchAdmin = async () => {

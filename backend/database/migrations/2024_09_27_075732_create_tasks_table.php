@@ -1,5 +1,5 @@
 <?php
-use App\Models\Classroom;
+
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -13,17 +13,18 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('title');
-            // $table->string('san7a', 255);
-            $table->string('description');
+            $table->string('san7a')->nullable(); 
+            $table->date('deadline'); 
+            $table->text('description'); 
             $table->timestamps();
         });
-        Schema::create('studenttasks', function (Blueprint $table) {
+
+        Schema::create('student_tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained();
-            $table->foreignIdFor(Task::class)->constrained();
-            // $table->date('timeoOfDelivery');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Task::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -33,6 +34,7 @@ return new class extends Migration {
      */
     public function down(): void
     {
+        Schema::dropIfExists('student_tasks');
         Schema::dropIfExists('tasks');
     }
 };

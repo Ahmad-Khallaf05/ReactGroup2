@@ -9,7 +9,7 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+//    protected $guarded = [];
     function class(
     ) {
         return $this->belongsTo(Classroom::class, 'classroom_id');
@@ -19,11 +19,11 @@ class Task extends Model
     return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
 }
 
-    // protected $fillable = [
-    //     'title',
-    //     'description',
-    //     'deadline',
-    //     'san7a',
-    // ];
-    
+     protected $fillable = [
+         'title',
+         'description',
+         'deadline',
+         'san7a',
+     ];
+
 }

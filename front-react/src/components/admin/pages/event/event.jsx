@@ -7,12 +7,24 @@ import Navbar from "../../Navbar";
 import Sidebar from "../../Sidebar"; 
 import Footer from "../../Footer"; 
 import Swal from 'sweetalert2';
-
+import { AuthContext } from "../../../landing/components/context/AuthContext";
+import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 function Events() {
+    const { auth } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
-        fetchEvents();
+        if(auth.user.role != "Teacher")
+        {
+            
+            fetchEvents();
+        }
+        else{
+            Swal.fire("Unathorized","","error");
+          navigate("/dashboard")
+        }
     }, []);
 
     // Function to fetch events data from the API
@@ -89,7 +101,7 @@ function Events() {
                                                         <tr key={event.id}>
                                                             <td>{event.title}</td>
                                                             <td>{event.description}</td>
-                                                            <td>{event.san7a}</td>
+                                                            <td><img src={`http://127.0.0.1:8000/${event.san7a}`} alt="event"/></td>
                                                             <td>{event.date}</td>
                                                             <td>{event.category}</td>
                                                             <td>

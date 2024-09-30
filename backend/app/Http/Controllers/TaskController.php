@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\task;
+use App\Models\Task; // Make sure the model name is correct
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = task::all();
+        $tasks = Task::all();
 
         if ($tasks->count() > 0) {
             return response()->json([
@@ -38,8 +38,8 @@ class TaskController extends Controller
             [
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
-                // 'deadline' => 'required|date',
-                // 'san7a' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
+                'deadline' => 'required|date',
+                'san7a' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]
         );
 
@@ -50,17 +50,20 @@ class TaskController extends Controller
             ], 422);
         }
 
-        // if ($request->hasFile('san7a')) {
-        //     $san7a = $request->file('san7a');
-        //     $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
-        //     $san7a->move(public_path('uploads/tasks'), $san7aName);
-        // }
+        // Handle file upload if it exists
+        if ($request->san7a) {
+            $file=$request->san7a;
+            $extension=$request->san7a->getClientOriginalExtension();
+            $fileNameSan7a=time().'.'.$extension;
+            $path='uploads/tasks/san7a';
+            $file->move($path, $fileNameSan7a);
+        }
 
-        $task = task::create([
+        $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
-            // 'deadline' => $request->deadline,
-            // 'san7a' => $san7aName ?? null, 
+            'deadline' => $request->deadline,
+            'san7a' => 'uploads/tasks/san7a/'. $fileNameSan7a ?? null,
         ]);
 
         return response()->json([
@@ -73,114 +76,66 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(task $task)
+    public function show(Task $task)
     {
-        if ($task) {
-            return response()->json([
-                'status' => 200,
-                'task' => $task
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No Records Found'
-            ], 404);
-        }
+        return response()->json([
+            'status' => 200,
+            'task' => $task
+        ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, task $task)
+    public function update(Request $request, Task $task)
     {
         $validator = Validator::make(
             $request->all(),
             [
                 'title' => 'required|string|max:255',
                 'description' => 'required|string',
-                // 'deadline' => 'required|date',
-                'san7a' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // التحقق من صحة san7a إذا تم رفعها
+                'deadline' => 'required|date',
+                'san7a' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]
         );
 
         if ($validator->fails()) {
             return response()->json([
                 'status' => 422,
-                'errors' => $validator->messages()
+                'errors' => $validator->messages(),
             ], 422);
         }
 
+        // Handle file upload if it exists
         if ($request->hasFile('san7a')) {
             $san7a = $request->file('san7a');
             $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
             $san7a->move(public_path('uploads/tasks'), $san7aName);
-            $task->san7a = $san7aName;
+            $task->san7a = $san7aName; // Update san7a only if a new file is uploaded
         }
 
         $task->update([
             'title' => $request->title,
             'description' => $request->description,
-            // 'deadline' => $request->deadline,
+            'deadline' => $request->deadline,
+            'san7a' => $task->san7a, // Ensure the san7a is updated if new file is uploaded
         ]);
 
         return response()->json([
             'status' => 200,
-            'message' => 'Task Updated Successfully'
+            'message' => 'Task Updated Successfully',
         ], 200);
-
-
-        if ($request->hasFile('san7a')) {
-            $san7a = $request->file('san7a');
-            $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
-            $san7a->move(public_path('uploads/tasks'), $san7aName);
-        } else {
-            return response()->json([
-                'status' => 400,
-                'message' => 'Image not uploaded successfully'
-            ], 400);
-        }
-        
-
-        if ($request->hasFile('san7a')) {
-            $san7a = $request->file('san7a');
-            $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
-            $san7a->move(public_path('uploads/tasks'), $san7aName);
-            $task->san7a = $san7aName;
-        }
-        
-        $task->update([
-            'title' => $request->title,
-            'description' => $request->description,
-            // 'deadline' => $request->deadline,
-        ]);
-        
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 422,
-                'errors' => $validator->messages(),
-                'message' => 'Please correct the errors and try again.'
-            ], 422);
-        }
-        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(task $task)
+    public function destroy(Task $task)
     {
-        if ($task) {
-            $task->delete();
-            return response()->json([
-                'status' => 200,
-                'message' => 'Task Deleted Successfully'
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 404,
-                'message' => 'No Records Found'
-            ], 404);
-        }
+        $task->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => 'Task Deleted Successfully'
+        ], 200);
     }
 }

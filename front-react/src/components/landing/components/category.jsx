@@ -11,11 +11,8 @@ export default function category() {
       <div className="row">
         <div className="col-md-6 text-center text-md-start mb-3 mb-md-0">
           <span className="text-light">
-            <a href="#">
-              <i className="fas fa-copyright text-light me-2" />
-              Your Site Name
-            </a>
-            , All right reserved.
+          
+            Al Harith International
           </span>
         </div>
         <div className="col-md-6 my-auto text-center text-md-end text-white">

@@ -70,11 +70,27 @@ const onSubmitChange = async (e) => {
 if(loading){
     return <Admins />
 }
-let options = '';
-if(auth.user.role == "Manager")
+function options()
 {
-  options = '<select className="form-select" id="inputGroupSelect02" onChange={e => changeAdminField(e)} name="role" value={adminData.role}><option selected>Choose Admin Role...</option><option value="Teacher">Teacher</option><option value="Supervisor">Supervisor</option></select>';
-}
+  console.log(auth.user.role);
+  
+  if(auth.user.role == "Manager")
+  {
+
+    return(<><div>
+      <label htmlFor="progress">Role</label>
+      <div className="input-group mb-3">
+        <select className="form-select" id="inputGroupSelect02" onChange={e => changeAdminField(e)} name="role" value={adminData.role}>
+          <option selected>Choose Admin Role...</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Supervisor">Supervisor</option>
+        </select>
+        <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
+      </div>
+      <p className="error"></p>
+    </div></>)
+    }
+  }
   return (
     <div className="container-scroller">
       <Navbar />
@@ -112,17 +128,19 @@ if(auth.user.role == "Manager")
                         <label htmlFor="description">Password</label>
                         <input onChange={e => changeAdminField(e)} name="password" type="password" placeholder="Enter Admin Password" className={"form-control"} />
                       </div>
-                      <div>
+                      {options()}
+                      {/* <div>
                         <label htmlFor="progress">Role</label>
                         <div className="input-group mb-3">
                           <select className="form-select" id="inputGroupSelect02" onChange={e => changeAdminField(e)} name="role" value={adminData.role}>
                             <option selected>Choose Admin Role...</option>
-                            {options}
+                            <option value="Teacher">Teacher</option>
+                            <option value="Supervisor">Supervisor</option>
                           </select>
                           <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
                         </div>
                         <p className="error"></p>
-                      </div>
+                      </div> */}
 
                       <label htmlFor="title">Image</label>
                       <div className="input-group mb-3">

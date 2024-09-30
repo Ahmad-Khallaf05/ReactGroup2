@@ -18,8 +18,8 @@ class AdminController extends Controller
         $admins = Admin::all();
 
         return response()->json([
-             'result' => $admins
-        ],200);
+            'result' => $admins
+        ], 200);
     }
 
     /**
@@ -37,45 +37,45 @@ class AdminController extends Controller
     {
         try {
             if ($request->san7a) {
-                $file=$request->san7a;
-                $extension=$request->san7a->getClientOriginalExtension();
-                $fileNameSan7a=time().'.'.$extension;
-                $path='uploads/admins/san7a';
+                $file = $request->san7a;
+                $extension = $request->san7a->getClientOriginalExtension();
+                $fileNameSan7a = time() . '.' . $extension;
+                $path = 'uploads/admins/san7a';
                 $file->move($path, $fileNameSan7a);
             }
-            
+
             Admin::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password'=>Hash::make($request->input('password')),
+                'password' => Hash::make($request->input('password')),
                 'role' => $request->role,
                 // 'san7a' => $request->admin_img // Have to Ckeck when add image
-                'san7a' => 'uploads/admins/san7a/'.$fileNameSan7a,
+                'san7a' => 'uploads/admins/san7a/' . $fileNameSan7a,
             ]);
-             return response()->json([
+            return response()->json([
                 'message' => "User successfully created."
-            ],200);
+            ], 200);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => "Something went really wrong!"
-            ],500);
+            ], 500);
         }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(String $id)
+    public function show(string $id)
     {
         $admins = Admin::find($id);
-        if(!$admins){
-          return response()->json([
-             'message'=>'This admin not found'
-          ],404);
+        if (!$admins) {
+            return response()->json([
+                'message' => 'This admin not found'
+            ], 404);
         }
         return response()->json([
-           'admins' => $admins
-        ],200);
+            'admins' => $admins
+        ], 200);
     }
 
     /**
@@ -89,20 +89,20 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AdminRequest $request, String $id)
+    public function update(AdminRequest $request, string $id)
     {
         try {
             $admins = Admin::find($id);
-            if(!$admins){
-              return response()->json([
-                'message'=>'User Not Found.'
-              ],404);
+            if (!$admins) {
+                return response()->json([
+                    'message' => 'User Not Found.'
+                ], 404);
             }
 
-        // Handle image upload and replace old image
-        $fileNameSan7a = $this->uploadFile($request->file('san7a'), 'san7a');
+            // Handle image upload and replace old image
+            $fileNameSan7a = $this->uploadFile($request->file('san7a'), 'san7a');
 
-        $admins->update($request->only(['name', 'email', 'role', 'san7a']));
+            // $admins->update($request->only(['name', 'email', 'role', 'san7a']));
 
             $admins->name = $request->name;
             $admins->email = $request->email;
@@ -116,12 +116,13 @@ class AdminController extends Controller
 
             return response()->json([
                 'message' => "Information successfully updated."
-            ],200);
+            ], 200);
         } catch (\Exception $e) {
             // Return Json Response
             return response()->json([
-                'message' => "Something went really wrong!"
-            ],500);
+                'message' => "Something went really wrong!",
+                "exception" => $e
+            ], 500);
         }
     }
 
@@ -131,10 +132,10 @@ class AdminController extends Controller
     public function destroy($id)
     {
         $admins = Admin::find($id);
-        if(!$admins){
-          return response()->json([
-             'message'=>'This Admin Not Found.'
-          ],404);
+        if (!$admins) {
+            return response()->json([
+                'message' => 'This Admin Not Found.'
+            ], 404);
         }
 
         // Delete User
@@ -143,7 +144,7 @@ class AdminController extends Controller
         // Return Json Response
         return response()->json([
             'message' => "Admin successfully deleted."
-        ],200);
+        ], 200);
 
     }
 }

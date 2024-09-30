@@ -4,33 +4,25 @@ import Nav from "./nav";
 import Footer from "./category";
 import { FaTasks } from 'react-icons/fa';
 import { AuthContext } from './context/AuthContext';
-import { useNavigate} from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Profile() {
     const navigate = useNavigate();
-    const [student, setStudent] = useState({});
     const [taskCount, setTaskCount] = useState(0); 
     const [error, setError] = useState({});
     const { auth } = useContext(AuthContext);
 
     useEffect(() => {
-        if(auth.user.role != "0")
-        {
-            console.log('hi')
+        if(auth.user.role !== "0") {
             navigate("/dashboard");
         }
-    }, []);
-
-
+    }, [auth.user.role, navigate]);
 
     useEffect(() => {
         const fetchStudentTaskCount = async () => {
             try {
                 const response = await axios.get(`http://127.0.0.1:8000/api/user-tasks/${auth.user.id}`);
-                
-               
                 const tasks = response.data;
                 setTaskCount(tasks.length); 
             } catch (err) {
@@ -42,6 +34,9 @@ function Profile() {
         fetchStudentTaskCount();
     }, [auth.user.id]); 
 
+
+
+
     const userName = auth.user.name;
     const userAge = new Date().getFullYear() - new Date(auth.user.dob).getFullYear(); 
     const userEmail = auth.user.email;
@@ -49,7 +44,10 @@ function Profile() {
     const userGender = auth.user.gender;
     const parentName = auth.user.parentName;
     const parentPhone = auth.user.parentPhone;
+    const userImage = `http://127.0.0.1:8000/${auth.user.san7a}`; 
 
+  
+    
     return (
         <div>
             <Nav />
@@ -93,7 +91,7 @@ function Profile() {
 
                     <div style={{ display: 'flex', alignItems: 'flex-start', padding: '15px', width: '100%' }}>
                         <img 
-                            src="https://afn.ca/wp-content/uploads/2022/12/unknown_staff-500x500.webp" 
+                            src={userImage}
                             alt="User" 
                             style={{ borderRadius: '10%', width: '300px', height: '300px', marginRight: '20px', border: '2px solid black'}} 
                         />
