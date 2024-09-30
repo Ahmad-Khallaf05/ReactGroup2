@@ -3,18 +3,29 @@ import { Link } from 'react-router-dom';
 import Navbar from "../../Navbar"; 
 import Sidebar from "../../Sidebar"; 
 import Footer from "../../Footer"; 
-import axios from "axios"
-import { MdDeleteForever } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
+import axios from "axios";
+import { MdDeleteForever, MdEdit } from "react-icons/md";
 import Swal from 'sweetalert2';
 
 function Tasks() {
     const [data, setData] = useState([]);
-    
+    const [loading, setLoading] = useState(true); // State for loading indicator
+    const [error, setError] = useState(null); // State for error handling
+
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/tasks/')
-            .then(res => setData(res.data.tasks))
-            .catch(error => console.error(error));
+        const fetchTasks = async () => {
+            try {
+                const res = await axios.get('http://127.0.0.1:8000/api/tasks/');
+                setData(res.data.tasks);
+            } catch (error) {
+                setError('Failed to fetch tasks. Please try again later.');
+                console.error(error);
+            } finally {
+                setLoading(false); // Set loading to false after the API call
+            }
+        };
+
+        fetchTasks();
     }, []);
 
     function handleDelete(id) {
@@ -24,12 +35,24 @@ function Tasks() {
             confirmButtonText: "Yes",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/tasks/${id}/delete`).then(res => {
-                    setData(prevData => prevData.filter(task => task.id !== id)); // تحديث البيانات
-                    Swal.fire('Deleted!', 'The task has been deleted.', 'success');
-                });
+                axios.delete(`http://127.0.0.1:8000/api/tasks/${id}/delete`)
+                    .then(() => {
+                        setData(prevData => prevData.filter(task => task.id !== id)); 
+                        Swal.fire('Deleted!', 'The task has been deleted.', 'success');
+                    })
+                    .catch(() => {
+                        Swal.fire('Error!', 'Failed to delete the task. Please try again.', 'error');
+                    });
             }
         });
+    }
+
+    if (loading) {
+        return <div>Loading...</div>; // Loading state
+    }
+
+    if (error) {
+        return <div>{error}</div>; // Error state
     }
 
     return (
@@ -43,7 +66,7 @@ function Tasks() {
                             <div className="page-header">
                                 <h3 className="page-title">Tasks</h3>
                                 <nav aria-label="breadcrumb">
-                                    <a href="/create-task" className='btn btn-gradient-success btn-rounded btn-fw'>Add Task</a>
+                                    <Link to="/create-task" className='btn btn-gradient-success btn-rounded btn-fw'>Add Task</Link>
                                 </nav>
                             </div>
                             <div className="row">
@@ -54,9 +77,8 @@ function Tasks() {
                                             <table className="table table-striped">
                                                 <thead>
                                                     <tr>
-                                                        <th>Id</th>
                                                         <th>Title</th>
-                                                        <th>San7a</th>
+                                                        <th>Image</th>
                                                         <th>Deadline</th>
                                                         <th>Description</th>
                                                         <th>Actions</th>
@@ -65,17 +87,16 @@ function Tasks() {
                                                 <tbody>
                                                     {
                                                         data.map(task => (
-                                                            <tr key={task.id}> {/* خاصية key الفريدة */}
-                                                                <td>{task.id}</td> {/* عرض الـ id */}
+                                                            <tr key={task.id}>
                                                                 <td>{task.title}</td>
                                                                 <td>
                                                                     {task.san7a ? (
-                                                                        <img src={`http://127.0.0.1:8000/uploads/tasks/${task.san7a}`} alt="san7a" width="50" />
+                                                                        <img src={`http://127.0.0.1:8000/uploads/tasks/${task.san7a}`} alt={`${task.title} image`} width="50" />
                                                                     ) : (
                                                                         <p>No Image</p>
                                                                     )}
                                                                 </td>
-                                                                
+                                                                <td>{task.deadline}</td>
                                                                 <td>{task.description}</td>
                                                                 <td>
                                                                     <Link to={`/task-edit/${task.id}`}>

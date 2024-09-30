@@ -4,21 +4,22 @@ import Nav from "./nav";
 import Footer from "./category"
 import { FaEnvelope } from 'react-icons/fa';
 import { AuthContext } from './context/AuthContext';
-import axios from 'axios'; // Ensure axios is imported
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios'; 
+import { useNavigate } from 'react-router-dom';
 
 function EditProfile() {
     const { auth } = useContext(AuthContext);
     const [userName, setUserName] = useState(auth.user.name);
     const [userAge, setUserAge] = useState(auth.user.dob);
     const [userEmail, setUserEmail] = useState(auth.user.email);
-    const [userGender, setUserGender] = useState(auth.user.gender); // Added for gender
-    const [parentName, setParentName] = useState(auth.user.parentName); // Added for parent name
-    const [parentPhone, setParentPhone] = useState(auth.user.parentPhone); // Added for parent phone
+    const [userGender, setUserGender] = useState(auth.user.gender); 
+    const [parentName, setParentName] = useState(auth.user.parentName);
+    const [parentPhone, setParentPhone] = useState(auth.user.parentPhone); 
+    const userImage = `http://127.0.0.1:8000/${auth.user.san7a}`; 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const { setAuth } = useContext(AuthContext);
-    const navigate = useNavigate(); // Initialize useNavigate
+    const navigate = useNavigate(); 
 
     const handleSave = async () => {
         if (!userName || !userEmail || !userGender || !parentName || !parentPhone) {
@@ -30,9 +31,9 @@ function EditProfile() {
             name: userName, 
             dob: userAge, 
             email: userEmail,
-            gender: userGender, // Include gender
-            parentName: parentName, // Include parent name
-            parentPhone: parentPhone // Include parent phone
+            gender: userGender, 
+            parentName: parentName, 
+            parentPhone: parentPhone ,
         };
 
         try {
@@ -92,7 +93,7 @@ function EditProfile() {
                     width: '100%'
                 }}>
                     <img
-                        src="https://afn.ca/wp-content/uploads/2022/12/unknown_staff-500x500.webp"
+                        src={userImage}
                         alt="User"
                         style={{ borderRadius: '10%', width: '300px', height: '300px', marginRight: '20px' }}
                     />
@@ -133,7 +134,6 @@ function EditProfile() {
                                     <option value="">Select Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
-                                    <option value="other">Other</option>
                                 </select>
                             </div>
                             <div>

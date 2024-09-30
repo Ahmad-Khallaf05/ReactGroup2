@@ -1,7 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import { taskySchema } from "../../../../schemas/index"; 
 import axios from 'axios';
 import Navbar from "../../Navbar";
 import Sidebar from "../../Sidebar";
@@ -10,15 +8,46 @@ import Swal from 'sweetalert2';
 
 const CreateTask = () => {
     const navigate = useNavigate();
-
-    const onSubmit = async (values) => {
-        try {
-            const formData = new FormData();
-            formData.append('title', values.title);
-            formData.append('description', values.description);
-            formData.append('san7a', values.san7a);  
     
-            const response = await axios.post('http://127.0.0.1:8000/api/tasks', formData, {
+   
+    const [formData, setFormData] = useState({
+        title: "",
+        description: "",
+        deadline: "",
+        san7a: null
+    });
+
+    const [loading, setLoading] = useState(false);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    };
+
+    const handleFileChange = (e) => {
+        setFormData({
+            ...formData,
+            san7a: e.target.files[0] 
+        });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        
+        try {
+            const data = new FormData();
+            data.append('title', formData.title);
+            data.append('description', formData.description);
+            data.append('deadline', formData.deadline); 
+            if (formData.san7a) {
+                data.append('san7a', formData.san7a);  
+            }
+
+            const response = await axios.post('http://127.0.0.1:8000/api/tasks', data, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -30,29 +59,19 @@ const CreateTask = () => {
                 icon: 'success',
                 confirmButtonText: 'OK'
             });
-            navigate('/tasks');  
-
+            navigate('/tasks');
         } catch (error) {
-            console.log("Error submitting form:", error.response ? error.response.data : error.message);
+            console.error("Error submitting form:", error.response ? error.response.data : error.message);
             Swal.fire({
                 title: 'Error!',
                 text: 'There was an error creating the task.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
+        } finally {
+            setLoading(false);
         }
     };
-    
-    const formik = useFormik({
-        initialValues: {
-            title: "",
-            description: "",
-            san7a: null  
-        },
-        validationSchema: taskySchema, 
-        onSubmit,
-    });
-    
 
     return (
         <>
@@ -75,50 +94,59 @@ const CreateTask = () => {
                                             <h4>Add A Task</h4>
                                         </div>
                                         <div className="card-body">
-                                            <form onSubmit={formik.handleSubmit} autoComplete="off">
+                                            <form onSubmit={handleSubmit} autoComplete="off">
                                                 <div className="form-group mb-3">
                                                     <label htmlFor='title'>Title</label>
-                                                    <input value={formik.values.title}
-                                                        onChange={formik.handleChange}
+                                                    <input
+                                                        value={formData.title}
+                                                        onChange={handleChange}
                                                         id="title"
+                                                        name="title"
                                                         type="text"
                                                         placeholder="Enter Task title"
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.title && formik.touched.title ? "input-error form-control" : "form-control"}
+                                                        className="form-control"
+                                                        required
                                                     />
-                                                    {formik.errors.title && formik.touched.title && <p className="error">{formik.errors.title}</p>}
                                                 </div>
                                                 <div className="form-group mb-3">
                                                     <label htmlFor='description'>Description</label>
-                                                    <input value={formik.values.description}
-                                                        onChange={formik.handleChange}
+                                                    <input
+                                                        value={formData.description}
+                                                        onChange={handleChange}
                                                         id="description"
+                                                        name="description"
                                                         type="text"
                                                         placeholder="Enter Task description"
-                                                        onBlur={formik.handleBlur}
-                                                        className={formik.errors.description && formik.touched.description ? "input-error form-control" : "form-control"}
+                                                        className="form-control"
+                                                        required
                                                     />
-                                                    {formik.errors.description && formik.touched.description && <p className="error">{formik.errors.description}</p>}
                                                 </div>
-                                                {/* <div className="form-group mb-3">
-                                                    <label htmlFor='san7a'>San7a</label>
+                                                <div className="form-group mb-3">
+                                                    <label htmlFor='deadline'>Deadline</label>
+                                                    <input
+                                                        value={formData.deadline}
+                                                        onChange={handleChange}
+                                                        id="deadline"
+                                                        name="deadline"
+                                                        type="date"
+                                                        className="form-control"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className="form-group mb-3">
+                                                    <label htmlFor='san7a'>San7a (Image)</label>
                                                     <input
                                                         id="san7a"
+                                                        name="san7a"
                                                         type="file"
                                                         accept="image/*"
-                                                        onChange={(event) => {
-                                                            formik.setFieldValue("san7a", event.currentTarget.files[0]); 
-                                                        }}
-                                                        className={formik.errors.san7a && formik.touched.san7a ? "input-error form-control" : "form-control"}
+                                                        onChange={handleFileChange}
+                                                        className="form-control"
                                                     />
-                                                    {formik.errors.san7a && formik.touched.san7a && (
-                                                        <p className="error">{formik.errors.san7a}</p>
-                                                    )}
-                                                </div> */}
-
+                                                </div>
                                                 <div className="form-group mb-3">
-                                                    <button type='submit' disabled={formik.isSubmitting} className='btn btn-primary'>
-                                                        {formik.isSubmitting ? 'Submitting...' : 'Add task'}
+                                                    <button type='submit' disabled={loading} className='btn btn-primary'>
+                                                        {loading ? 'Submitting...' : 'Add Task'}
                                                     </button>
                                                 </div>
                                             </form>
