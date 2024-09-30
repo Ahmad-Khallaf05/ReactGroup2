@@ -18,9 +18,7 @@ function Classrooms() {
         axios.get('http://127.0.0.1:8000/api/classrooms')
             .then(response => {
                 console.log('API Response:', response.data);
-                setClassrooms(response.data);
-                setClassrooms(response.data.classrooms); 
-
+                setClassrooms(response.data.classrooms); // تأكد من استجابة البيانات الصحيحة
             })
             .catch(error => {
                 console.error('Error fetching classrooms:', error);
@@ -28,11 +26,13 @@ function Classrooms() {
     };
 
     const handleDelete = async (id) => {
-        try {
-            await axios.delete(`http://127.0.0.1:8000/api/classrooms/${id}/delete`);
-            fetchClassrooms(); 
-        } catch (error) {
-            console.error('Error deleting classroom:', error);
+        if (window.confirm("Are you sure you want to delete this classroom?")) {
+            try {
+                await axios.delete(`http://127.0.0.1:8000/api/classrooms/${id}`);
+                fetchClassrooms(); 
+            } catch (error) {
+                console.error('Error deleting classroom:', error);
+            }
         }
     };
 
@@ -59,7 +59,7 @@ function Classrooms() {
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
-                                                    <th>admin</th>
+                                                    <th>Admin</th>
                                                     <th>Level</th>
                                                     <th>Date</th>
                                                     <th>Edit</th>
@@ -67,33 +67,33 @@ function Classrooms() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-    {classrooms.length > 0 ? (
-        classrooms.map((classroom) => (
-            <tr key={classroom.id}>
-                <td>{classroom.name}</td>
-                <td>{classroom.admin_id}</td>
-                <td>{classroom.level}</td>
-                <td>{classroom.created_at}</td>
-                <td>
-                    <Link to={`/edit-classroom/${classroom.id}`}>
-                        <MdEdit style={{ width: 25, height: 25, cursor: 'pointer' }} />
-                    </Link>
-                </td>
-                <td>
-                    <MdDeleteForever
-                        style={{ width: 35, height: 35, cursor: 'pointer' }}
-                        onClick={() => handleDelete(classroom.id)}
-                    />
-                </td>
-            </tr>
-        ))
-    ) : (
-        <tr>
-            <td colSpan="5">No classrooms found</td>
-        </tr>
-    )}
-</tbody>
+                                                {classrooms.length > 0 ? (
+                                                    classrooms.map((classroom) => (
+                                                        <tr key={classroom.id}>
+                                                            <td>{classroom.name}</td>
+                                                            <td>{classroom.admin_id}</td>
+                                                            <td>{classroom.level}</td>
+                                                            <td>{new Date(classroom.created_at).toLocaleString()}</td>
 
+                                                            <td>
+                                                                <Link to={`/edit-classroom/${classroom.id}`}>
+                                                                    <MdEdit style={{ width: 25, height: 25, cursor: 'pointer' }} />
+                                                                </Link>
+                                                            </td>
+                                                            <td>
+                                                                <MdDeleteForever
+                                                                    style={{ width: 35, height: 35, cursor: 'pointer' }}
+                                                                    onClick={() => handleDelete(classroom.id)}
+                                                                />
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="6">No classrooms found</td>
+                                                    </tr>
+                                                )}
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>

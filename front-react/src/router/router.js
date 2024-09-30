@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthProvider } from '../components/landing/components/context/AuthContext';
-import ProtectedRoute from '../components/landing/components/utils/ProtectedRoute'; // Create this component for regular users.
+// import ProtectedRoute from '../components/landing/components/utils/ProtectedRoute'; // Create this component for regular users.
 
 import Landing from "../components/pages/land";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';

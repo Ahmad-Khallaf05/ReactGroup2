@@ -48,8 +48,8 @@ Route::get('/classrooms', [ClassroomController::class, 'index']);
 Route::post('/classrooms', [ClassroomController::class, 'store']);
 Route::apiResource('classrooms', ClassroomController::class);
 Route::get('/classrooms/{classroom}', [ClassroomController::class, 'show']);
-Route::get('/classrooms/{classroom}/edit', [ClassroomController::class, 'edit']);
-Route::put('/classrooms/{classroom}/edit', [ClassroomController::class, 'update']);
+Route::get('classrooms/{id}/edit', [ClassroomController::class, 'edit']);
+Route::put('classrooms/{id}/edit', [ClassroomController::class, 'update']);
 Route::delete('/classrooms/{id}/delete', [ClassroomController::class, 'destroy']);
 //studentclassrooms
 Route::get('/studentclasses', [StudentclasseController::class, 'index']);

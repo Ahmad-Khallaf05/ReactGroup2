@@ -1,52 +1,76 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useFormik } from "formik";
-import { ClassroomSchema } from "../../../../schemas/index"; // Ensure the schema is correct
 import axios from 'axios';
-
 import Navbar from "../../Navbar";
 import Sidebar from "../../Sidebar";
 import Footer from "../../Footer";
 
 const EditClassroom = () => {
-    const { id } = useParams(); // Get classroom ID from URL
+    const { id } = useParams();
     const navigate = useNavigate();
-
-    const formik = useFormik({
-        initialValues: {
-            name: "",
-            level: "",
-        },
-        validationSchema: ClassroomSchema, // Use ClassroomSchema
-        onSubmit: async (values) => {
-            try {
-                await axios.put(`http://127.0.0.1:8000/api/classrooms/${id}`, values);
-                fetchClassroom(); // Reload classroom data after update
-                navigate('/classrooms');
-            } catch (error) {
-                console.error('Error updating classroom:', error);
-                alert("An error occurred: " + (error.response?.data?.message || error.message));
-            }
-        },
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [formData, setFormData] = useState({
+        name: "",
+        level: "",
+    });
+    const [formErrors, setFormErrors] = useState({
+        name: "",
+        level: "",
     });
 
-    const fetchClassroom = async () => {
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/classrooms/${id}`); // Use GET here
+    const validate = () => {
+        let errors = {};
+        if (!formData.name) {
+            errors.name = "Name is required";
+        }
+        if (!formData.level) {
+            errors.level = "Level is required";
+        }
+        return errors;
+    };
 
-            formik.setValues({
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const errors = validate();
+        if (Object.keys(errors).length > 0) {
+            setFormErrors(errors);
+            return;
+        }
+
+        try {
+            const response = await axios.put(`http://127.0.0.1:8000/api/classrooms/${id}`, formData);
+            console.log("Response:", response.data);
+            navigate('/classrooms');
+        } catch (error) {
+            console.error('Error updating classroom:', error);
+            alert("An error occurred: " + (error.response?.data?.message || error.message));
+        }
+    };
+
+    const fetchClassroom = async () => {
+        setLoading(true);
+        try {
+            const response = await axios.get(`http://127.0.0.1:8000/api/classrooms/${id}/edit`);
+            console.log("Classroom ID:", id);
+            setFormData({
                 name: response.data.classroom.name,
                 level: response.data.classroom.level,
             });
         } catch (error) {
             console.error('Error fetching classroom:', error);
-            alert("Failed to fetch classroom details.");
+            setError("Failed to fetch classroom details.");
+        } finally {
+            setLoading(false);
         }
     };
 
     useEffect(() => {
         fetchClassroom();
     }, [id]);
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>{error}</div>;
 
     return (
         <div className="container-scroller">
@@ -68,35 +92,35 @@ const EditClassroom = () => {
                                         <h4>Edit A Classroom</h4>
                                     </div>
                                     <div className="card-body">
-                                        <form onSubmit={formik.handleSubmit} autoComplete="off">
+                                        <form onSubmit={onSubmit} autoComplete="off">
                                             <div className="form-group mb-3">
                                                 <label htmlFor='name'>Name</label>
-                                                <input 
-                                                    value={formik.values.name}
-                                                    onChange={formik.handleChange}
+                                                <input
+                                                    value={formData.name}
+                                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                                     id="name"
                                                     type="text"
                                                     placeholder="Enter classroom name"
-                                                    onBlur={formik.handleBlur}
-                                                    className={formik.errors.name && formik.touched.name ? "input-error form-control" : "form-control"}
+                                                    className={formErrors.name ? "input-error form-control" : "form-control"}
                                                 />
-                                                {formik.errors.name && formik.touched.name && <p className="error">{formik.errors.name}</p>}
+                                                {formErrors.name && <p className="error">{formErrors.name}</p>}
                                             </div>
                                             <div className="form-group mb-3">
                                                 <label htmlFor='level'>Level</label>
-                                                <input 
-                                                    value={formik.values.level}
-                                                    onChange={formik.handleChange}
+                                                <input
+                                                    value={formData.level}
+                                                    onChange={(e) => setFormData({ ...formData, level: e.target.value })}
                                                     id="level"
                                                     type="text"
                                                     placeholder="Enter classroom level"
-                                                    onBlur={formik.handleBlur}
-                                                    className={formik.errors.level && formik.touched.level ? "input-error form-control" : "form-control"}
+                                                    className={formErrors.level ? "input-error form-control" : "form-control"}
                                                 />
-                                                {formik.errors.level && formik.touched.level && <p className="error">{formik.errors.level}</p>}
+                                                {formErrors.level && <p className="error">{formErrors.level}</p>}
                                             </div>
                                             <div className="form-group mb-3">
-                                                <button type='submit' disabled={formik.isSubmitting} className='btn btn-primary'>Update Classroom</button>
+                                                <button type='submit' className='btn btn-primary'>
+                                                    Update Classroom
+                                                </button>
                                             </div>
                                         </form>
                                     </div>

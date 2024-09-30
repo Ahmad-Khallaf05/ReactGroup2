@@ -9,21 +9,23 @@ import Footer from "../../Footer";
 
 const CreateStudentclasses = () => {
     const navigate = useNavigate();
-    const [admins, setAdmins] = useState([]); 
+    const [users, setUsers] = useState([]); 
     const [classrooms, setClassrooms] = useState([]); 
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const [adminResponse, classResponse] = await Promise.all([
-                    axios.get('http://127.0.0.1:8000/api/admins'),
-                    axios.get('http://127.0.0.1:8000/api/classrooms')
+                const [userResponse, classroomResponse] = await Promise.all([
+                    axios.get('http://127.0.0.1:8000/api/users'),
+                    axios.get('http://127.0.0.1:8000/api/classrooms'),
+                    
                 ]);
-                setAdmins(adminResponse.data.result || []);
-                setClassrooms(classResponse.data.result || []);
-                console.log("Classrooms:", classResponse.data.result); 
+                
+                setUsers(userResponse.data.result || []);
+                setClassrooms(classroomResponse.data.result || []);
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError("An error occurred while fetching data.");
@@ -35,23 +37,26 @@ const CreateStudentclasses = () => {
         fetchData();
     }, []);
     
-
     const onSubmit = async (values) => {
+        setSubmitting(true);
         try {
             const response = await axios.post('http://127.0.0.1:8000/api/studentclasses', values);
             console.log("Response:", response.data);
             formik.resetForm(); 
             navigate('/studentclasses');
+
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert("An error occurred: " + (error.response?.data?.errors?.admin_id || error.message));
+            setError(error.response?.data?.errors?.admin_id || "An error occurred");
+        } finally {
+            setSubmitting(false);
         }
     };
 
     const formik = useFormik({
         initialValues: {
-            admin_id: "",
-            class_id: "",
+            user_id: "",
+            classroom_id: "",
         },
         validationSchema: StudentclassSchema,
         onSubmit,
@@ -82,38 +87,40 @@ const CreateStudentclasses = () => {
                                     <div className="card-body">
                                         <form onSubmit={formik.handleSubmit} autoComplete="off">
                                             <div className="form-group mb-3">
-                                                <label htmlFor='admin_id'>Select Admin</label>
+                                                <label htmlFor='user_id'>Select Admin</label>
                                                 <select
-                                                    id="admin_id"
-                                                    name="admin_id"
-                                                    {...formik.getFieldProps('admin_id')}
-                                                    className={formik.touched.admin_id && formik.errors.admin_id ? "input-error form-control" : "form-control"}
+                                                    id="user_id"
+                                                    name="user_id"
+                                                    {...formik.getFieldProps('user_id')}
+                                                    className={formik.touched.user_id && formik.errors.user_id ? "input-error form-control" : "form-control"}
                                                 >
                                                     <option value="">Choose Admin...</option>
-                                                    {admins.length > 0 && admins.map(admin => (
-                                                        <option key={admin.id} value={admin.id}>{admin.name}</option>
+                                                    {users.length > 0 && users.map(user => (
+                                                        <option key={user.id} value={user.id}>{user.name}</option>
                                                     ))}
                                                 </select>
-                                                {formik.touched.admin_id && formik.errors.admin_id && <p className="error">{formik.errors.admin_id}</p>}
+                                                {formik.touched.user_id && formik.errors.user_id && <p className="error">{formik.errors.user_id}</p>}
                                             </div>
                                             <div className="form-group mb-3">
-                                                <label htmlFor='class_id'>Select Class</label>
+                                                <label htmlFor='classroom_id'>Select Class</label>
                                                 <select
-                                                    id="class_id"
-                                                    name="class_id"
-                                                    {...formik.getFieldProps('class_id')}
-                                                    className={formik.touched.class_id && formik.errors.class_id ? "input-error form-control" : "form-control"}
+                                                    id="classroom_id"
+                                                    name="classroom_id"
+                                                    {...formik.getFieldProps('classroom_id')}
+                                                    className={formik.touched.classroom_id && formik.errors.classroom_id ? "input-error form-control" : "form-control"}
                                                 >
                                                     <option value="">Choose Class...</option>
                                                     {classrooms.length > 0 && classrooms.map(classroom => (
                                                         <option key={classroom.id} value={classroom.id}>{classroom.name}</option>
                                                     ))}
                                                 </select>
-                                                {formik.touched.class_id && formik.errors.class_id && <p className="error">{formik.errors.class_id}</p>}
+                                                {formik.touched.classroom_id && formik.errors.classroom_id && <p className="error">{formik.errors.classroom_id}</p>}
                                             </div>
 
                                             <div className="form-group mb-3">
-                                                <button type='submit' disabled={formik.isSubmitting} className='btn btn-primary'>Add Classroom</button>
+                                                <button type='submit' disabled={formik.isSubmitting || submitting} className='btn btn-primary'>
+                                                    {submitting ? "Adding..." : "Add Classroom"}
+                                                </button>
                                             </div>
                                         </form>
                                     </div>

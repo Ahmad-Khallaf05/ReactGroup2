@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\User;
 use App\Models\Studentclasse;
 use App\Models\Classroom;
 use Illuminate\Http\Request;
@@ -17,11 +18,11 @@ class StudentclasseController extends Controller
     {
         $classrooms = Classroom::all();
         $studentclasses = Studentclasse::all();
-        $admins = Admin::all();
+        $users = User::all();
 
         return response()->json([
             'classrooms' => $classrooms,
-            'admins' => $admins,
+            'users' => $users,
             'studentclasses' => $studentclasses
         ]);
     }
@@ -42,8 +43,8 @@ class StudentclasseController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'admin_id' => 'required',
-                'class_id' => 'required',
+                'user_id' => 'required',
+                'classroom_id' => 'required',
             ]
         );
 
@@ -54,10 +55,9 @@ class StudentclasseController extends Controller
             ], 422);
         }
 
-        // استخدم Studentclasse لإنشاء سجل جديد
         $studentclass = Studentclasse::create([
-            'class_id' => $request->class_id,
-            'admin_id' => $request->admin_id,
+            'classroom_id' => $request->classroom_id,
+            'user_id' => $request->user_id,
         ]);
 
         return response()->json([

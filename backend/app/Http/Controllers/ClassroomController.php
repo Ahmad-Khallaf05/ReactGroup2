@@ -73,12 +73,33 @@ class ClassroomController extends Controller
 
         return response()->json(['classroom' => $classroom]);
     }
+    public function edit($id)
+    {
+        $classroom = Classroom::find($id);
 
+        if (!$classroom) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Classroom not found',
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 200,
+            'classroom' => $classroom,
+        ], 200);
+    }
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
     {
+        $classroom = Classroom::find($id);
+
+        if (!$classroom) {
+            return response()->json(['message' => 'Classroom not found'], 404);
+        }
+
         $validator = Validator::make(
             $request->all(),
             [
@@ -94,28 +115,12 @@ class ClassroomController extends Controller
             ], 422);
         }
 
-        // البحث عن الفصل الدراسي باستخدام المعرف
-        $classroom = Classroom::find($id);
+        // Use $request->all() instead of $validator->all() to get the data
+        $classroom->update($request->all());
 
-        if (!$classroom) {
-            return response()->json([
-                'status' => 404,
-                'message' => 'Classroom not found'
-            ], 404);
-        }
-
-        // تحديث المعلومات
-        $classroom->update([
-            'name' => $request->name,
-            'level' => $request->level,
-        ]);
-
-        return response()->json([
-            'status' => 200,
-            'message' => 'Classroom updated successfully',
-            'classroom' => $classroom
-        ], 200);
+        return response()->json(['message' => 'Classroom updated successfully', 'classroom' => $classroom], 200);
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -3,8 +3,9 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Admin;
+use App\Models\User;
 use App\Models\Classroom;
+
 return new class extends Migration
 {
     /**
@@ -15,8 +16,8 @@ return new class extends Migration
         Schema::create('studentclasses', function (Blueprint $table) {
             $table->id();
             // $table->string('EnrollmentID');
-            $table->foreignIdFor(Admin::class)->constrained();
-            $table->foreignIdFor(Classroom::class)->constrained();
+            $table->foreignIdFor(Classroom::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
