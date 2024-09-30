@@ -5,7 +5,7 @@ export default function about() {
     <div>
 
           {/* About Start */}
-  <div className="container-fluid py-5 about bg-light">
+  <div className="container-fluid py-5 about bg-light" id={'about'}>
     <div className="container py-5">
       <div className="row g-5 align-items-center">
         <div className="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
@@ -64,9 +64,7 @@ export default function about() {
               </h6>
             </div>
           </div>
-          <a href="" className="btn btn-primary px-5 py-3 btn-border-radius">
-            More Details
-          </a>
+
         </div>
       </div>
     </div>

@@ -52,11 +52,7 @@ export default function nav() {
     </div> */}
     <div className="container px-0">
       <nav className="navbar navbar-light navbar-expand-xl py-3">
-        <a href="index.html" className="navbar-brand">
-          {/* <h1 className="text-primary display-6">
-            Baby<span className="text-secondary">Care</span>
-          </h1> */}
-        </a>
+
         <button
           className="navbar-toggler py-2 px-3"
           type="button"
@@ -67,45 +63,23 @@ export default function nav() {
         </button>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <div className="navbar-nav mx-auto">
-            <a href="index.html" className="nav-item nav-link active">
+            <a href="/" className="nav-item nav-link active">
               Home
             </a>
-            <a href="about.html" className="nav-item nav-link">
+            <a href="/#about" className="nav-item nav-link">
               About
             </a>
             {/* <a href="service.html" className="nav-item nav-link">
               Event
             </a> */}
-            <a href="program.html" className="nav-item nav-link">
-              teatcher
-            </a>
-            <a href="event.html" className="nav-item nav-link">
+            <a href="/#event" className="nav-item nav-link">
               Events
             </a>
-            {/* <div className="nav-item dropdown">
-              <a
-                href="#"
-                className="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                Pages
-              </a>
-              <div className="dropdown-menu m-0 bg-secondary rounded-0">
-                <a href="blog.html" className="dropdown-item">
-                  Our Blog
-                </a>
-                <a href="team.html" className="dropdown-item">
-                  Our Team
-                </a>
-                <a href="testimonial.html" className="dropdown-item">
-                  Testimonial
-                </a>
-                <a href="404.html" className="dropdown-item">
-                  404 Page
-                </a>
-              </div>
-            </div> */}
-            <a href="contact.html" className="nav-item nav-link">
+            <a href="/#teatcher" className="nav-item nav-link">
+              staff
+            </a>
+
+            <a href="/#contact" className="nav-item nav-link" >
               Contact
             </a>
           </div>

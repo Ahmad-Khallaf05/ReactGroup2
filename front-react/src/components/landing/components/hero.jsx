@@ -19,17 +19,12 @@ Fostering Excellence and Inspiration in Every Step
 </h4>
 
           <a
-            href=""
+            href="/login"
             className="btn btn-primary px-4 py-3 px-md-5  me-4 btn-border-radius"
           >
             Get Started
           </a>
-          <a
-            href=""
-            className="btn btn-primary px-4 py-3 px-md-5 btn-border-radius"
-          >
-            learn more aobut
-          </a>
+
           
         </div>
       </div>

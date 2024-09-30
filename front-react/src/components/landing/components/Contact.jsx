@@ -48,7 +48,7 @@ export default function Contact() {
     <div>
       {/* Contact Form Start */}
       <div className="container my-5">
-        <h2 className="text-dark mb-4 display-5" style={{ textAlign: 'center' }}>Contact Us</h2>
+        <h2 className="text-dark mb-4 display-5" style={{ textAlign: 'center' }} id={'contact'}>Contact Us</h2>
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-md-6 mb-3">

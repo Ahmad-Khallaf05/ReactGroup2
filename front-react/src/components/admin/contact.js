@@ -4,10 +4,17 @@ import { MdDeleteForever } from "react-icons/md";
 
 import Navbar from "../../components/admin/Navbar"; 
 import Sidebar from "../../components/admin/Sidebar"; 
-import Footer from "../../components/admin/Footer"; 
+import Footer from "../../components/admin/Footer";
+import Swal from "sweetalert2";
+import withReactContent from 'sweetalert2-react-content';
+
 
 function Contacts() {
     const [contacts, setContacts] = useState([]);
+    const [loading, setLoading] = useState(false);
+
+
+
 
     useEffect(() => {
         axios.get('http://127.0.0.1:8000/api/contacts') 
@@ -19,17 +26,41 @@ function Contacts() {
             });
     }, []);
 
-    const handleDelete = (id) => {
-        console.log("Deleting contact with ID:", id);
-        axios.delete(`http://127.0.0.1:8000/api/contacts/${id}`) 
-            .then(() => {
-                setContacts(contacts.filter(contact => contact.id !== id)); 
-            })
-            .catch(error => {
-                console.error('Error deleting contact:', error);
-            });
-    };
-
+    function handleDelete(id){
+        Swal.fire({
+            title: "Are you sure you want to delete this user?",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.delete(`http://127.0.0.1:8000/api/contacts/${id}`) .then(res=>{
+                    // alert('The User Has Been Delete');
+                    Swal.fire("Deleted!", "", "success");
+                    setContacts(contacts.filter(contact => contact.id !== id));
+                    setLoading(false);
+                })
+            } else if (result.isDenied) {
+                Swal.fire("Changes are not saved", "", "info");
+            }
+        });}
+    // const handleDelete = (id) => {
+    //     console.log("Deleting contact with ID:", id);
+    //     axios.delete(`http://127.0.0.1:8000/api/contacts/${id}`)
+    //         .then(() => {
+    //             setContacts(contacts.filter(contact => contact.id !== id));
+    //         })
+    //         .catch(error => {
+    //             console.error('Error deleting contact:', error);
+    //         });
+    // };
+    if(loading){
+        return (
+            <div className="spinner-border text-primary d-flex justify-content-center" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        )
+    }
     return (
         <div>
             <div className="container-scroller">
