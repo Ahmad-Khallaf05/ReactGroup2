@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import * as Yup from 'yup';
 import { useFormik } from "formik";
 
 const passwordRules = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/;
@@ -43,3 +44,18 @@ export const taskySchema = yup.object().shape({
         
         
 });
+
+
+ export const ClassroomSchema = Yup.object().shape({
+     name: Yup.string().required('Name is required'),
+     level: Yup.string().required('Level is required'),
+     admin_id: Yup.string().required('Admin must be selected'),
+ });
+ 
+ export const StudentclassSchema = Yup.object().shape({
+     
+     user_id: Yup.string().required('Admin must be selected'),
+     classroom_id: Yup.string().required('class must be selected'),
+ });
+ 
+ 

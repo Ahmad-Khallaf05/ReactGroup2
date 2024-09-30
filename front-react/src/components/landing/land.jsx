@@ -5,7 +5,7 @@ import './css/bootstrap.min.css';
 
 import NavLand from './components/nav';
 import HeroLand from './components/hero';
-import Category from './components/categories';
+// import Category from './components/categories';
 import AboutLand from './components/about';
 import EventLand from './components/event';
 import ProgramLand from './components/program';
@@ -26,7 +26,7 @@ export default function Land() {
           <NavLand />
           <HeroLand />
           <AboutLand />
-          <Category />
+          {/* <Category /> */}
           <EventLand />
           <ProgramLand />
           <BlogLand />
