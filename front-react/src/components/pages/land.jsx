@@ -6,7 +6,7 @@ import '../landing/css/bootstrap.min.css';
 
 import NavLand from '../landing/components/nav';
 import HeroLand from '../landing/components/hero';
-import Category from '../landing/components/categories';
+// import Category from '../landing/components/categories';
 import AboutLand from '../landing/components/about';
 import EventLand from '../landing/components/event';
 import ProgramLand from '../landing/components/program';
@@ -26,7 +26,7 @@ export default function Land() {
     <div>
         <NavLand />
         <HeroLand />
-        <Category />
+        {/* <Category /> */}
         <AboutLand />
         <EventLand />
         <ProgramLand />

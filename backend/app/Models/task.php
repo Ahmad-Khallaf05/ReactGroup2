@@ -14,8 +14,16 @@ class Task extends Model
     ) {
         return $this->belongsTo(Classroom::class, 'classroom_id');
     }
-    function sturdents()
-    {
-        return $this->belongsToMany(User::class, 'user_id');
-    }
+    function students()
+{
+    return $this->belongsToMany(User::class, 'task_user', 'task_id', 'user_id');
+}
+
+    // protected $fillable = [
+    //     'title',
+    //     'description',
+    //     'deadline',
+    //     'san7a',
+    // ];
+    
 }

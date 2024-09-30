@@ -1,12 +1,13 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useFormik } from "formik";
-import { taskSchema } from "../../../../schemas/index";
+import { taskySchema } from "../../../../schemas/index";
 import axios from 'axios';
 import { useState,useEffect } from 'react';
 import Navbar from "../../Navbar";
 import Sidebar from "../../Sidebar";
 import Footer from "../../Footer";
+import Swal from 'sweetalert2';
 
 const EditTask = () => {
     const {id} = useParams();
@@ -41,7 +42,7 @@ const EditTask = () => {
             deadline: data.deadline,
             progress: data.progress
         },
-        validationSchema: taskSchema,enableReinitialize:true,
+        validationSchema: taskySchema,enableReinitialize:true,
         onSubmit,
     });
     return (

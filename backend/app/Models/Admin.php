@@ -21,11 +21,7 @@ class Admin extends Authenticatable
         'san7a'
     ];
     protected $table = 'admins';
-    function classes()
-    {
-
-        return $this->hasMany(Classroom::class, 'classroom_id');
-    }
+    
     function events()
     {
         return $this->hasMany(Event::class);
