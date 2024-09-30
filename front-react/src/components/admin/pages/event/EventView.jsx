@@ -43,26 +43,31 @@ function EventView() {
         <div className="main-panel">
           <div className="content-wrapper">
             <div className="page-header">
-              <h3 className="page-title">Events Table</h3>
+              <h3 className="page-title">Events </h3>
               <Link to="/Event" className="btn btn-primary">
                 back
               </Link>
             </div>
-            <div>
-              <h2>{event.title}</h2>
-              <p>{event.description}</p>
-              <p>
-                <strong>Image:</strong> {event.san7a}
-              </p>
-              <p>
-                <strong>Date:</strong> {event.date}
-              </p>
-              <p>
-                <strong>Category:</strong> {event.category}
-              </p>
+            <div className="row">
+              <div className="col-lg-12 grid-margin stretch-card">
+                <div className="card">
+                  <div className="card-body">
+                    <h5 className="card-title">Event Info</h5>
+                    <img src={`http://127.0.0.1:8000/${event.san7a}`} alt="student image"
+                         className="img-fluid mb-2"/>
+
+                    <p className='card-text'><b className='text-bg-info'>Event Title : </b>{event.title}</p>
+                    <p className='card-text'><b>Event Description : </b>{event.description}</p>
+                    <p className='card-text'><b>Event Date : </b>{event.date}</p>
+                    <p className='card-text'><b>Event Category : </b>{event.category}</p>
+
+
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <Footer />
+          <Footer/>
         </div>
       </div>
     </div>

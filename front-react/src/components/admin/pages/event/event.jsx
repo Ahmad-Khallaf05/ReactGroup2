@@ -89,7 +89,7 @@ function Events() {
                                                         <tr key={event.id}>
                                                             <td>{event.title}</td>
                                                             <td>{event.description}</td>
-                                                            <td>{event.san7a}</td>
+                                                            <td><img src={`http://127.0.0.1:8000/${event.san7a}`} alt="event"/></td>
                                                             <td>{event.date}</td>
                                                             <td>{event.category}</td>
                                                             <td>

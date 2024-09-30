@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -167,7 +169,7 @@ class UserController extends Controller
 
         // Find the user
         $user = User::find($id);
-        
+
         if (!$user) {
             return response()->json([
                 'status' => 404,
@@ -244,4 +246,16 @@ class UserController extends Controller
     }
 
 
+    public function chart()
+    {
+        return response()->json([
+            'status' => 200,
+            'student' => User::all()->count(),
+            'admin' => Admin::all()->count(),
+            'teacher' => Admin::where('role', 'Teacher')->count()->get(),
+            'supervisor' => Admin::where('role', 'Supervisor')->count()->get(),
+            'manager' => Admin::where('role', 'Manager')->count()->get(),
+            'event' => Event::all()->count(),
+        ],200);
+    }
 }
