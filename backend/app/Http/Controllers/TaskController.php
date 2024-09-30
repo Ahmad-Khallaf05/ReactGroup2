@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task; // Make sure the model name is correct
+use App\Models\studenttask;
+use App\Models\task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -13,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
+        $tasks = task::all();
 
         if ($tasks->count() > 0) {
             return response()->json([
@@ -27,7 +28,21 @@ class TaskController extends Controller
             ], 404);
         }
     }
+    public function addStudent(Request $request,$id) 
+    {
 
+        $task = task::findOrFail($id);
+        
+        studenttask::create([
+            'user_id' => $request->user_id,
+            'task_id' =>$id
+        ]);
+        return response()->json([
+            'user' => $request->user_id,
+            'id' => $id
+        ]);
+        
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -59,7 +74,7 @@ class TaskController extends Controller
             $file->move($path, $fileNameSan7a);
         }
 
-        $task = Task::create([
+        $task = task::create([
             'title' => $request->title,
             'description' => $request->description,
             'deadline' => $request->deadline,
@@ -76,18 +91,25 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show(task $task)
     {
-        return response()->json([
-            'status' => 200,
-            'task' => $task
-        ], 200);
+        if ($task) {
+            return response()->json([
+                'status' => 200,
+                'task' => $task
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'No Records Found'
+            ], 404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, task $task)
     {
         $validator = Validator::make(
             $request->all(),
@@ -102,40 +124,93 @@ class TaskController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 422,
-                'errors' => $validator->messages(),
+                'errors' => $validator->messages()
             ], 422);
         }
 
-        // Handle file upload if it exists
         if ($request->hasFile('san7a')) {
             $san7a = $request->file('san7a');
             $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
             $san7a->move(public_path('uploads/tasks'), $san7aName);
-            $task->san7a = $san7aName; // Update san7a only if a new file is uploaded
+            $task->san7a = $san7aName;
         }
 
         $task->update([
             'title' => $request->title,
             'description' => $request->description,
-            'deadline' => $request->deadline,
-            'san7a' => $task->san7a, // Ensure the san7a is updated if new file is uploaded
+            // 'deadline' => $request->deadline,
         ]);
 
         return response()->json([
             'status' => 200,
-            'message' => 'Task Updated Successfully',
+            'message' => 'Task Updated Successfully'
         ], 200);
+
+
+        if ($request->hasFile('san7a')) {
+            $san7a = $request->file('san7a');
+            $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
+            $san7a->move(public_path('uploads/tasks'), $san7aName);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Image not uploaded successfully'
+            ], 400);
+        }
+        
+
+        if ($request->hasFile('san7a')) {
+            $san7a = $request->file('san7a');
+            $san7aName = time() . '.' . $san7a->getClientOriginalExtension();
+            $san7a->move(public_path('uploads/tasks'), $san7aName);
+            $task->san7a = $san7aName;
+        }
+        
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            // 'deadline' => $request->deadline,
+        ]);
+        
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 422,
+                'errors' => $validator->messages(),
+                'message' => 'Please correct the errors and try again.'
+            ], 422);
+        }
+        
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy(task $task)
     {
-        $task->delete();
-        return response()->json([
-            'status' => 200,
-            'message' => 'Task Deleted Successfully'
-        ], 200);
+        if ($task) {
+            $task->delete();
+            return response()->json([
+                'status' => 200,
+                'message' => 'Task Deleted Successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'No Records Found'
+            ], 404);
+        }
     }
+
+    public function getUserTasks($userId)
+    {
+        $tasks = Task::join('studenttasks', 'tasks.id', '=', 'studenttasks.task_id')
+                     ->where('studenttasks.user_id', $userId)
+                     ->select('tasks.id', 'tasks.title', 'tasks.description', 'tasks.san7a')
+                     ->get();
+        return response()->json($tasks);
+    }
+
+    
+
 }

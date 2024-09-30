@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,20 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-     protected $fillable = [
-         'name',
-         'gender',
-         'email',
-         'dob',
-         'parentName',
-         'parentPhone',
-         'san7a',
-         'officialId',
-         'accepter',
-         'password',
-     ];
-
-//    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'gender',
+        'email',
+        'dob',
+        'parentName',
+        'parentPhone',
+        'san7a',
+        'officialId',
+        'accepter',
+        'password',
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -52,15 +49,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    function classes()
+    /**
+     * The classrooms that the user belongs to.
+     */
+    public function classes()
     {
         return $this->belongsToMany(Classroom::class);
     }
 
-
-    function tasks()
+    /**
+     * The tasks that the user is associated with.
+     */
+    public function tasks()
     {
         return $this->belongsToMany(Task::class);
     }
-    
 }

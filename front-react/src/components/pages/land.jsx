@@ -26,13 +26,13 @@ export default function Land() {
     <div>
         <NavLand />
         <HeroLand />
-        {/* <Category /> */}
+         {/*<Category />*/}
         <AboutLand />
         <EventLand />
-        <ProgramLand />
-        {/* <BlogLand /> */}
+        {/*<ProgramLand />*/}
+        {/* <BlogLand />*/}
         <TeamLand />
-        <TestemonialLand />
+        {/*<TestemonialLand />*/}
         <Contact />
         <FooterLand />
         <GategoryLand />

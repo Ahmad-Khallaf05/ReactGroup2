@@ -5,13 +5,14 @@ import Sidebar from "../../Sidebar";
 import Footer from "../../Footer"; 
 import axios from "axios";
 import { MdDeleteForever, MdEdit } from "react-icons/md";
+import { FaEye } from "react-icons/fa"; 
 import Swal from 'sweetalert2';
 import {log10} from "chart.js/helpers";
 
 function Tasks() {
     const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true); // State for loading indicator
-    const [error, setError] = useState(null); // State for error handling
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchTasks = async () => {
@@ -22,7 +23,7 @@ function Tasks() {
                 setError('Failed to fetch tasks. Please try again later.');
                 console.error(error);
             } finally {
-                setLoading(false); // Set loading to false after the API call
+                setLoading(false);
             }
         };
 
@@ -49,11 +50,11 @@ function Tasks() {
     }
 
     if (loading) {
-        return <div>Loading...</div>; // Loading state
+        return <div>Loading...</div>;
     }
 
     if (error) {
-        return <div>{error}</div>; // Error state
+        return <div>{error}</div>;
     }
     console.log(data)
     return (
@@ -79,7 +80,6 @@ function Tasks() {
                                                 <thead>
                                                     <tr>
                                                         <th>Title</th>
-                                                        <th>Image</th>
                                                         <th>Deadline</th>
                                                         <th>Description</th>
                                                         <th>Actions</th>
@@ -100,8 +100,11 @@ function Tasks() {
                                                                 <td>{task.deadline}</td>
                                                                 <td>{task.description}</td>
                                                                 <td>
+                                                                    <Link to={`/task-view/${task.id}`}>
+                                                                        <FaEye style={{ width: 25, height: 25, marginRight: '10px' }} /> 
+                                                                    </Link>
                                                                     <Link to={`/task-edit/${task.id}`}>
-                                                                        <MdEdit style={{ width: 25, height: 25 }} />
+                                                                        <MdEdit style={{ width: 25, height: 25, marginRight: '10px' }} />
                                                                     </Link>
                                                                     <MdDeleteForever style={{ width: 25, height: 25 }} onClick={() => handleDelete(task.id)} />
                                                                 </td>

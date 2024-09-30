@@ -17,6 +17,8 @@ import ShowUser from '../components/admin/pages/user/showUser';
 // ----------------------------------------------------------------------------
 import CreateTask from '../components/admin/pages/task/CreateTask';
 import EditTask from '../components/admin/pages/task/EditTask';
+import TaskView from '../components/admin/pages/task/TaskView';
+import AddUser from '../components/admin/pages/task/AddUserPage';
 
 import EditClassroom from '../components/admin/pages/classroom/EditClassroom';
 import CreateClassroom from '../components/admin/pages/classroom/CreateClassroom';
@@ -75,6 +77,8 @@ export default function Myrouter() {
 
                     <Route path="/create-task" element={<CreateTask />} />
                     <Route path="/task-edit/:id" element={<EditTask />} />
+                    <Route path={`/task-view/:id`} element={<TaskView />} />
+                    <Route path={`/add-user/:id`} element={<AddUser />} />
                     
                     <Route path="/create-user" element={<CreateUser />} />
                     <Route path={`/user-edit/:id`} element={<EditUser/>}/>
