@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa";
+
 const Sidebar = () => {
+  
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
       <ul className="nav">
@@ -27,7 +29,7 @@ const Sidebar = () => {
         <li className="nav-item">
           <a className="nav-link" href="/Contacts">
             <span className="menu-title">Contacts</span>
-            <FaRegUser/>
+            <FaRegUser style={{float: 'right'}}/>
           </a>
         </li>
         <li className="nav-item">

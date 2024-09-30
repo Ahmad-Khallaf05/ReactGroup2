@@ -29,8 +29,7 @@ export default function Admins() {
       setAdminData(result.data.result);
     } catch (error) {
       console.log("Somthing went wrong");
-    }
-  };
+    }};
   const handleDelete = async (id) => {
     // console.log(id)
     Swal.fire({

@@ -38,7 +38,7 @@ const onSubmitChange = async (e) => {
         Swal.fire("Admin Added successfully!","","success")
         setLoading(true);
     } catch (error) {
-        console.log("Something Wrong");
+        console.error(error);
         Swal.fire("Server/Validation Error: Try again, & Check all fields!","","error")
     }
 }
