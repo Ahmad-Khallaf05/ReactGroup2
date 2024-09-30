@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa";
-
+import { AuthContext } from '../landing/components/context/AuthContext';
+import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const Sidebar = () => {
-  
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <nav className="sidebar sidebar-offcanvas" id="sidebar">
       <ul className="nav">

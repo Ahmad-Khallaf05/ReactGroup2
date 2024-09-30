@@ -12,11 +12,22 @@ import { TiUserDelete } from "react-icons/ti";
 import Swal from "sweetalert2";
 import withReactContent from 'sweetalert2-react-content'
 import { MdVisibility } from "react-icons/md";
+import { AuthContext } from "../../../landing/components/context/AuthContext";
+import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+// import Swal from "sweetalert2";
 export default function Admins() {
-  const MySwal = withReactContent(Swal)
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
+  // const MySwal = withReactContent(Swal)
   const [adminData, setAdminData] = useState([]);
 
   useEffect(() => {
+    if(auth.user.role == 'Teacher') 
+    {
+      Swal.fire("Unathorized","","error");
+      navigate("/dashboard")
+    }
     fetchData();
   }, []);
 

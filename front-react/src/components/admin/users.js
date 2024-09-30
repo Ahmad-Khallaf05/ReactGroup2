@@ -5,6 +5,9 @@ import Sidebar from "./Sidebar";
 import Footer from "./Footer"; 
 
 function Users() {
+    const { auth } = useContext(AuthContext);
+    console.log(auth);
+    
     return (
 
         <div>

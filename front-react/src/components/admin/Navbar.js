@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Logout from "../landing/components/logout";
 import { AuthContext } from '../landing/components/context/AuthContext';
 import { useContext } from 'react';
@@ -8,14 +8,22 @@ import Swal from "sweetalert2";
 const Navbar = () => {
   const { auth } = useContext(AuthContext);
   const navigate = useNavigate();
-  // console.log(auth);
+  const [imaage, setImaage] = useState('');
+  console.log(auth);
   useEffect( () => {
-    if(!auth.user) {
+    if(auth.user)
+    {
+      if(auth.user.role == 0) {
+        Swal.fire("Unauthorized","","error");
+        navigate("/login");
+      }
+    }else {
       Swal.fire("Unauthorized","","error");
       navigate("/login");
     }
   })
   if(auth.user)
+  {if(auth.user.role != 0)
   {
 
     return (
@@ -172,5 +180,5 @@ const Navbar = () => {
   );
 };
 }
-
+}
 export default Navbar;

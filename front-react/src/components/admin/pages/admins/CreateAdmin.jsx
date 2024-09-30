@@ -5,7 +5,13 @@ import { useState } from "react";
 import axios from "axios";
 import Admins from "./Admins";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../landing/components/context/AuthContext";
+import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 export default function CreateAdmin() {
+  const { auth } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [adminData, setAdminData] = useState({
     name: "",
     email: "",
@@ -13,7 +19,12 @@ export default function CreateAdmin() {
     role: "",
     san7a: null,
   });
-
+  useEffect(() => {
+    if(auth.user.role == 'Teacher') 
+    {
+      Swal.fire("Unathorized","","error");
+      navigate("/dashboard")
+    }})
   const changeAdminField = (e) => {
     setAdminData({
         ...adminData,
@@ -59,7 +70,11 @@ const onSubmitChange = async (e) => {
 if(loading){
     return <Admins />
 }
-
+let options = '';
+if(auth.user.role == "Manager")
+{
+  options = '<select className="form-select" id="inputGroupSelect02" onChange={e => changeAdminField(e)} name="role" value={adminData.role}><option selected>Choose Admin Role...</option><option value="Teacher">Teacher</option><option value="Supervisor">Supervisor</option></select>';
+}
   return (
     <div className="container-scroller">
       <Navbar />
@@ -102,8 +117,7 @@ if(loading){
                         <div className="input-group mb-3">
                           <select className="form-select" id="inputGroupSelect02" onChange={e => changeAdminField(e)} name="role" value={adminData.role}>
                             <option selected>Choose Admin Role...</option>
-                            <option value="Teacher">Teacher</option>
-                            <option value="Supervisor">Supervisor</option>
+                            {options}
                           </select>
                           <label className="input-group-text" htmlFor="inputGroupSelect02">Options</label>
                         </div>
