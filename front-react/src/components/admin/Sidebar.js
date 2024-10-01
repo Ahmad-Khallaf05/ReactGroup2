@@ -10,7 +10,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   function options()
   {
-    if(auth.user.role != "Teacher")
+    if(auth.user && auth.user.role != "Teacher")
     {
       return <><li className="nav-item">
       <a className="nav-link" href="/event">
